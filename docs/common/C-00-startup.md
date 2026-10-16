@@ -1,20 +1,20 @@
 # 🚨 啟動檢查（最高優先）
 
 > **在你讀取本檔案的第一秒，請立刻執行以下動作：**
-> 1. 檢查你是否已經自報編號（格式：`A{YYYYMMDD}-{序號3位}`）。
-> 2. 如果沒有，請**立刻停止閱讀本檔案**，先輸出你的編號，並輸出一行 `- A{YYYYMMDD}-{序號3位}` 提示使用者更新至 `docs/records/R-01-writers.md`。
+> 1. 檢查你是否已經自報編號（格式：`{專案代碼}-{YYYYMMDD}-{序號3位}`）。
+> 2. 如果沒有，請**立刻停止閱讀本檔案**，先確認本次對話所屬專案後再報編號。
 > 3. 等待使用者回覆「已更新」後，才能繼續往下讀取。
 >
-> ⚠️ 如果你沒有先報編號，視為嚴重任務失敗。
+> ⚠️ 未確認專案前自報編號，視為嚴重任務失敗（見 §3.4）。
 
 ---
 （以下為原本的 C-00 內容）
 
 # C-00 啟動卡（AI 首次必讀）
 最後更新：B34-5
-Version: 1791916300
+Version: 1791931200
 Batch: B34-5
-Writer: ai-system-20261016-003#051
+Writer: ai-system-20261016-003#129
 用途：你只需上傳此檔即可啟動新對話
 
 ---
@@ -44,24 +44,20 @@ Writer: ai-system-20261016-003#051
 | 1 | 讀完此檔 |
 | 2 | 回報「已讀取 startup」 |
 | 3 | 檢查 R-01-writers.md（AI 名單 + Repo 清單） |
-| 4 | **讀取 P-13-handoff.md（若存在）** |
-| 5 | **讀取 P-12-conclusion.md（若存在）** |
-| 6 | 生成對話編號（見第三節） |
-| 7 | 自報編號 |
-| 8 | 依議題表驅動制提示下一議題（見 D-050） |
-| 9 | 列 4 選項（見第四節） |
-| 10 | 待使用者選擇 |
+| 4 | **讀取 SYSTEM-HANDOFF.md（若存在）** |
+| 5 | **讀取 SYSTEM-CONCLUSION.md（若存在）** |
+| 6 | 回報共享包構建編號 |
+| 7 | 依議題表驅動制提示下一議題（見 §零點九） |
+| 8 | 待使用者選擇 |
 
-**禁止**：未生成編號就開始任何動作。
+**禁止**：未確認專案就開始任何動作。
 
-**P-12 / P-13 說明**：
+**體系層專屬檔案**：
 
 | 檔案 | 用途 |
 |---|---|
-| P-13-handoff.md | 本專案交接快照（≤ 80 行） |
-| P-12-conclusion.md | 本專案滾動式累積結論 + 議題表 + 決策記錄 |
-
-若兩檔存在，**必須先讀**，再依進度繼續討論或開發。
+| SYSTEM-HANDOFF.md | 體系層交接快照（≤ 80 行） |
+| SYSTEM-CONCLUSION.md | 體系層滾動式累積結論 + 議題表 + 決策記錄 |
 
 **R-01 說明**：
 
@@ -77,23 +73,23 @@ Writer: ai-system-20261016-003#051
 
 ### 3.1 編號格式
 
-格式為 A{YYYYMMDD}-{序號3位}
+格式為 `{專案代碼}-{YYYYMMDD}-{專案內序號3位}`
 
 | 範例 | 說明 |
 |---|---|
-| A20261013-001 | 2026-10-13 第 1 個對話 |
-| A20261013-002 | 同一天第 2 個對話 |
+| webapp-20261016-001 | 家庭 webapp 第 1 個對話 |
+| ai-system-20261016-001 | AI 對話系統第 1 個對話 |
 
 ### 3.2 生成流程
 
 | 情境 | 動作 |
 |---|---|
-| 有 R-01-writers.md | 取最新編號 + 1（同日）或 -001（新日） |
+| 有 R-01-writers.md | 取該專案最新序號 + 1 |
 | 無 R-01-writers.md | 自建第一筆，並交付 R-01 |
 
 ### 3.3 回覆序號
 
-每次 AI 回覆開頭標示：🆔 A20261013-001 #005
+每次 AI 回覆開頭標示：🆔 ai-system-20261016-001 #005
 
 - 從 #001 起，同對話累加
 - 每次回覆**必須**標
@@ -106,7 +102,7 @@ Writer: ai-system-20261016-003#051
 |---|---|
 | 1 | 使用者回答本次對話所屬專案之前，**禁止生成任何對話編號**（含預設、繼承、猜測） |
 | 2 | 收到專案回答後，**必須重新從 PROJECT-LIST.md 讀取該專案的 `code`** |
-| 3 | 編號必須**重新計算**（從 R-01 §四 取該專案最新序號 +1），禁止沿用上一輪、上一對話或任何預設編號 |
+| 3 | 編號必須**重新計算**（從 R-01 §四 取該專案最新序號 +1） |
 | 4 | 若在確認專案前已自報編號，該編號**必須作廢**，重新生成後再輸出 |
 | 5 | 若發現新對話曾自報錯誤編號，AI **必須主動指出並要求更正 R-01** |
 
@@ -131,10 +127,10 @@ Writer: ai-system-20261016-003#051
 
 **AI 首次回應格式**：
 
-> 🆔 A20261013-001 #001
+> 🆔 {對話編號} #001
 >
 > 已讀取 startup 檔。
-> 本對話編號：A20261013-001
+> 本包構建編號：#XXXX
 > 建議下一議題：{依議題表}
 >
 > 請告知本次情境：
@@ -151,7 +147,7 @@ Writer: ai-system-20261016-003#051
 | 使用者選 | AI 動作 |
 |---|---|
 | 新專案 | **先問領域**（見 §十一）→ 依回答處理 |
-| 舊專案 | 說「請提供 INDEX URL 或 2 條 STARTUP URL」（見 §十） |
+| 舊專案 | 說「請上傳對應共享包」（見 §十） |
 | 純討論 | 說「請描述問題」 |
 | 其他 | 依使用者說明 |
 
@@ -201,7 +197,7 @@ Writer: ai-system-20261016-003#051
 
 | # | 記住 |
 |---|---|
-| 1 | 開新對話 → 上傳 PACKAGE-CORE.md（見 §十） |
+| 1 | 開新對話 → 上傳對應編號的共享包（見 §十） |
 | 2 | 說「請讀取 docs/」 |
 | 3 | 回答 AI 的問題 |
 
@@ -219,7 +215,7 @@ Writer: ai-system-20261016-003#051
 | 通用規則 | C-02-rules.md |
 | 流程指南 | C-03-guide.md |
 | 交付格式 | C-04-delivery.md |
-| 學習日誌 | C-05-learning.md |
+| 學習日誌 | C-05-learning/（general / system / w） |
 | Token 記錄 | C-06-token-log.md |
 | 階段總結 | C-07-summary.md |
 | 滾動結論機制 | C-09-rolling-mechanism.md |
@@ -235,6 +231,13 @@ Writer: ai-system-20261016-003#051
 | 前端 ES Module | W-03-esmodule.md |
 | PWA + SW | W-04-pwa.md |
 | Page Schema | W-05-schema.md |
+
+### 體系層專屬
+
+| 主題 | 檔案 |
+|---|---|
+| 體系層滾動結論 | SYSTEM-CONCLUSION.md |
+| 體系層交接快照 | SYSTEM-HANDOFF.md |
 
 ### L3 本專案（P-*）
 
@@ -260,18 +263,20 @@ Writer: ai-system-20261016-003#051
 | 主題 | 檔案 |
 |---|---|
 | AI 名單 + 專案清單 + **Repo 清單** | R-01-writers.md |
+| 檔案索引（Actions 生成） | FILE-INDEX.md |
+| 歷史歸屬（Actions 生成） | HISTORY-INDEX.md |
 
 ---
 
-## 十、啟動機制（D-136）
+## 十、啟動機制（D-136 修正）
 
-### 10.1 核心：上傳 PACKAGE-CORE.md
+### 10.1 核心：上傳共享包
 
-**核心**：使用者**上傳 `PACKAGE-CORE.md`** 給 AI。
+**核心**：使用者**上傳對應編號的共享包**給 AI。
 
-**來源**：`tlee20860-dotcom/AI-training-build`（由 Actions 生成）。
+**來源**：`tlee20860-dotcom/AI-packages`（由 Actions 生成）。
 
-> ⚠️ **重要變更**：原本設計為「貼 URL」，因 AI 無法讀取 URL，**改為上傳檔案**。
+> ⚠️ **重要變更**：原設計為「貼 URL」，因 AI 無法讀取 URL，**改為上傳檔案**。
 
 ### 10.2 兩種啟動方式
 
@@ -279,37 +284,48 @@ Writer: ai-system-20261016-003#051
 
 | # | 檔案 | 內容 |
 |---|---|---|
-| 1 | PACKAGE-CORE.md | C-00 + C-01 + C-02 + C-04 + C-05~C-11 + R-01 + PROJECT-LIST |
+| 1 | 01-CORE-SYSTEM.md | C-00 + C-01 + C-02 + C-04 + C-05(general+system) + C-07 + C-09 + C-10 + R-01 + SYSTEM-HANDOFF + SYSTEM-CONCLUSION + PROJECT-LIST |
 
 **方式 2（專案層）**：上傳 2 檔
 
 | # | 檔案 | 內容 |
 |---|---|---|
-| 1 | PACKAGE-CORE.md | 通用規則 |
-| 2 | PACKAGE-{專案}.md | 專案文件 + 程式碼 |
+| 1 | 02-CORE-PROJECT.md | C-00 + C-01 + C-04 + C-05(general+w) + R-01 + PROJECT-LIST |
+| 2 | 90-{專案}.md 等 | 專案文件 + 程式碼 |
 
-AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給對應 PACKAGE-*.md 名稱。
+### 10.3 包編號對照
 
-### 10.3 實際 repo（見 R-01 §三之一）
+**十位數 = 類別，個位數 = 同類序號。**
 
-| Repo | 內容 |
-|---|---|
-| tlee20860-dotcom/AI-General | 體系層 |
-| tlee20860-dotcom/AI-training-build | 共享包（Actions 產出） |
-| tlee20860-dotcom/WEB-APP-Family | 家庭 webapp |
-| tlee20860-dotcom/AI-training-files | 訓練 AI |
+| 編號 | 檔案 | 用途 |
+|---|---|---|
+| 01 | 01-CORE-SYSTEM.md | 體系層核心包 |
+| 02 | 02-CORE-PROJECT.md | 專案層核心包 |
+| 10 | 10-SKILLS-W.md | Web App 技能包 |
+| 20 | 20-SKILLS-V.md | VBA 技能包（未來） |
+| 30 | 30-SKILLS-D.md | 資料分析技能包（未來） |
+| 90 | 90-web-app-family.md | 家庭 webapp |
+| 91+ | 未來新增專案 | 依序 |
+| 99 | 99-CONCLUSION-ARCHIVE.md | 體系舊決策（罕用） |
 
-### 10.4 未來新增專案時
+### 10.4 共享包頂部資訊
+
+每個共享包頂部含：
+
+> 生成時間：YYYY-MM-DD HH:mm:ss UTC
+> 構建編號：#NNNN
+
+**AI 讀到後必須回報**「本包構建編號 #NNNN，生成於 XX」，並問使用者是否為最新。
+
+### 10.5 未來新增專案時
 
 | 步驟 | 動作 |
 |---|---|
 | 1 | 使用者說「新增專案 X」 |
 | 2 | AI 依 §十一 問領域 |
-| 3 | AI 更新 PROJECT-LIST.md |
+| 3 | AI 更新 PROJECT-LIST.md（含 package_no） |
 | 4 | AI 更新 R-01 §三 |
-| 5 | GitHub Actions 自動產生 PACKAGE-{X}.md |
-
-**啟動包清單變更時**，**必須同步更新 §十 + C-03**。
+| 5 | GitHub Actions 自動產生對應編號的共享包 |
 
 ---
 
@@ -343,6 +359,7 @@ AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給對應 PACKAGE
 | 3b | **新領域** → AI 主動建議建 `{X}-*` 6 檔 |
 | 4 | 使用者確認 → AI 產出 6 檔草稿 |
 | 5 | AI 依使用者回饋迭代 |
+| **6** | **產出該專案的 `notify.yml`**（參考既有 notify 內容，改 dispatch type） |
 
 **6 檔模板**：
 
@@ -354,6 +371,8 @@ AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給對應 PACKAGE
 | 4 | {X}-03-sop.md |
 | 5 | {X}-04-templates.md |
 | 6 | {X}-99-errors-map.md |
+
+**新增專案完成後**：AI 需提醒使用者「在該 repo 建立 notify.yml」。
 
 ---
 
@@ -378,27 +397,27 @@ AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給對應 PACKAGE
 
 | 階段 | 使用者動作 | AI 動作 | 產出 |
 |---|---|---|---|
-| 1. 啟動 | 上傳 PACKAGE-CORE.md | 讀規則、回報 4 項摘要 | — |
+| 1. 啟動 | 上傳 01-CORE-SYSTEM.md | 讀規則、回報構建編號與 4 項摘要 | — |
 | 2. 選專案 | 說「確認」 | 列所有專案、問哪個 | — |
 | 3. 生成編號 | 回答專案 | **重新計算編號**（防呆 §3.4） | 🆔 編號 |
 | 4. 更新 R-01 | 說「繼續」→「確認」 | 輸出完整 R-01 | R-01 更新 |
 | 5. 需求 | 說「已更新」→ 提需求 | 分析、提方案、等確認 | — |
-| 6. 交付 | 說「確認」 | 輸出完整檔案 | 檔案更新 |
+| 6. 討論 | 說「確認」 | **只記錄修改點，不交付**（C-02 §19.1） | 檔案狀態總表 |
+| 7. 交付 | 說「開始交付」→「確認清單」 | 逐批交付 | 檔案更新 |
 
-**情境 B：專案層（家庭 webapp / 訓練 AI）**
+**情境 B：專案層（家庭 webapp 等）**
 
 | 階段 | 差異 |
 |---|---|
-| 1. 啟動 | 上傳 PACKAGE-CORE.md + PACKAGE-{專案}.md |
+| 1. 啟動 | 上傳 02-CORE-PROJECT.md + 90-{專案}.md |
 | 5. 需求 | 從專案包提取 P-* 檔案 |
 
 ### 13.2 共享包生成流程（任一 repo → Actions）
 
 | 觸發源 | 中間 | 終點 | 產出 |
 |---|---|---|---|
-| WEB-APP-Family push | notify.yml → dispatch | AI-General setup-structure.yml | PACKAGE-web-app-family.md → AI-training-build |
-| AI-training-files push | notify.yml → dispatch | 同上 | PACKAGE-ai-training.md → 同上 |
-| AI-General push docs/** | — | setup-structure.yml | PACKAGE-CORE.md、PACKAGE-SKILLS-W.md → 同上 |
+| WEB-APP-Family 上傳到 GitHub | notify.yml → dispatch | AI-General setup-structure.yml | 全部共享包 → AI-packages |
+| AI-General 上傳到 GitHub | — | setup-structure.yml | 同上 |
 
 **核心**：**任一個 repo 更新 → 全部共享包重做一遍**，保持最新。
 
@@ -414,7 +433,7 @@ AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給對應 PACKAGE
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-00-startup.md
-V: 1791916300
+V: 1791931200
 B: B34-5
-W: ai-system-20261016-003#051
+W: ai-system-20261016-003#129
 ═══ */
