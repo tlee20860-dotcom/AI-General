@@ -1,6 +1,7 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v3）
+# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v4）
 # 位置：AI-General/.github/workflows/setup-structure.yml
+# 變更：廢除 REPOS.md，awk 直接讀 PROJECT-LIST.md
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -15,7 +16,6 @@ on:
     paths-ignore:
       - 'docs/records/FILE-INDEX.md'
       - 'docs/records/HISTORY-INDEX.md'
-      - 'docs/records/REPOS.md'
   repository_dispatch:
     types: [web-app-family-updated, ai-training-updated]
   workflow_dispatch:
@@ -32,61 +32,23 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 步驟 1：從 PROJECT-LIST.md 自動生成 REPOS.md
-      - name: Generate REPOS.md from PROJECT-LIST.md
+      # 步驟 1：Checkout 所有專案倉庫（到 external/）
+      - name: Checkout all project repos
         run: |
           if [ ! -f "docs/records/PROJECT-LIST.md" ]; then
             echo "找不到 PROJECT-LIST.md，跳過"
             exit 0
           fi
-          OUTPUT="docs/records/REPOS.md"
-          echo "# 倉庫清單" > "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "> ⚠️ 本檔由 GitHub Actions 從 PROJECT-LIST.md 自動生成，請勿手動編輯。" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "最後更新：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "---" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-
           awk '
             /^## 專案/ { block=1; next }
             block && /^name:/ { name=$2 }
             block && /^repo:/ { repo=$2 }
-            block && /^package:/ { pkg=$2 }
+            block && /^auto_create:/ { auto=$2 }
             block && /^---/ {
-              if (name && repo && pkg && pkg != "（無，體系層不生成專案包）") {
-                print "## " name
-                print ""
-                print "name: " name
-                print "path: external/" name
-                print "repo: " repo
-                print "package: " pkg
-                print ""
-                print "---"
-                print ""
-              }
-              name=""; repo=""; pkg=""; block=0
+              if (name && repo && auto != "false") print name "|external/" name "|" repo
+              name=""; repo=""; auto=""; block=0
             }
-          ' docs/records/PROJECT-LIST.md >> "$OUTPUT"
-
-      # 步驟 2：Checkout 所有專案倉庫（到 external/）
-      - name: Checkout all project repos
-        run: |
-          if [ ! -f "docs/records/REPOS.md" ]; then
-            echo "找不到 REPOS.md，跳過"
-            exit 0
-          fi
-          awk '
-            /^## / { block=1; next }
-            block && /^name:/ { name=$2 }
-            block && /^path:/ { path=$2 }
-            block && /^repo:/ { repo=$2 }
-            block && /^---/ {
-              if (name && path && repo) print name "|" path "|" repo
-              name=""; path=""; repo=""; block=0
-            }
-          ' docs/records/REPOS.md > /tmp/repos.txt
+          ' docs/records/PROJECT-LIST.md > /tmp/repos.txt
           while IFS='|' read -r name path repo; do
             if [ -n "$repo" ]; then
               echo "Checkout: $repo -> $path"
@@ -101,7 +63,7 @@ jobs:
           token: ${{ secrets.CROSS_REPO_PAT }}
           path: build-repo
 
-      # 步驟 3：生成 PACKAGE-CORE.md
+      # 步驟 2：生成 PACKAGE-CORE.md
       - name: Build PACKAGE-CORE.md
         run: |
           OUTPUT="build-repo/PACKAGE-CORE.md"
@@ -112,7 +74,7 @@ jobs:
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
-          # 3.1 共同語言表（C-11）
+          # 2.1 共同語言表（C-11）
           if [ -f "docs/common/C-11-terms.md" ]; then
             echo "## 📖 共同語言表（C-11）" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
@@ -127,7 +89,7 @@ jobs:
             echo "" >> "$OUTPUT"
           fi
 
-          # 3.2 當前任務進度（從 PROGRESS.md 注入）
+          # 2.2 當前任務進度（從 PROGRESS.md 注入）
           if [ -f "docs/records/PROGRESS.md" ]; then
             echo "## 📊 當前任務進度" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
@@ -136,7 +98,7 @@ jobs:
             echo "" >> "$OUTPUT"
           fi
 
-          # 3.3 啟動指示
+          # 2.3 啟動指示
           echo "## 🚨 AI 啟動指示（最高優先）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "### 🔹 步驟 0：讀取規則並回報" >> "$OUTPUT"
@@ -220,7 +182,7 @@ jobs:
           echo "## 📚 核心訓練規則" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
-          # 加入 C-05、C-06、C-07、C-09、C-10
+          # 加入所有 C-* 與 R-01
           for f in \
             docs/common/C-00-startup.md \
             docs/common/C-01-profile.md \
@@ -247,7 +209,7 @@ jobs:
             bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT"
           fi
 
-      # 步驟 4：生成 PACKAGE-SKILLS-W.md
+      # 步驟 3：生成 PACKAGE-SKILLS-W.md
       - name: Build PACKAGE-SKILLS-W.md
         run: |
           OUTPUT="build-repo/PACKAGE-SKILLS-W.md"
@@ -261,24 +223,23 @@ jobs:
             fi
           done
 
-      # 步驟 5：動態生成所有專案包
+      # 步驟 4：動態生成所有專案包
       - name: Build all project packages dynamically
         run: |
-          if [ ! -f "docs/records/REPOS.md" ]; then
-            echo "沒有 REPOS.md，跳過"
+          if [ ! -f "docs/records/PROJECT-LIST.md" ]; then
+            echo "沒有 PROJECT-LIST.md，跳過"
             exit 0
           fi
 
           awk '
-            /^## / { block=1; next }
+            /^## 專案/ { block=1; next }
             block && /^name:/ { name=$2 }
-            block && /^path:/ { path=$2 }
             block && /^package:/ { pkg=$2 }
             block && /^---/ {
-              if (name && path && pkg) print name "|" path "|" pkg
-              name=""; path=""; pkg=""; block=0
+              if (name && pkg && pkg != "（無，體系層不生成專案包）") print name "|external/" name "|" pkg
+              name=""; pkg=""; block=0
             }
-          ' docs/records/REPOS.md > /tmp/projects.txt
+          ' docs/records/PROJECT-LIST.md > /tmp/projects.txt
 
           while IFS='|' read -r name path pkg; do
             [ -z "$name" ] && continue
@@ -332,12 +293,12 @@ jobs:
             echo "/* ═══ EOF ═══ */" >> "$OUTPUT"
           done < /tmp/projects.txt
 
-      # 步驟 6：複製 PROJECT-LIST 到 build-repo
+      # 步驟 5：複製 PROJECT-LIST 到 build-repo
       - name: Copy PROJECT-LIST to build-repo
         run: |
           [ -f "docs/records/PROJECT-LIST.md" ] && cp "docs/records/PROJECT-LIST.md" "build-repo/PROJECT-LIST.md"
 
-      # 步驟 7：部署到 AI-training-build
+      # 步驟 6：部署到 AI-training-build
       - name: Deploy to AI-training-build
         run: |
           cd build-repo
@@ -353,7 +314,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791915400
+# V: 1791915700
 # B: B34-5
-# W: ai-system-20261016-003#044
+# W: ai-system-20261016-003#048
 # ═══ EOF ═══
