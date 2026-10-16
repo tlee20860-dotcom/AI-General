@@ -24,3 +24,5 @@
 | records/FILE-INDEX.md |  1792166678  | B34-5 |  1792166918  | B34-5 | 2026-10-16 16:09 |
 | external/ai-system/docs/common/C-11-terms.md |  1791908600  | B34-4 |  1791932400  | B34-5 | 2026-10-16 16:09 |
 | common/C-11-terms.md |  1791908600  | B34-4 |  1791932400  | B34-5 | 2026-10-16 16:09 |
+| external/ai-system/docs/records/FILE-INDEX.md |  1792166918  | B34-5 |  1792166992  | B34-5 | 2026-10-16 16:11 |
+| records/FILE-INDEX.md |  1792166918  | B34-5 |  1792166992  | B34-5 | 2026-10-16 16:11 |
