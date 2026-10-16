@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v2）
+# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v3）
 # 位置：AI-General/.github/workflows/setup-structure.yml
 # ============================================
 
@@ -212,11 +212,17 @@ jobs:
           echo "## 📚 核心訓練規則" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
+          # 加入 C-05、C-06、C-07、C-09、C-10
           for f in \
             docs/common/C-00-startup.md \
             docs/common/C-01-profile.md \
             docs/common/C-02-rules.md \
             docs/common/C-04-delivery.md \
+            docs/common/C-05-learning.md \
+            docs/common/C-06-token-log.md \
+            docs/common/C-07-summary.md \
+            docs/common/C-09-rolling-mechanism.md \
+            docs/common/C-10-handoff-mechanism.md \
             docs/records/R-01-writers.md
           do
             if [ -f "$f" ]; then
@@ -339,7 +345,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791908800
+# V: 1791909000
 # B: B34-4
-# W: ai-system-20261016-001
+# W: ai-system-20261016-001#073
 # ═══ EOF ═══
