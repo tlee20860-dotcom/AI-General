@@ -1,13 +1,7 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v7）
+# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v8）
 # 位置：AI-General/.github/workflows/setup-structure.yml
-# 變更：
-#   - 修復 auto_create bug
-#   - 拆分 01-CORE-SYSTEM / 02-CORE-PROJECT
-#   - 包編號十位數類別制
-#   - C-05 分檔注入
-#   - 頂部加構建編號
-#   - 部署目標改為 AI-packages
+# 變更：修正 paths / paths-ignore 衝突
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -15,13 +9,15 @@ name: Build Shared Packages and Deploy
 on:
   push:
     branches: [main, master]
-    paths:
-      - 'docs/**'
-      - '.github/workflows/**'
-      - '*.md'
     paths-ignore:
       - 'docs/records/FILE-INDEX.md'
       - 'docs/records/HISTORY-INDEX.md'
+      - '**/*.png'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.gif'
+      - '**/*.svg'
+      - '**/*.ico'
   repository_dispatch:
     types: [web-app-family-updated]
   workflow_dispatch:
@@ -431,9 +427,9 @@ jobs:
               -not -path "*/build-repo/*" \
               | while read -r f; do
                 tail -n 15 "$f" | sed 's/^[[:space:]]*\(#[/*!-]*\|<!--\)[[:space:]]*//;s/[[:space:]]*\*\/-->*[[:space:]]*$//' > /tmp/eof-tail.txt
-                V=$(grep -oE '^V: *[0-9]+' /tmp/eof-tail.txt | head -1 | sed 's/^V: *//')
-                B=$(grep -oE '^B: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^B: *//')
-                W=$(grep -oE '^W: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^W: *//')
+                V=$(grep -oE '^V: *[0-9]+' /tmp/eof-tail.txt | head -1 | sed 's/^V: *//' || true)
+                B=$(grep -oE '^B: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^B: *//' || true)
+                W=$(grep -oE '^W: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^W: *//' || true)
                 [ -z "$V" ] && continue
                 REL="${f#./}"
                 REL="${REL#docs/}"
@@ -503,18 +499,18 @@ jobs:
           awk -F'|' '/^\| / && $2 !~ /Repo|---/ {
             gsub(/^ *| *$/, "", $3); gsub(/^ *| *$/, "", $5);
             print $3 "|" $4 "|" $5
-          }' "$OLD" > /tmp/old-rows.txt
+          }' "$OLD" > /tmp/old-rows.txt || true
 
           awk -F'|' '/^\| / && $2 !~ /Repo|---/ {
             gsub(/^ *| *$/, "", $3); gsub(/^ *| *$/, "", $5);
             print $3 "|" $4 "|" $5
-          }' "$NEW" > /tmp/new-rows.txt
+          }' "$NEW" > /tmp/new-rows.txt || true
 
           NOW=$(date -u +'%Y-%m-%d %H:%M')
 
           while IFS='|' read -r file new_v new_w; do
             [ -z "$file" ] && continue
-            old_line=$(grep -F "$file|" /tmp/old-rows.txt | head -1)
+            old_line=$(grep -F "$file|" /tmp/old-rows.txt | head -1 || true)
             [ -z "$old_line" ] && continue
             old_v=$(echo "$old_line" | cut -d'|' -f2)
             old_w=$(echo "$old_line" | cut -d'|' -f3)
@@ -528,7 +524,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/records/FILE-INDEX.md docs/records/HISTORY-INDEX.md
+          git add docs/records/FILE-INDEX.md docs/records/HISTORY-INDEX.md 2>/dev/null || true
           if git diff --cached --quiet; then
             exit 0
           fi
@@ -555,7 +551,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791924000
+# V: 1791925800
 # B: B34-5
-# W: ai-system-20261016-003#113
+# W: ai-system-20261016-003#117
 # ═══ EOF ═══
