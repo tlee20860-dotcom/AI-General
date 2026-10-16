@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（穩健版）
+# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v2）
 # 位置：AI-General/.github/workflows/setup-structure.yml
 # ============================================
 
@@ -49,7 +49,7 @@ jobs:
             block && /^repo:/ { repo=$2 }
             block && /^package:/ { pkg=$2 }
             block && /^---/ {
-              if (name && repo && pkg) {
+              if (name && repo && pkg && pkg != "（無，體系層不生成專案包）") {
                 print "## " name
                 print ""
                 print "name: " name
@@ -106,6 +106,7 @@ jobs:
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
+          # 3.1 共同語言表（C-11）
           if [ -f "docs/common/C-11-terms.md" ]; then
             echo "## 📖 共同語言表（C-11）" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
@@ -113,58 +114,85 @@ jobs:
             echo "" >> "$OUTPUT"
             echo "**【交付前確認】任何檔案內容、修改方案、R-01 更新，都必須先向我報告「打算做什麼」，等我說「確認」之後，才能輸出完整內容。**" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
-            echo "**【所屬專案】每次回覆請在開頭標示「所屬專案：{專案名稱}」。通用檔案標「AI 對話系統」，專案檔案標對應專案。**" >> "$OUTPUT"
+            echo "**【所屬專案】每次回覆請在開頭標示「所屬專案：{專案顯示名稱}（第 {N} 個對話）」。**" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
-            cat "docs/common/C-11-terms.md" >> "$OUTPUT"
-            echo "" >> "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/common/C-11-terms.md" "$OUTPUT"
             echo "---" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
           fi
 
+          # 3.2 當前任務進度（從 PROGRESS.md 注入）
+          if [ -f "docs/records/PROGRESS.md" ]; then
+            echo "## 📊 當前任務進度" >> "$OUTPUT"
+            echo "" >> "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/PROGRESS.md" "$OUTPUT"
+            echo "---" >> "$OUTPUT"
+            echo "" >> "$OUTPUT"
+          fi
+
+          # 3.3 啟動指示
           echo "## 🚨 AI 啟動指示（最高優先）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "### 🔹 步驟 0：讀取規則並回報" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "請先讀取本檔案中的以下檔案：C-00、C-01、C-02、C-04、R-01、PROJECT-LIST。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "讀完後，請回報以下三件事：" >> "$OUTPUT"
+          echo "讀完後，請回報以下四件事：" >> "$OUTPUT"
           echo "1. 「已讀取核心規則」" >> "$OUTPUT"
           echo "2. 用 3~5 條列點，摘要 C-01 中「使用者的核心偏好」" >> "$OUTPUT"
           echo "3. 用 3~5 條列點，摘要 C-02 中「你必須遵守的關鍵規則」" >> "$OUTPUT"
+          echo "4. 報告「當前任務進度」摘要（從上方的「當前任務進度」區塊讀取）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "回報完畢後停下來，等待我回覆「確認」。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "### 🔹 步驟 1：自報編號" >> "$OUTPUT"
+          echo "### 🔹 步驟 1：詢問本次對話所屬專案" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "等我說「確認」後，從 R-01 §四計算新編號，輸出「🆔 A{YYYYMMDD}-{序號3位}」，停下來等我回覆「繼續」。" >> "$OUTPUT"
+          echo "等我說「確認」後，從 PROJECT-LIST.md 列出所有專案，並問我：「本次對話屬於哪個專案？」" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "等我回答後：" >> "$OUTPUT"
+          echo "1. 從 PROJECT-LIST.md 讀取該專案的 code。" >> "$OUTPUT"
+          echo "2. 從 R-01 §四 找出該專案最新序號，+1 生成新編號。" >> "$OUTPUT"
+          echo "3. 編號格式：{code}-{YYYYMMDD}-{專案內序號3位}（如 webapp-20261016-001）。" >> "$OUTPUT"
+          echo "4. 輸出：「🆔 {對話編號}」。" >> "$OUTPUT"
+          echo "5. 停下來，等待我回覆「繼續」。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "### 🔹 步驟 2：R-01 更新確認" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "等我說「繼續」後，報告準備更新 R-01，等我確認後吐出完整 R-01 內容，我貼上後回覆「已更新」。" >> "$OUTPUT"
+          echo "等我說「繼續」後：" >> "$OUTPUT"
+          echo "1. 報告：「我準備更新 R-01 §四，加入新編號 {對話編號}、所屬專案、當前時間。請問是否可以生成更新後的完整 R-01？」" >> "$OUTPUT"
+          echo "2. 停下來，等待我回覆「確認」。" >> "$OUTPUT"
+          echo "3. 收到確認後，才輸出完整的、更新後的 R-01-writers.md 內容。" >> "$OUTPUT"
+          echo "4. 提示我：「請將以上內容複製，貼到 docs/records/R-01-writers.md，完成後回覆『已更新』」。" >> "$OUTPUT"
+          echo "5. 停下來，等待我回覆「已更新」。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "### 🔹 步驟 3：列出專案清單" >> "$OUTPUT"
+          echo "### 🔹 步驟 3：請求對應的專案包" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "從 PROJECT-LIST.md 列出所有專案，詢問我要進行哪個。" >> "$OUTPUT"
+          echo "等我說「已更新」後：" >> "$OUTPUT"
+          echo "- 若我選擇的專案是「家庭 webapp」→ 說「請上傳 PACKAGE-web-app-family.md 以繼續」。" >> "$OUTPUT"
+          echo "- 若我選擇的專案是「訓練 AI」→ 說「請上傳 PACKAGE-ai-training.md 以繼續」。" >> "$OUTPUT"
+          echo "- 若我選擇的專案是「AI 對話系統」→ 說「本對話為體系層，已有完整上下文，請直接說明需求」。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "### 🔹 步驟 4：請求對應的專案包" >> "$OUTPUT"
+          echo "### 🔹 步驟 4：自主提取與方案確認" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "依我選擇的專案，說「請上傳 {對應的 package 檔名} 以繼續」。" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "### 🔹 步驟 5：自主提取與方案確認" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "收到專案包後，當我提出需求，自動分析、報告方案、等我確認後才輸出完整內容。" >> "$OUTPUT"
+          echo "收到專案包後（或體系層直接進入），當我提出需求時：" >> "$OUTPUT"
+          echo "1. 自動從共享包中找出相關檔案。" >> "$OUTPUT"
+          echo "2. 禁止詢問「要讀取哪些檔案」，直接進行分析。" >> "$OUTPUT"
+          echo "3. 先向我報告：「我分析了以下檔案：XXX。我建議的修改方案是：YYY。請問是否同意此方案？」" >> "$OUTPUT"
+          echo "4. 停下來，等待我回覆「確認」。" >> "$OUTPUT"
+          echo "5. 收到確認後，才輸出完整的修改方案與程式碼。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "### 🔹 新增專案流程" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "當我說「新增專案」，請一次列出 Q1~Q6（含人話說明），等我逐一回答。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "Q1：專案英文名稱（A. 自訂 / B. AI 自動生成）" >> "$OUTPUT"
-          echo "Q2：專案顯示名稱（A. 自訂 / B. AI 自動生成）" >> "$OUTPUT"
-          echo "Q3：專案領域（A. W / B. V / C. D / D. M / E. 其他）" >> "$OUTPUT"
-          echo "Q4：倉庫可見性（A. Public / B. Private）" >> "$OUTPUT"
-          echo "Q5：是否自動建立倉庫（A. 是 / B. 否）" >> "$OUTPUT"
-          echo "Q6：新倉庫初始內容（A. 只有 README / B. README + .gitignore / C. README + .gitignore + 目錄）" >> "$OUTPUT"
+          echo "Q1：專案英文名稱？（A. 自訂 / B. AI 自動生成）" >> "$OUTPUT"
+          echo "Q2：專案顯示名稱？（A. 自訂 / B. AI 自動生成）" >> "$OUTPUT"
+          echo "Q3：專案領域？（A. W / B. V / C. D / D. M / E. 其他）" >> "$OUTPUT"
+          echo "Q4：倉庫可見性？（A. Public / B. Private）" >> "$OUTPUT"
+          echo "Q5：是否自動建立倉庫？（A. 是 / B. 否）" >> "$OUTPUT"
+          echo "Q6：新倉庫初始內容？（A. 只有 README / B. README + .gitignore / C. README + .gitignore + 目錄）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
+          echo "每個選項下方附「> 人話解釋：」。" >> "$OUTPUT"
           echo "等我回答後，報告準備新增的專案，等我確認後吐出完整 PROJECT-LIST.md。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "---" >> "$OUTPUT"
@@ -174,7 +202,7 @@ jobs:
           echo "1. 禁止使用簡體中文回覆。" >> "$OUTPUT"
           echo "2. 禁止在未經我確認前，直接輸出任何檔案內容或修改方案。" >> "$OUTPUT"
           echo "3. 禁止跳過步驟 0，直接進入步驟 1。" >> "$OUTPUT"
-          echo "4. 禁止在步驟 3 之前，自行判斷或假設專案。" >> "$OUTPUT"
+          echo "4. 禁止在步驟 1 之前，自行假設專案。" >> "$OUTPUT"
           echo "5. 禁止一次輸出超過 2000 字的方案，請分段並等待我確認。" >> "$OUTPUT"
           echo "6. 禁止未標示「所屬專案」。" >> "$OUTPUT"
           echo "7. 禁止以 Token 為理由，交付不完整的檔案。" >> "$OUTPUT"
@@ -184,7 +212,6 @@ jobs:
           echo "## 📚 核心訓練規則" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
-          # 用穩健函數輸出每個檔案
           for f in \
             docs/common/C-00-startup.md \
             docs/common/C-01-profile.md \
@@ -312,7 +339,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791908100
+# V: 1791908800
 # B: B34-4
-# W: A20261016-001
+# W: ai-system-20261016-001
 # ═══ EOF ═══
