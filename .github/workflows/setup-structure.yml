@@ -1,0 +1,295 @@
+# ============================================
+# setup-structure.yml — 三倉庫架構版（含生成時間）
+# 位置：AI-training-files/.github/workflows/setup-structure.yml
+# ============================================
+
+name: Build PACKAGE-ALL and Deploy to Build Repo
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'docs/**'
+      - 'C-*.md'
+      - 'W-*.md'
+      - 'R-*.md'
+      - 'P-*.md'
+  repository_dispatch:
+    types: [v2-family-updated]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout AI-training-files
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout v2.Family (跨倉庫)
+        uses: actions/checkout@v4
+        with:
+          repository: tlee20860-dotcom/v2.Family
+          token: ${{ secrets.CROSS_REPO_PAT }}
+          path: external/v2.Family
+
+      - name: Checkout AI-training-build (生成倉庫)
+        uses: actions/checkout@v4
+        with:
+          repository: tlee20860-dotcom/AI-training-build
+          token: ${{ secrets.CROSS_REPO_PAT }}
+          path: build-repo
+
+      - name: Create directory structure
+        run: |
+          mkdir -p docs/common
+          mkdir -p docs/skills/W
+          mkdir -p docs/records
+          mkdir -p docs/projects/family-fin
+          mkdir -p docs/projects/ai-training
+
+      - name: Move files to correct directories
+        run: |
+          for f in C-*.md; do [ -f "$f" ] && git mv "$f" docs/common/ 2>/dev/null || true; done
+          for f in W-*.md; do [ -f "$f" ] && git mv "$f" docs/skills/W/ 2>/dev/null || true; done
+          for f in R-*.md; do [ -f "$f" ] && git mv "$f" docs/records/ 2>/dev/null || true; done
+          for f in P-*.md; do [ -f "$f" ] && git mv "$f" docs/projects/family-fin/ 2>/dev/null || true; done
+
+      - name: Build CODE-MAP-v2.Family.md
+        run: |
+          OUTPUT="build-repo/CODE-MAP-v2.Family.md"
+          echo "# v2.Family 程式碼地圖" > "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
+          echo "> 本檔由 GitHub Actions 自動生成。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "## 檔案清單" >> "$OUTPUT"
+          cd external/v2.Family
+          find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" -o -name "*.json" \) \
+            -not -path "./.git/*" \
+            -not -path "./node_modules/*" \
+            -not -path "./.github/*" \
+            | sort | while read -r file; do
+            clean_path="${file#./}"
+            echo "- $clean_path -> https://raw.githubusercontent.com/tlee20860-dotcom/v2.Family/main/$clean_path" >> "../../$OUTPUT"
+          done
+          cd ../..
+
+      - name: Build INDEX.md
+        run: |
+          OUTPUT="build-repo/INDEX.md"
+          cat > "$OUTPUT" <<'EOF'
+          # 專案索引（AI 專用倉庫地圖）
+
+          > ⚠️ 本檔由 GitHub Actions 自動生成。
+          > 生成時間：__GENERATED_AT__
+
+          ## 🚨 AI 啟動與自主提取指示（最高優先）
+
+          **【語言規則】你必須嚴格使用「繁體中文」回覆，禁止使用簡體中文。**
+
+          ---
+
+          ## 📋 專案清單
+
+          - 專案名稱：家庭 webapp（領域：W）
+          - 專案名稱：訓練 AI（領域：W）
+
+          ---
+
+          ## 🗺️ 倉庫檔案地圖（AI-training-files）
+
+          EOF
+
+          # 將 __GENERATED_AT__ 替換為實際時間
+          sed -i "s/__GENERATED_AT__/$(date -u +'%Y-%m-%d %H:%M:%S UTC')/" "$OUTPUT"
+
+          for f in docs/common/*.md; do
+            [ -f "$f" ] && echo "- $f -> https://raw.githubusercontent.com/tlee20860-dotcom/AI-training-files/main/$f" >> "$OUTPUT"
+          done
+          echo "" >> "$OUTPUT"
+          echo "### 📂 Web App 技能包" >> "$OUTPUT"
+          for f in docs/skills/W/*.md; do
+            [ -f "$f" ] && echo "- $f -> https://raw.githubusercontent.com/tlee20860-dotcom/AI-training-files/main/$f" >> "$OUTPUT"
+          done
+          echo "" >> "$OUTPUT"
+          echo "### 📂 機械記錄" >> "$OUTPUT"
+          for f in docs/records/*.md; do
+            [ -f "$f" ] && echo "- $f -> https://raw.githubusercontent.com/tlee20860-dotcom/AI-training-files/main/$f" >> "$OUTPUT"
+          done
+          echo "" >> "$OUTPUT"
+          echo "### 📂 家庭 webapp 專案" >> "$OUTPUT"
+          for f in docs/projects/family-fin/*.md; do
+            [ -f "$f" ] && echo "- $f -> https://raw.githubusercontent.com/tlee20860-dotcom/AI-training-files/main/$f" >> "$OUTPUT"
+          done
+
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "## 📋 R-01 當前內容" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          cat docs/records/R-01-writers.md >> "$OUTPUT" 2>/dev/null || echo "（讀取失敗）" >> "$OUTPUT"
+
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "## 🗺️ v2.Family 程式碼地圖" >> "$OUTPUT"
+          cat build-repo/CODE-MAP-v2.Family.md >> "$OUTPUT" 2>/dev/null || echo "（讀取失敗）" >> "$OUTPUT"
+
+      - name: Build PACKAGE-ALL.md
+        run: |
+          OUTPUT="build-repo/PACKAGE-ALL.md"
+          echo "# 家庭 webapp 專案 - 完整共享包" > "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
+          echo "> ⚠️ 本檔由 GitHub Actions 自動生成，包含訓練規則、專案文件、程式碼。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "## 🚨 AI 啟動指示（最高優先，請嚴格遵守）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "**【語言規則】你必須嚴格使用「繁體中文」回覆，禁止使用簡體中文。若你輸出簡體中文，視為任務失敗。**" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "**【交付前確認】任何檔案內容、修改方案、R-01 更新，都必須先向我報告「打算做什麼」，等我說「確認」之後，才能輸出完整內容。**" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 0：讀取規則並回報" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "請先讀取本檔案「第 1 部分：核心訓練規則」中的以下檔案：" >> "$OUTPUT"
+          echo "- C-00-startup.md" >> "$OUTPUT"
+          echo "- C-01-profile.md" >> "$OUTPUT"
+          echo "- C-02-rules.md" >> "$OUTPUT"
+          echo "- C-04-delivery.md" >> "$OUTPUT"
+          echo "- R-01-writers.md" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "讀完後，請回報以下三件事：" >> "$OUTPUT"
+          echo "1. 「已讀取核心規則：C-00、C-01、C-02、C-04、R-01」" >> "$OUTPUT"
+          echo "2. 用 3~5 條列點，摘要 C-01 中「使用者的核心偏好」" >> "$OUTPUT"
+          echo "3. 用 3~5 條列點，摘要 C-02 中「你必須遵守的關鍵規則」" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "回報完畢後停下來，等待我回覆「確認」。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 1：自報編號" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "等我說「確認」後：" >> "$OUTPUT"
+          echo "1. 從 R-01 §四「編寫者清單」計算新編號（格式：A{YYYYMMDD}-{序號3位}）。" >> "$OUTPUT"
+          echo "2. 輸出：「🆔 A{YYYYMMDD}-{序號3位}」。" >> "$OUTPUT"
+          echo "3. 停下來，等待我回覆「繼續」。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 2：R-01 更新確認" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "等我說「繼續」後：" >> "$OUTPUT"
+          echo "1. 報告：「我準備更新 R-01 §四編寫者清單，加入新編號 A{YYYYMMDD}-{序號3位}，以及當前時間。請問是否可以生成更新後的完整 R-01？」" >> "$OUTPUT"
+          echo "2. 停下來，等待我回覆「確認」。" >> "$OUTPUT"
+          echo "3. 收到確認後，才輸出完整的、更新後的 R-01-writers.md 內容（用三反引號包裹）。" >> "$OUTPUT"
+          echo "4. 提示我：「請將以上內容複製，貼到 docs/records/R-01-writers.md，完成後回覆『已更新』」。" >> "$OUTPUT"
+          echo "5. 停下來，等待我回覆「已更新」。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 3：列出專案清單" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "等我說「已更新」後，列出專案清單：" >> "$OUTPUT"
+          echo "1. 家庭 webapp" >> "$OUTPUT"
+          echo "2. 訓練 AI" >> "$OUTPUT"
+          echo "並詢問我要選擇哪個專案。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 4：自主提取與方案確認" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "我選擇專案並提出需求後：" >> "$OUTPUT"
+          echo "1. 自動從本檔案中找出與需求相關的程式碼與專案文件。" >> "$OUTPUT"
+          echo "2. 禁止詢問「要讀取哪些檔案」，直接進行分析。" >> "$OUTPUT"
+          echo "3. 先向我報告：「我分析了以下檔案：XXX。我建議的修改方案是：YYY。請問是否同意此方案？」" >> "$OUTPUT"
+          echo "4. 停下來，等待我回覆「確認」。" >> "$OUTPUT"
+          echo "5. 收到確認後，才輸出完整的修改方案與程式碼。" >> "$OUTPUT"
+          echo "6. 只有當所需資訊完全不在本檔案中時，才詢問我。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "## ⛔ 禁止事項（違反視為任務失敗）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "1. 禁止使用簡體中文回覆。" >> "$OUTPUT"
+          echo "2. 禁止要求我提供 STARTUP URL（本檔案已包含全部內容）。" >> "$OUTPUT"
+          echo "3. 禁止詢問「要讀取哪兩個檔案」，請自行從本檔案中提取。" >> "$OUTPUT"
+          echo "4. **禁止在未經我確認前，直接輸出任何檔案內容或修改方案。**" >> "$OUTPUT"
+          echo "5. 禁止跳過步驟 0，直接進入步驟 1。" >> "$OUTPUT"
+          echo "6. 禁止一次輸出超過 2000 字的方案，請分段並等待我確認。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+
+          # 第 1 部分：核心訓練規則
+          echo "# 📚 第 1 部分：核心訓練規則" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          for f in \
+            docs/common/C-00-startup.md \
+            docs/common/C-01-profile.md \
+            docs/common/C-02-rules.md \
+            docs/common/C-04-delivery.md \
+            docs/records/R-01-writers.md
+          do
+            if [ -f "$f" ]; then
+              echo "---" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              echo "## 📄 $f" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              cat "$f" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+            fi
+          done
+
+          # 第 2 部分：家庭 webapp 專案文件
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "# 📁 第 2 部分：家庭 webapp 專案文件" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          for f in docs/projects/family-fin/*.md; do
+            if [ -f "$f" ]; then
+              echo "---" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              echo "## 📄 $f" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              cat "$f" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+            fi
+          done
+
+          # 第 3 部分：v2.Family 程式碼
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "# 💻 第 3 部分：v2.Family 專案程式碼" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          cd external/v2.Family
+          find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" -o -name "*.json" \) \
+            -not -path "./.git/*" \
+            -not -path "./node_modules/*" \
+            -not -path "./.github/*" \
+            | sort | while read -r file; do
+            clean_path="${file#./}"
+            echo "---" >> "../../$OUTPUT"
+            echo "" >> "../../$OUTPUT"
+            echo "## 📄 $clean_path" >> "../../$OUTPUT"
+            echo "" >> "../../$OUTPUT"
+            echo '```' >> "../../$OUTPUT"
+            cat "$file" >> "../../$OUTPUT"
+            echo '```' >> "../../$OUTPUT"
+            echo "" >> "../../$OUTPUT"
+          done
+          cd ../..
+
+          echo "" >> "$OUTPUT"
+          echo "/* ═══ EOF ═══ */" >> "$OUTPUT"
+
+      - name: Deploy to AI-training-build repo
+        run: |
+          cd build-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "無變化，跳過"
+            exit 0
+          fi
+          git commit -m "chore: auto-build from AI-training-files [skip ci]"
+          git push
