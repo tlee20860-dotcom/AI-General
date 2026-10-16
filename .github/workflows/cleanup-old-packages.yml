@@ -1,0 +1,63 @@
+# ============================================
+# cleanup-old-packages.yml — 一次性清理舊共享包
+# 位置：AI-General/.github/workflows/cleanup-old-packages.yml
+# 用途：刪除 AI-packages 內舊版共享包（一次性）
+# 觸發：手動 workflow_dispatch
+# ============================================
+
+name: Cleanup Old Package Files
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout AI-packages
+        uses: actions/checkout@v4
+        with:
+          repository: tlee20860-dotcom/AI-packages
+          token: ${{ secrets.CROSS_REPO_PAT }}
+
+      - name: Delete old package files
+        run: |
+          FILES=(
+            "PACKAGE-CORE.md"
+            "PACKAGE-SKILLS-W.md"
+            "PACKAGE-ALL.md"
+            "PACKAGE-PACKAGE-ai-training.md.md"
+            "PACKAGE-PACKAGE-web-app-family.md.md"
+            "PACKAGE-（無，體系層不生成專案包）.md"
+            "CODE-MAP-v2.Family.md"
+            "INDEX.md"
+          )
+          for f in "${FILES[@]}"; do
+            if [ -f "$f" ]; then
+              git rm "$f"
+              echo "✅ 已刪除：$f"
+            else
+              echo "⏭️ 不存在，跳過：$f"
+            fi
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --cached --quiet; then
+            echo "無變化，跳過"
+            exit 0
+          fi
+          git commit -m "chore: cleanup old package files [skip ci]"
+          git push
+
+# ═══ EOF ═══
+# F: AI-General/.github/workflows/cleanup-old-packages.yml
+# V: 1791938400
+# B: B34-5
+# W: ai-system-20261016-003#139
+# ═══ EOF ═══
