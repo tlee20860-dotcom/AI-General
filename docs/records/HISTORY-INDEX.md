@@ -16,3 +16,7 @@
 | records/FILE-INDEX.md |  1792166226  | B34-5 |  1792166308  | B34-5 | 2026-10-16 16:04 |
 | external/ai-system/docs/common/C-01-profile.md |  1791910300  | B34-5 |  1791930000  | B34-5 | 2026-10-16 16:04 |
 | common/C-01-profile.md |  1791910300  | B34-5 |  1791930000  | B34-5 | 2026-10-16 16:04 |
+| external/ai-system/docs/records/FILE-INDEX.md |  1792166308  | B34-5 |  1792166678  | B34-5 | 2026-10-16 16:08 |
+| records/FILE-INDEX.md |  1792166308  | B34-5 |  1792166678  | B34-5 | 2026-10-16 16:08 |
+| external/ai-system/docs/common/C-00-startup.md |  1791916300  | B34-5 |  1791931200  | B34-5 | 2026-10-16 16:08 |
+| common/C-00-startup.md |  1791916300  | B34-5 |  1791931200  | B34-5 | 2026-10-16 16:08 |

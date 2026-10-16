@@ -2,14 +2,16 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成（掃描所有檔案 EOF），請勿手動編輯。
 
-最後更新：2026-10-16 16:04:38 UTC
+最後更新：2026-10-16 16:08:38 UTC
 
 ---
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
-| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792166308 | B34-5 | ai-system-20261016-003#auto |
-| AI-General | records/FILE-INDEX.md | 1792166308 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792166678 | B34-5 | ai-system-20261016-003#auto |
+| AI-General | records/FILE-INDEX.md | 1792166678 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/common/C-00-startup.md | 1791931200 | B34-5 | ai-system-20261016-003#129 |
+| AI-General | common/C-00-startup.md | 1791931200 | B34-5 | ai-system-20261016-003#129 |
 | ai-system | external/ai-system/docs/common/C-01-profile.md | 1791930000 | B34-5 | ai-system-20261016-003#127 |
 | AI-General | common/C-01-profile.md | 1791930000 | B34-5 | ai-system-20261016-003#127 |
 | ai-system | external/ai-system/docs/common/C-02-rules.md | 1791928000 | B34-5 | ai-system-20261016-003#123 |
@@ -24,8 +26,6 @@
 | AI-General | common/C-04-delivery.md | 1791921000 | B34-5 | ai-system-20261016-003#108 |
 | ai-system | external/ai-system/docs/records/PROJECT-LIST.md | 1791918000 | B34-5 | ai-system-20261016-003#096 |
 | AI-General | records/PROJECT-LIST.md | 1791918000 | B34-5 | ai-system-20261016-003#096 |
-| ai-system | external/ai-system/docs/common/C-00-startup.md | 1791916300 | B34-5 | ai-system-20261016-003#051 |
-| AI-General | common/C-00-startup.md | 1791916300 | B34-5 | ai-system-20261016-003#051 |
 | ai-system | external/ai-system/docs/records/R-01-writers.md | 1791916000 | B34-5 | ai-system-20261016-003#049 |
 | AI-General | records/R-01-writers.md | 1791916000 | B34-5 | ai-system-20261016-003#049 |
 | web-app-family | external/web-app-family/.github/workflows/notify.yml | 1791915000 | B34-5 | ai-system-20261016-003#041 |
@@ -81,7 +81,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/FILE-INDEX.md
-V: 1792166678
+V: 1792166918
 B: B34-5
 W: ai-system-20261016-003#auto
 ═══ */
