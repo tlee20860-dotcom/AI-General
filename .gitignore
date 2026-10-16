@@ -1,0 +1,7 @@
+# 忽略 Actions 臨時 checkout 目錄
+external/
+build-repo/
+
+# 忽略系統檔案
+.DS_Store
+*.log
