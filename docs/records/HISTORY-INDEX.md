@@ -12,3 +12,7 @@
 | records/FILE-INDEX.md |  1792165979  | B34-5 |  1792166226  | B34-5 | 2026-10-16 15:58 |
 | external/ai-system/docs/common/C-02-rules.md |  1791910300  | B34-5 |  1791928000  | B34-5 | 2026-10-16 15:58 |
 | common/C-02-rules.md |  1791910300  | B34-5 |  1791928000  | B34-5 | 2026-10-16 15:58 |
+| external/ai-system/docs/records/FILE-INDEX.md |  1792166226  | B34-5 |  1792166308  | B34-5 | 2026-10-16 16:04 |
+| records/FILE-INDEX.md |  1792166226  | B34-5 |  1792166308  | B34-5 | 2026-10-16 16:04 |
+| external/ai-system/docs/common/C-01-profile.md |  1791910300  | B34-5 |  1791930000  | B34-5 | 2026-10-16 16:04 |
+| common/C-01-profile.md |  1791910300  | B34-5 |  1791930000  | B34-5 | 2026-10-16 16:04 |
