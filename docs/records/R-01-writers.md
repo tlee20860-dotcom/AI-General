@@ -1,9 +1,9 @@
 # R-01 AI 編寫者名單 + 專案索引
 
 最後更新：ai-system-20261016-003
-Version: 1791913700
+Version: 1791916000
 Batch: B34-5
-Writer: ai-system-20261016-003#019
+Writer: ai-system-20261016-003#049
 用途：追蹤專案 / 對話 / 編寫者 / 檔案歸屬 / Repo
 
 ---
@@ -134,7 +134,7 @@ Writer: ai-system-20261016-003#019
 | C-02-rules.md | 1791910300 | ai-system-20261016-002 |
 | C-03-guide.md | 1791907700 | ai-system-20261016-001 |
 | C-04-delivery.md | 1791908500 | ai-system-20261016-001 |
-| C-05-learning.md | 待更新 | 舊版 |
+| C-05-learning.md | 1791914000 | ai-system-20261016-003 |
 | C-06-token-log.md | 待更新 | 舊版 |
 | C-07-summary.md | 待更新 | 舊版 |
 | C-09-rolling-mechanism.md | 待更新 | 舊版 |
@@ -156,16 +156,15 @@ Writer: ai-system-20261016-003#019
 
 | 檔案 | Version | Writer |
 |---|---|---|
-| R-01-writers.md | 1791913700 | ai-system-20261016-003 |
+| R-01-writers.md | 1791916000 | ai-system-20261016-003 |
 | PROJECT-LIST.md | 1791908200 | ai-system-20261016-001 |
-| REPOS.md | （Actions 生成） | — |
-| PROGRESS.md | 1791907800 | ai-system-20261016-001 |
+| PROGRESS.md | 1791914000 | ai-system-20261016-003 |
 
 ### AI-General/.github/workflows/
 
 | 檔案 | Version | Writer |
 |---|---|---|
-| setup-structure.yml | 1791913400 | ai-system-20261016-003 |
+| setup-structure.yml | 1791915700 | ai-system-20261016-003 |
 | setup-migration.yml | 1791906700 | ai-system-20261016-001 |
 | append_file.sh | 1791908100 | ai-system-20261016-001 |
 
@@ -188,8 +187,13 @@ Writer: ai-system-20261016-003#019
 | C-04-delivery.md | 1791907500 | ai-system-20261016-001 | 1791908500 | ai-system-20261016-001 | 2026-10-16 |
 | R-01-writers.md | 1791910500 | ai-system-20261016-002#010 | 1791912600 | ai-system-20261016-003#006 | 2026-10-16 |
 | R-01-writers.md | 1791912600 | ai-system-20261016-003#006 | 1791913700 | ai-system-20261016-003#019 | 2026-10-16 |
+| R-01-writers.md | 1791913700 | ai-system-20261016-003#019 | 1791916000 | ai-system-20261016-003#049 | 2026-10-16 |
 | C-00-startup.md | 1791903520 | A20261013-004#166 | 1791913200 | ai-system-20261016-003#012 | 2026-10-16 |
+| C-05-learning.md | 1791902800 | A20261013-004#136 | 1791914000 | ai-system-20261016-003#022 | 2026-10-16 |
 | setup-structure.yml | 1791908100 | ai-system-20261016-001 | 1791913400 | ai-system-20261016-003#016 | 2026-10-16 |
+| setup-structure.yml | 1791913400 | ai-system-20261016-003#016 | 1791915400 | ai-system-20261016-003#044 | 2026-10-16 |
+| setup-structure.yml | 1791915400 | ai-system-20261016-003#044 | 1791915700 | ai-system-20261016-003#048 | 2026-10-16 |
+| REPOS.md | （Actions 生成，從未入庫） | — | 已廢除 | ai-system-20261016-003#048 | 2026-10-16 |
 
 ---
 
@@ -252,7 +256,7 @@ Writer: ai-system-20261016-003#019
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/R-01-writers.md
-V: 1791913700
+V: 1791916000
 B: B34-5
-W: ai-system-20261016-003#019
+W: ai-system-20261016-003#049
 ═══ */
