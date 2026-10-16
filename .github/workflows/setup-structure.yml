@@ -1,7 +1,13 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v6）
+# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v7）
 # 位置：AI-General/.github/workflows/setup-structure.yml
-# 變更：新增 concurrency 鎖
+# 變更：
+#   - 修復 auto_create bug
+#   - 拆分 01-CORE-SYSTEM / 02-CORE-PROJECT
+#   - 包編號十位數類別制
+#   - C-05 分檔注入
+#   - 頂部加構建編號
+#   - 部署目標改為 AI-packages
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -17,7 +23,7 @@ on:
       - 'docs/records/FILE-INDEX.md'
       - 'docs/records/HISTORY-INDEX.md'
   repository_dispatch:
-    types: [web-app-family-updated, ai-training-updated]
+    types: [web-app-family-updated]
   workflow_dispatch:
 
 concurrency:
@@ -47,10 +53,9 @@ jobs:
             /^## 專案/ { block=1; next }
             block && /^name:/ { name=$2 }
             block && /^repo:/ { repo=$2 }
-            block && /^auto_create:/ { auto=$2 }
             block && /^---/ {
-              if (name && repo && auto != "false") print name "|external/" name "|" repo
-              name=""; repo=""; auto=""; block=0
+              if (name && repo) print name "|external/" name "|" repo
+              name=""; repo=""; block=0
             }
           ' docs/records/PROJECT-LIST.md > /tmp/repos.txt
           while IFS='|' read -r name path repo; do
@@ -60,57 +65,49 @@ jobs:
             fi
           done < /tmp/repos.txt
 
-      - name: Checkout AI-training-build
+      - name: Checkout AI-packages
         uses: actions/checkout@v4
         with:
-          repository: tlee20860-dotcom/AI-training-build
+          repository: tlee20860-dotcom/AI-packages
           token: ${{ secrets.CROSS_REPO_PAT }}
           path: build-repo
 
-      # 步驟 2：生成 PACKAGE-CORE.md
-      - name: Build PACKAGE-CORE.md
+      # 步驟 2：生成 01-CORE-SYSTEM.md
+      - name: Build 01-CORE-SYSTEM.md
         run: |
-          OUTPUT="build-repo/PACKAGE-CORE.md"
-          echo "# AI 協作 - 通用規則包" > "$OUTPUT"
+          OUTPUT="build-repo/01-CORE-SYSTEM.md"
+          RUN_NO="${{ github.run_number }}"
+          GEN_TIME="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          BUILD_NO=$(printf '%04d' $RUN_NO)
+          echo "# AI 協作 - 體系層核心包" > "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
+          echo "> 生成時間：$GEN_TIME" >> "$OUTPUT"
+          echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
-          if [ -f "docs/common/C-11-terms.md" ]; then
-            echo "## 📖 共同語言表（C-11）" >> "$OUTPUT"
-            echo "" >> "$OUTPUT"
-            echo "**【語言規則】你必須嚴格使用「繁體中文」回覆，禁止使用簡體中文。若你輸出簡體中文，視為任務失敗。**" >> "$OUTPUT"
-            echo "" >> "$OUTPUT"
-            echo "**【交付前確認】任何檔案內容、修改方案、R-01 更新，都必須先向我報告「打算做什麼」，等我說「確認」之後，才能輸出完整內容。**" >> "$OUTPUT"
-            echo "" >> "$OUTPUT"
-            echo "**【所屬專案】每次回覆請在開頭標示「所屬專案：{專案顯示名稱}（第 {N} 個對話）」。**" >> "$OUTPUT"
-            echo "" >> "$OUTPUT"
-            bash .github/workflows/append_file.sh "docs/common/C-11-terms.md" "$OUTPUT"
-            echo "---" >> "$OUTPUT"
-            echo "" >> "$OUTPUT"
-          fi
+          echo "**【語言規則】你必須嚴格使用「繁體中文」回覆，禁止使用簡體中文。若你輸出簡體中文，視為任務失敗。**" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "**【交付前確認】任何檔案內容、修改方案、R-01 更新，都必須先向我報告「打算做什麼」，等我說「確認」之後，才能輸出完整內容。**" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "**【所屬專案】每次回覆請在開頭標示「所屬專案：{專案顯示名稱}（第 {N} 個對話）」。**" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
 
-          if [ -f "docs/records/PROGRESS.md" ]; then
-            echo "## 📊 當前任務進度" >> "$OUTPUT"
-            echo "" >> "$OUTPUT"
-            bash .github/workflows/append_file.sh "docs/records/PROGRESS.md" "$OUTPUT"
-            echo "---" >> "$OUTPUT"
-            echo "" >> "$OUTPUT"
-          fi
-
-          echo "## 🚨 AI 啟動指示（最高優先）" >> "$OUTPUT"
+          echo "## 🚨 AI 啟動指示（體系層）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "### 🔹 步驟 0：讀取規則並回報" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "請先讀取本檔案中的以下檔案：C-00、C-01、C-02、C-04、R-01、PROJECT-LIST。" >> "$OUTPUT"
+          echo "請先讀取本包內的以下檔案：C-00、C-01、C-02、C-04、R-01、PROJECT-LIST。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "讀完後，請回報以下四件事：" >> "$OUTPUT"
-          echo "1. 「已讀取核心規則」" >> "$OUTPUT"
-          echo "2. 用 3~5 條列點，摘要 C-01 中「使用者的核心偏好」" >> "$OUTPUT"
-          echo "3. 用 3~5 條列點，摘要 C-02 中「你必須遵守的關鍵規則」" >> "$OUTPUT"
-          echo "4. 報告「當前任務進度」摘要（從上方的「當前任務進度」區塊讀取）" >> "$OUTPUT"
+          echo "讀完後，請回報以下五件事：" >> "$OUTPUT"
+          echo "1. 「已讀取體系層核心包」" >> "$OUTPUT"
+          echo "2. 回報本包「構建編號」與「生成時間」，並問我是否為最新。" >> "$OUTPUT"
+          echo "3. 用 3~5 條列點，摘要 C-01 中「使用者的核心偏好」" >> "$OUTPUT"
+          echo "4. 用 3~5 條列點，摘要 C-02 中「你必須遵守的關鍵規則」" >> "$OUTPUT"
+          echo "5. 報告「當前任務進度」摘要" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "回報完畢後停下來，等待我回覆「確認」。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
@@ -118,12 +115,146 @@ jobs:
           echo "" >> "$OUTPUT"
           echo "等我說「確認」後，從 PROJECT-LIST.md 列出所有專案，並問我：「本次對話屬於哪個專案？」" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "⚠️ 防呆（C-00 §3.4）：在確認本次對話所屬專案之前，禁止生成任何對話編號（含預設、繼承、猜測）。收到回答後，必須重新從 PROJECT-LIST.md 讀取該專案 code，並重新計算編號，禁止沿用任何先前自報的編號。" >> "$OUTPUT"
+          echo "⚠️ 防呆（C-00 §3.4）：在確認本次對話所屬專案之前，禁止生成任何對話編號。收到回答後，必須重新從 PROJECT-LIST.md 讀取該專案 code，並重新計算編號，禁止沿用任何先前自報的編號。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "等我回答後：" >> "$OUTPUT"
           echo "1. 從 PROJECT-LIST.md 讀取該專案的 code。" >> "$OUTPUT"
           echo "2. 從 R-01 §四 找出該專案最新序號，+1 生成新編號。" >> "$OUTPUT"
-          echo "3. 編號格式：{code}-{YYYYMMDD}-{專案內序號3位}（如 webapp-20261016-001）。" >> "$OUTPUT"
+          echo "3. 編號格式：{code}-{YYYYMMDD}-{專案內序號3位}。" >> "$OUTPUT"
+          echo "4. 輸出：「🆔 {對話編號}」。" >> "$OUTPUT"
+          echo "5. 停下來，等待我回覆「繼續」。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 2：R-01 更新確認" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "等我說「繼續」後：" >> "$OUTPUT"
+          echo "1. 報告：「我準備更新 R-01 §四，加入新編號 {對話編號}、所屬專案、當前時間。請問是否可以生成更新後的完整 R-01？」" >> "$OUTPUT"
+          echo "2. 停下來，等待我回覆「確認」。" >> "$OUTPUT"
+          echo "3. 收到確認後，才輸出完整的、更新後的 R-01-writers.md 內容。" >> "$OUTPUT"
+          echo "4. 提示我：「請將以上內容複製，貼到 docs/records/R-01-writers.md，完成後回覆『已更新』」。" >> "$OUTPUT"
+          echo "5. 停下來，等待我回覆「已更新」。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 3：進入需求討論" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "（體系層對話，無需上傳專案包，直接說明需求即可）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 4：先收集後交付（核心規則）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "當我提出需求時：" >> "$OUTPUT"
+          echo "1. 自動從本包中找出相關檔案，禁止詢問「要讀取哪些檔案」。" >> "$OUTPUT"
+          echo "2. 先向我報告：「我分析了以下檔案：XXX。我建議的修改方案是：YYY。請問是否同意此方案？」" >> "$OUTPUT"
+          echo "3. 收到「確認」後，**只記錄修改點到「檔案狀態總表」，不立即交付**。" >> "$OUTPUT"
+          echo "4. 持續討論，直到我說「開始交付」，才整合所有修改點，列完整清單。" >> "$OUTPUT"
+          echo "5. 等我說「確認清單」，才逐批交付。每個檔案只交付一次（見 C-02 §19）。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "## ⛔ 禁止事項（違反視為任務失敗）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "1. 禁止使用簡體中文回覆。" >> "$OUTPUT"
+          echo "2. 禁止在未經我確認前，直接輸出任何檔案內容或修改方案。" >> "$OUTPUT"
+          echo "3. 禁止跳過步驟 0，直接進入步驟 1。" >> "$OUTPUT"
+          echo "4. 禁止在步驟 1 之前，自行假設專案。" >> "$OUTPUT"
+          echo "5. 禁止一次輸出超過 2000 字的方案，請分段並等待我確認。" >> "$OUTPUT"
+          echo "6. 禁止未標示「所屬專案」。" >> "$OUTPUT"
+          echo "7. 禁止以 Token 為理由，交付不完整的檔案。" >> "$OUTPUT"
+          echo "8. 禁止在未說「開始交付」前，提前交付任何檔案。" >> "$OUTPUT"
+          echo "9. 禁止同一個檔案重複交付。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "## 📚 核心訓練規則" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+
+          for f in \
+            docs/common/C-00-startup.md \
+            docs/common/C-01-profile.md \
+            docs/common/C-02-rules.md \
+            docs/common/C-04-delivery.md \
+            docs/common/C-07-summary.md \
+            docs/common/C-09-rolling-mechanism.md \
+            docs/common/C-10-handoff-mechanism.md \
+            docs/records/R-01-writers.md
+          do
+            if [ -f "$f" ]; then
+              bash .github/workflows/append_file.sh "$f" "$OUTPUT"
+            fi
+          done
+
+          if [ -f "docs/common/C-05-learning/general.md" ]; then
+            bash .github/workflows/append_file.sh "docs/common/C-05-learning/general.md" "$OUTPUT"
+          fi
+          if [ -f "docs/common/C-05-learning/system.md" ]; then
+            bash .github/workflows/append_file.sh "docs/common/C-05-learning/system.md" "$OUTPUT"
+          fi
+
+          if [ -f "docs/records/SYSTEM-HANDOFF.md" ]; then
+            echo "---" >> "$OUTPUT"
+            echo "" >> "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/SYSTEM-HANDOFF.md" "$OUTPUT"
+          fi
+          if [ -f "docs/records/SYSTEM-CONCLUSION.md" ]; then
+            echo "---" >> "$OUTPUT"
+            echo "" >> "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/SYSTEM-CONCLUSION.md" "$OUTPUT"
+          fi
+
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "## 📋 專案清單（PROJECT-LIST.md）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          if [ -f "docs/records/PROJECT-LIST.md" ]; then
+            bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT"
+          fi
+
+      # 步驟 3：生成 02-CORE-PROJECT.md
+      - name: Build 02-CORE-PROJECT.md
+        run: |
+          OUTPUT="build-repo/02-CORE-PROJECT.md"
+          RUN_NO="${{ github.run_number }}"
+          GEN_TIME="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          BUILD_NO=$(printf '%04d' $RUN_NO)
+          echo "# AI 協作 - 專案層核心包" > "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "> 生成時間：$GEN_TIME" >> "$OUTPUT"
+          echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"
+          echo "> 使用方式：搭配專案包一起上傳。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+
+          echo "**【語言規則】你必須嚴格使用「繁體中文」回覆，禁止使用簡體中文。若你輸出簡體中文，視為任務失敗。**" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "**【交付前確認】任何檔案內容、修改方案，都必須先向我報告「打算做什麼」，等我說「確認」之後，才能輸出完整內容。**" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "**【所屬專案】每次回覆請在開頭標示「所屬專案：{專案顯示名稱}（第 {N} 個對話）」。**" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+
+          echo "## 🚨 AI 啟動指示（專案層）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 0：讀取規則並回報" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "請先讀取本包內的以下檔案：C-00、C-01、C-04、R-01、PROJECT-LIST。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "讀完後，請回報以下四件事：" >> "$OUTPUT"
+          echo "1. 「已讀取專案層核心包」" >> "$OUTPUT"
+          echo "2. 回報本包「構建編號」與「生成時間」，並問我是否為最新。" >> "$OUTPUT"
+          echo "3. 用 3~5 條列點，摘要 C-01 中「使用者的核心偏好」" >> "$OUTPUT"
+          echo "4. 提示我上傳對應的專案包（如 90-web-app-family.md）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "回報完畢後停下來，等待我回覆「確認」。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 🔹 步驟 1：詢問本次對話所屬專案" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "等我說「確認」後，從 PROJECT-LIST.md 列出所有專案，並問我：「本次對話屬於哪個專案？」" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "⚠️ 防呆（C-00 §3.4）：在確認本次對話所屬專案之前，禁止生成任何對話編號。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "等我回答後：" >> "$OUTPUT"
+          echo "1. 從 PROJECT-LIST.md 讀取該專案的 code。" >> "$OUTPUT"
+          echo "2. 從 R-01 §四 找出該專案最新序號，+1 生成新編號。" >> "$OUTPUT"
+          echo "3. 編號格式：{code}-{YYYYMMDD}-{專案內序號3位}。" >> "$OUTPUT"
           echo "4. 輸出：「🆔 {對話編號}」。" >> "$OUTPUT"
           echo "5. 停下來，等待我回覆「繼續」。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
@@ -138,33 +269,16 @@ jobs:
           echo "" >> "$OUTPUT"
           echo "### 🔹 步驟 3：請求對應的專案包" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "等我說「已更新」後：" >> "$OUTPUT"
-          echo "- 若我選擇的專案是「家庭 webapp」→ 說「請上傳 PACKAGE-web-app-family.md 以繼續」。" >> "$OUTPUT"
-          echo "- 若我選擇的專案是「訓練 AI」→ 說「請上傳 PACKAGE-ai-training.md 以繼續」。" >> "$OUTPUT"
-          echo "- 若我選擇的專案是「AI 對話系統」→ 說「本對話為體系層，已有完整上下文，請直接說明需求」。" >> "$OUTPUT"
+          echo "等我說「已更新」後，若尚未上傳專案包，說「請上傳對應編號的專案包（如 90-web-app-family.md）以繼續」。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "### 🔹 步驟 4：自主提取與方案確認" >> "$OUTPUT"
+          echo "### 🔹 步驟 4：先收集後交付（核心規則）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "收到專案包後（或體系層直接進入），當我提出需求時：" >> "$OUTPUT"
-          echo "1. 自動從共享包中找出相關檔案。" >> "$OUTPUT"
-          echo "2. 禁止詢問「要讀取哪些檔案」，直接進行分析。" >> "$OUTPUT"
-          echo "3. 先向我報告：「我分析了以下檔案：XXX。我建議的修改方案是：YYY。請問是否同意此方案？」" >> "$OUTPUT"
-          echo "4. 停下來，等待我回覆「確認」。" >> "$OUTPUT"
-          echo "5. 收到確認後，才輸出完整的修改方案與程式碼。" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "### 🔹 新增專案流程" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "當我說「新增專案」，請一次列出 Q1~Q6（含人話說明），等我逐一回答。" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "Q1：專案英文名稱？（A. 自訂 / B. AI 自動生成）" >> "$OUTPUT"
-          echo "Q2：專案顯示名稱？（A. 自訂 / B. AI 自動生成）" >> "$OUTPUT"
-          echo "Q3：專案領域？（A. W / B. V / C. D / D. M / E. 其他）" >> "$OUTPUT"
-          echo "Q4：倉庫可見性？（A. Public / B. Private）" >> "$OUTPUT"
-          echo "Q5：是否自動建立倉庫？（A. 是 / B. 否）" >> "$OUTPUT"
-          echo "Q6：新倉庫初始內容？（A. 只有 README / B. README + .gitignore / C. README + .gitignore + 目錄）" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "每個選項下方附「> 人話解釋：」。" >> "$OUTPUT"
-          echo "等我回答後，報告準備新增的專案，等我確認後吐出完整 PROJECT-LIST.md。" >> "$OUTPUT"
+          echo "收到專案包後，當我提出需求時：" >> "$OUTPUT"
+          echo "1. 自動從共享包中找出相關檔案，禁止詢問「要讀取哪些檔案」。" >> "$OUTPUT"
+          echo "2. 先向我報告：「我分析了以下檔案：XXX。我建議的修改方案是：YYY。請問是否同意此方案？」" >> "$OUTPUT"
+          echo "3. 收到「確認」後，**只記錄修改點到「檔案狀態總表」，不立即交付**。" >> "$OUTPUT"
+          echo "4. 持續討論，直到我說「開始交付」，才整合所有修改點，列完整清單。" >> "$OUTPUT"
+          echo "5. 等我說「確認清單」，才逐批交付。每個檔案只交付一次（見 C-02 §19）。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
@@ -177,6 +291,8 @@ jobs:
           echo "5. 禁止一次輸出超過 2000 字的方案，請分段並等待我確認。" >> "$OUTPUT"
           echo "6. 禁止未標示「所屬專案」。" >> "$OUTPUT"
           echo "7. 禁止以 Token 為理由，交付不完整的檔案。" >> "$OUTPUT"
+          echo "8. 禁止在未說「開始交付」前，提前交付任何檔案。" >> "$OUTPUT"
+          echo "9. 禁止同一個檔案重複交付。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
@@ -186,19 +302,20 @@ jobs:
           for f in \
             docs/common/C-00-startup.md \
             docs/common/C-01-profile.md \
-            docs/common/C-02-rules.md \
             docs/common/C-04-delivery.md \
-            docs/common/C-05-learning.md \
-            docs/common/C-06-token-log.md \
-            docs/common/C-07-summary.md \
-            docs/common/C-09-rolling-mechanism.md \
-            docs/common/C-10-handoff-mechanism.md \
             docs/records/R-01-writers.md
           do
             if [ -f "$f" ]; then
               bash .github/workflows/append_file.sh "$f" "$OUTPUT"
             fi
           done
+
+          if [ -f "docs/common/C-05-learning/general.md" ]; then
+            bash .github/workflows/append_file.sh "docs/common/C-05-learning/general.md" "$OUTPUT"
+          fi
+          if [ -f "docs/common/C-05-learning/w.md" ]; then
+            bash .github/workflows/append_file.sh "docs/common/C-05-learning/w.md" "$OUTPUT"
+          fi
 
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
@@ -208,13 +325,16 @@ jobs:
             bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT"
           fi
 
-      # 步驟 3：生成 PACKAGE-SKILLS-W.md
-      - name: Build PACKAGE-SKILLS-W.md
+      # 步驟 4：生成 10-SKILLS-W.md
+      - name: Build 10-SKILLS-W.md
         run: |
-          OUTPUT="build-repo/PACKAGE-SKILLS-W.md"
+          OUTPUT="build-repo/10-SKILLS-W.md"
+          RUN_NO="${{ github.run_number }}"
+          BUILD_NO=$(printf '%04d' $RUN_NO)
           echo "# Web App 技能包（W-*）" > "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
+          echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           for f in docs/skills/W/*.md; do
             if [ -f "$f" ]; then
@@ -222,7 +342,7 @@ jobs:
             fi
           done
 
-      # 步驟 4：動態生成所有專案包
+      # 步驟 5：動態生成所有專案包
       - name: Build all project packages dynamically
         run: |
           if [ ! -f "docs/records/PROJECT-LIST.md" ]; then
@@ -233,25 +353,30 @@ jobs:
           awk '
             /^## 專案/ { block=1; next }
             block && /^name:/ { name=$2 }
+            block && /^package_no:/ { pkgno=$2 }
             block && /^package:/ { pkg=$2 }
             block && /^---/ {
-              if (name && pkg && pkg != "（無，體系層不生成專案包）") print name "|external/" name "|" pkg
-              name=""; pkg=""; block=0
+              if (name && pkgno && pkg && pkg != "（無，體系層不生成專案包）") print name "|external/" name "|" pkgno "|" pkg
+              name=""; pkgno=""; pkg=""; block=0
             }
           ' docs/records/PROJECT-LIST.md > /tmp/projects.txt
 
-          while IFS='|' read -r name path pkg; do
+          RUN_NO="${{ github.run_number }}"
+          BUILD_NO=$(printf '%04d' $RUN_NO)
+          while IFS='|' read -r name path pkgno pkg; do
             [ -z "$name" ] && continue
-            OUTPUT="build-repo/PACKAGE-${pkg}.md"
+            SHORT="${pkg#PACKAGE-}"
+            OUTPUT="build-repo/${pkgno}-${SHORT}"
 
             echo "# 專案包：${name}" > "$OUTPUT"
             echo "" >> "$OUTPUT"
             echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
+            echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
             echo "## 📌 使用方式" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
             echo "本檔案為「${name}」專案的完整上下文包。" >> "$OUTPUT"
-            echo "AI 已讀取通用規則包（PACKAGE-CORE.md），本包包含專案文件與程式碼。" >> "$OUTPUT"
+            echo "AI 已讀取專案層核心包（02-CORE-PROJECT.md），本包包含專案文件與程式碼。" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
 
             proj_docs_dir="$path/docs/projects/${name}"
@@ -280,7 +405,6 @@ jobs:
                 -not -path "./docs/*" \
                 | sort > /tmp/code_files.txt
               while read -r file; do
-                clean_path="${file#./}"
                 bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT"
               done < /tmp/code_files.txt
               cd ../..
@@ -290,7 +414,7 @@ jobs:
             echo "/* ═══ EOF ═══ */" >> "$OUTPUT"
           done < /tmp/projects.txt
 
-      # 步驟 4.5：掃描 EOF，生成 FILE-INDEX.md
+      # 步驟 6：掃描 EOF，生成 FILE-INDEX.md
       - name: Scan EOF and build FILE-INDEX.md
         run: |
           OUTPUT="docs/records/FILE-INDEX.md"
@@ -305,10 +429,8 @@ jobs:
               -not -path "*/.git/*" \
               -not -path "*/node_modules/*" \
               -not -path "*/build-repo/*" \
-              -not -path "*/external/*/external/*" \
               | while read -r f; do
                 tail -n 15 "$f" | sed 's/^[[:space:]]*\(#[/*!-]*\|<!--\)[[:space:]]*//;s/[[:space:]]*\*\/-->*[[:space:]]*$//' > /tmp/eof-tail.txt
-                F=$(grep -oE '^F: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^F: *//')
                 V=$(grep -oE '^V: *[0-9]+' /tmp/eof-tail.txt | head -1 | sed 's/^V: *//')
                 B=$(grep -oE '^B: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^B: *//')
                 W=$(grep -oE '^W: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^W: *//')
@@ -321,16 +443,6 @@ jobs:
 
           scan_files "AI-General" "docs"
           scan_files "AI-General" ".github"
-          find . -maxdepth 1 -name "*.md" -not -name "FILE-INDEX.md" -not -name "HISTORY-INDEX.md" -not -name "README.md" | while read -r f; do
-            tail -n 15 "$f" | sed 's/^[[:space:]]*\(#[/*!-]*\|<!--\)[[:space:]]*//;s/[[:space:]]*\*\/-->*[[:space:]]*$//' > /tmp/eof-tail.txt
-            F=$(grep -oE '^F: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^F: *//')
-            V=$(grep -oE '^V: *[0-9]+' /tmp/eof-tail.txt | head -1 | sed 's/^V: *//')
-            B=$(grep -oE '^B: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^B: *//')
-            W=$(grep -oE '^W: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^W: *//')
-            [ -z "$V" ] && continue
-            echo "AI-General|$f|$V|$B|$W" >> "$TMP_TABLE"
-          done
-
           if [ -d "external" ]; then
             for repo_dir in external/*/; do
               [ -d "$repo_dir" ] || continue
@@ -363,9 +475,7 @@ jobs:
             echo "═══ */"
           } > "$OUTPUT"
 
-          echo "FILE-INDEX 生成完成，行數：$(wc -l < $OUTPUT)"
-
-      # 步驟 4.6：比對舊 FILE-INDEX，append 差異到 HISTORY-INDEX
+      # 步驟 7：比對舊 FILE-INDEX，append HISTORY-INDEX
       - name: Update HISTORY-INDEX.md
         run: |
           NEW="docs/records/FILE-INDEX.md"
@@ -375,12 +485,11 @@ jobs:
           git show HEAD:"$NEW" > "$OLD" 2>/dev/null || touch "$OLD"
 
           if [ ! -s "$OLD" ]; then
-            echo "首次生成，無歷史可比對"
             if [ ! -f "$HISTORY" ]; then
               {
                 echo "# HISTORY-INDEX（歷史歸屬）"
                 echo ""
-                echo "> ⚠️ 本檔由 GitHub Actions 自動生成（比對 FILE-INDEX 差異），請勿手動編輯。"
+                echo "> ⚠️ 本檔由 GitHub Actions 自動生成，請勿手動編輯。"
                 echo ""
                 echo "---"
                 echo ""
@@ -414,35 +523,31 @@ jobs:
             fi
           done < /tmp/new-rows.txt
 
-          echo "HISTORY-INDEX 更新完成"
-
-      # 步驟 4.7：push FILE-INDEX / HISTORY-INDEX 回 AI-General
+      # 步驟 8：push FILE-INDEX / HISTORY-INDEX 回 AI-General
       - name: Push index files to AI-General
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/records/FILE-INDEX.md docs/records/HISTORY-INDEX.md
           if git diff --cached --quiet; then
-            echo "索引無變化，跳過"
             exit 0
           fi
           git commit -m "chore: auto-update index files [skip ci]"
           git push || echo "push 失敗（可能為權限或無變化）"
 
-      # 步驟 5：複製 PROJECT-LIST 到 build-repo
+      # 步驟 9：複製 PROJECT-LIST 到 build-repo
       - name: Copy PROJECT-LIST to build-repo
         run: |
           [ -f "docs/records/PROJECT-LIST.md" ] && cp "docs/records/PROJECT-LIST.md" "build-repo/PROJECT-LIST.md"
 
-      # 步驟 6：部署到 AI-training-build
-      - name: Deploy to AI-training-build
+      # 步驟 10：部署到 AI-packages
+      - name: Deploy to AI-packages
         run: |
           cd build-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "無變化，跳過"
             exit 0
           fi
           git commit -m "chore: auto-build packages [skip ci]"
@@ -450,7 +555,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791917100
+# V: 1791924000
 # B: B34-5
-# W: ai-system-20261016-003#056
+# W: ai-system-20261016-003#113
 # ═══ EOF ═══
