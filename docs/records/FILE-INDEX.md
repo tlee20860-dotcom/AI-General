@@ -2,16 +2,16 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成（掃描所有檔案 EOF），請勿手動編輯。
 
-最後更新：2026-10-16 16:23:54 UTC
+最後更新：2026-10-16 16:28:07 UTC
 
 ---
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
-| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792167498 | B34-5 | ai-system-20261016-003#auto |
-| AI-General | records/FILE-INDEX.md | 1792167498 | B34-5 | ai-system-20261016-003#auto |
-| ai-system | external/ai-system/.github/workflows/cleanup-old-packages.yml | 1791938400 | B34-5 | ai-system-20261016-003#139 |
-| AI-General | .github/workflows/cleanup-old-packages.yml | 1791938400 | B34-5 | ai-system-20261016-003#139 |
+| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792167834 | B34-5 | ai-system-20261016-003#auto |
+| AI-General | records/FILE-INDEX.md | 1792167834 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/.github/workflows/cleanup-files.yml | 1791938400 | B34-5 | ai-system-20261016-003#139 |
+| AI-General | .github/workflows/cleanup-files.yml | 1791938400 | B34-5 | ai-system-20261016-003#139 |
 | web-app-family | external/web-app-family/.github/workflows/notify.yml | 1791936000 | B34-5 | ai-system-20261016-003#135 |
 | ai-system | external/ai-system/docs/records/R-01-writers.md | 1791934800 | B34-5 | ai-system-20261016-003#134 |
 | AI-General | records/R-01-writers.md | 1791934800 | B34-5 | ai-system-20261016-003#134 |
@@ -85,7 +85,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/FILE-INDEX.md
-V: 1792167834
+V: 1792168087
 B: B34-5
 W: ai-system-20261016-003#auto
 ═══ */
