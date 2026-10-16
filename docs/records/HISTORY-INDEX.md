@@ -65,3 +65,7 @@
 | records/FILE-INDEX.md |  1792172283  | B34-5 |  1792172346  | B34-5 | 2026-10-16 17:41 |
 | external/ai-system/docs/common/C-03-guide.md |  1791907700  | B34-4 |  1791946200  | B34-5 | 2026-10-16 17:41 |
 | common/C-03-guide.md |  1791907700  | B34-4 |  1791946200  | B34-5 | 2026-10-16 17:41 |
+| external/ai-system/docs/records/FILE-INDEX.md |  1792172346  | B34-5 |  1792172508  | B34-5 | 2026-10-16 23:44 |
+| records/FILE-INDEX.md |  1792172346  | B34-5 |  1792172508  | B34-5 | 2026-10-16 23:44 |
+| external/ai-system/.github/workflows/setup-structure.yml |  1791925800  | B34-5 |  1791948000  | B34-5 | 2026-10-16 23:44 |
+| .github/workflows/setup-structure.yml |  1791925800  | B34-5 |  1791948000  | B34-5 | 2026-10-16 23:44 |

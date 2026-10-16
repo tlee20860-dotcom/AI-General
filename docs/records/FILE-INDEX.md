@@ -2,14 +2,16 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成（掃描所有檔案 EOF），請勿手動編輯。
 
-最後更新：2026-10-16 17:41:48 UTC
+最後更新：2026-10-16 23:44:29 UTC
 
 ---
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
-| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792172346 | B34-5 | ai-system-20261016-003#auto |
-| AI-General | records/FILE-INDEX.md | 1792172346 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792172508 | B34-5 | ai-system-20261016-003#auto |
+| AI-General | records/FILE-INDEX.md | 1792172508 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/.github/workflows/setup-structure.yml | 1791948000 | B34-5 | ai-system-20261016-003#169 |
+| AI-General | .github/workflows/setup-structure.yml | 1791948000 | B34-5 | ai-system-20261016-003#169 |
 | ai-system | external/ai-system/docs/common/C-03-guide.md | 1791946200 | B34-5 | ai-system-20261016-003#159 |
 | AI-General | common/C-03-guide.md | 1791946200 | B34-5 | ai-system-20261016-003#159 |
 | ai-system | external/ai-system/docs/common/C-02-rules.md | 1791944400 | B34-5 | ai-system-20261016-003#155 |
@@ -39,8 +41,6 @@
 | AI-General | common/C-01-profile.md | 1791930000 | B34-5 | ai-system-20261016-003#127 |
 | ai-system | external/ai-system/docs/common/C-05-learning/general.md | 1791927000 | B34-5 | ai-system-20261016-003#121 |
 | AI-General | common/C-05-learning/general.md | 1791927000 | B34-5 | ai-system-20261016-003#121 |
-| ai-system | external/ai-system/.github/workflows/setup-structure.yml | 1791925800 | B34-5 | ai-system-20261016-003#117 |
-| AI-General | .github/workflows/setup-structure.yml | 1791925800 | B34-5 | ai-system-20261016-003#117 |
 | ai-system | external/ai-system/docs/common/C-05-learning/system.md | 1791922200 | B34-5 | ai-system-20261016-003#111 |
 | AI-General | common/C-05-learning/system.md | 1791922200 | B34-5 | ai-system-20261016-003#111 |
 | ai-system | external/ai-system/docs/common/C-04-delivery.md | 1791921000 | B34-5 | ai-system-20261016-003#108 |
@@ -85,7 +85,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/FILE-INDEX.md
-V: 1792172508
+V: 1792194269
 B: B34-5
 W: ai-system-20261016-003#auto
 ═══ */
