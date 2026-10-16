@@ -148,11 +148,9 @@ jobs:
           fi
           echo "═══════════════════════════════════════"
 
----
-
-/* ═══ EOF ═══
-F: AI-General/.github/workflows/setup-migration.yml
-V: 1791906560
-B: B34-4
-W: A20261016-001
-═══ */
+# ═══ EOF ═══
+# F: AI-General/.github/workflows/setup-migration.yml
+# V: 1791906700
+# B: B34-4
+# W: A20261016-001
+# ═══ EOF ═══
