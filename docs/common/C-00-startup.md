@@ -12,9 +12,9 @@
 
 # C-00 啟動卡（AI 首次必讀）
 最後更新：B34-5
-Version: 1791913200
+Version: 1791916300
 Batch: B34-5
-Writer: ai-system-20261016-003#012
+Writer: ai-system-20261016-003#051
 用途：你只需上傳此檔即可啟動新對話
 
 ---
@@ -201,7 +201,7 @@ Writer: ai-system-20261016-003#012
 
 | # | 記住 |
 |---|---|
-| 1 | 開新對話 → 貼啟動 URL（見 §十） |
+| 1 | 開新對話 → 上傳 PACKAGE-CORE.md（見 §十） |
 | 2 | 說「請讀取 docs/」 |
 | 3 | 回答 AI 的問題 |
 
@@ -224,6 +224,7 @@ Writer: ai-system-20261016-003#012
 | 階段總結 | C-07-summary.md |
 | 滾動結論機制 | C-09-rolling-mechanism.md |
 | 交接快照機制 | C-10-handoff-mechanism.md |
+| 共同語言表 | C-11-terms.md |
 
 ### L2 Web App 通用（W-*）
 
@@ -262,37 +263,41 @@ Writer: ai-system-20261016-003#012
 
 ---
 
-## 十、啟動機制（D-136，貼 URL）
+## 十、啟動機制（D-136）
 
-### 10.1 核心：只貼 URL，不上傳
+### 10.1 核心：上傳 PACKAGE-CORE.md
 
-**核心**：使用者**貼 URL** 給 AI，AI 讀取該 URL 內容。
+**核心**：使用者**上傳 `PACKAGE-CORE.md`** 給 AI。
 
-**URL 清單由 GitHub Actions 自動產出**（見 P-15 重組計畫）。
+**來源**：`tlee20860-dotcom/AI-training-build`（由 Actions 生成）。
+
+> ⚠️ **重要變更**：原本設計為「貼 URL」，因 AI 無法讀取 URL，**改為上傳檔案**。
 
 ### 10.2 兩種啟動方式
 
-**方式 1（快速，已記住 URL）**：貼 2 條 URL
+**方式 1（體系層）**：上傳 1 檔
 
-| # | URL | 內容 |
+| # | 檔案 | 內容 |
 |---|---|---|
-| 1 | STARTUP-core-webapp.md | C-00 + R-01 + W-* |
-| 2 | STARTUP-project-family-fin.md | P-12 + P-13 |
+| 1 | PACKAGE-CORE.md | C-00 + C-01 + C-02 + C-04 + C-05~C-11 + R-01 + PROJECT-LIST |
 
-**方式 2（彈性，忘記 URL）**：先貼 INDEX.md
+**方式 2（專案層）**：上傳 2 檔
 
-| # | URL | 內容 |
+| # | 檔案 | 內容 |
 |---|---|---|
-| 1 | INDEX.md | 列出所有專案 + 對應 STARTUP URL |
+| 1 | PACKAGE-CORE.md | 通用規則 |
+| 2 | PACKAGE-{專案}.md | 專案文件 + 程式碼 |
 
-AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給 2 條 URL → 使用者貼。
+AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給對應 PACKAGE-*.md 名稱。
 
 ### 10.3 實際 repo（見 R-01 §三之一）
 
 | Repo | 內容 |
 |---|---|
-| tlee20860-dotcom/AI-training-files | AI 訓練檔案 |
-| tlee20860-dotcom/v2.Family | 家庭 webapp 程式碼 |
+| tlee20860-dotcom/AI-General | 體系層 |
+| tlee20860-dotcom/AI-training-build | 共享包（Actions 產出） |
+| tlee20860-dotcom/WEB-APP-Family | 家庭 webapp |
+| tlee20860-dotcom/AI-training-files | 訓練 AI |
 
 ### 10.4 未來新增專案時
 
@@ -300,8 +305,9 @@ AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給 2 條 URL →
 |---|---|
 | 1 | 使用者說「新增專案 X」 |
 | 2 | AI 依 §十一 問領域 |
-| 3 | AI 更新 R-01 §三（專案清單） |
-| 4 | GitHub Actions 自動產新 STARTUP |
+| 3 | AI 更新 PROJECT-LIST.md |
+| 4 | AI 更新 R-01 §三 |
+| 5 | GitHub Actions 自動產生 PACKAGE-{X}.md |
 
 **啟動包清單變更時**，**必須同步更新 §十 + C-03**。
 
@@ -364,9 +370,51 @@ AI 讀完後問「要哪個專案」→ 使用者回答 → AI 給 2 條 URL →
 
 ---
 
+## 十三、完整操作流程
+
+### 13.1 對話流程（使用者 ↔ AI）
+
+**情境 A：體系層（AI 對話系統）**
+
+| 階段 | 使用者動作 | AI 動作 | 產出 |
+|---|---|---|---|
+| 1. 啟動 | 上傳 PACKAGE-CORE.md | 讀規則、回報 4 項摘要 | — |
+| 2. 選專案 | 說「確認」 | 列所有專案、問哪個 | — |
+| 3. 生成編號 | 回答專案 | **重新計算編號**（防呆 §3.4） | 🆔 編號 |
+| 4. 更新 R-01 | 說「繼續」→「確認」 | 輸出完整 R-01 | R-01 更新 |
+| 5. 需求 | 說「已更新」→ 提需求 | 分析、提方案、等確認 | — |
+| 6. 交付 | 說「確認」 | 輸出完整檔案 | 檔案更新 |
+
+**情境 B：專案層（家庭 webapp / 訓練 AI）**
+
+| 階段 | 差異 |
+|---|---|
+| 1. 啟動 | 上傳 PACKAGE-CORE.md + PACKAGE-{專案}.md |
+| 5. 需求 | 從專案包提取 P-* 檔案 |
+
+### 13.2 共享包生成流程（任一 repo → Actions）
+
+| 觸發源 | 中間 | 終點 | 產出 |
+|---|---|---|---|
+| WEB-APP-Family push | notify.yml → dispatch | AI-General setup-structure.yml | PACKAGE-web-app-family.md → AI-training-build |
+| AI-training-files push | notify.yml → dispatch | 同上 | PACKAGE-ai-training.md → 同上 |
+| AI-General push docs/** | — | setup-structure.yml | PACKAGE-CORE.md、PACKAGE-SKILLS-W.md → 同上 |
+
+**核心**：**任一個 repo 更新 → 全部共享包重做一遍**，保持最新。
+
+**關鍵檔案**：
+
+| 檔案 | 職責 |
+|---|---|
+| notify.yml（各專案 repo） | 偵測變更 → 發 dispatch |
+| setup-structure.yml（AI-General） | 全量掃描 → 重建所有共享包 |
+| append_file.sh（AI-General） | 檔案附加工具 |
+
+---
+
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-00-startup.md
-V: 1791913200
+V: 1791916300
 B: B34-5
-W: ai-system-20261016-003#012
+W: ai-system-20261016-003#051
 ═══ */
