@@ -41,3 +41,7 @@
 | records/FILE-INDEX.md |  1792167353  | B34-5 |  1792167498  | B34-5 | 2026-10-16 16:23 |
 | external/ai-system/docs/records/FILE-INDEX.md |  1792167498  | B34-5 |  1792167834  | B34-5 | 2026-10-16 16:28 |
 | records/FILE-INDEX.md |  1792167498  | B34-5 |  1792167834  | B34-5 | 2026-10-16 16:28 |
+| external/ai-system/docs/records/FILE-INDEX.md |  1792167834  | B34-5 |  1792168087  | B34-5 | 2026-10-16 17:32 |
+| records/FILE-INDEX.md |  1792167834  | B34-5 |  1792168087  | B34-5 | 2026-10-16 17:32 |
+| external/ai-system/docs/common/C-09-rolling-mechanism.md |  1791898780  | B34-3 |  1791941400  | B34-5 | 2026-10-16 17:32 |
+| common/C-09-rolling-mechanism.md |  1791898780  | B34-3 |  1791941400  | B34-5 | 2026-10-16 17:32 |
