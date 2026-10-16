@@ -2,14 +2,16 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成（掃描所有檔案 EOF），請勿手動編輯。
 
-最後更新：2026-10-16 17:33:14 UTC
+最後更新：2026-10-16 17:35:38 UTC
 
 ---
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
-| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792171930 | B34-5 | ai-system-20261016-003#auto |
-| AI-General | records/FILE-INDEX.md | 1792171930 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792171994 | B34-5 | ai-system-20261016-003#auto |
+| AI-General | records/FILE-INDEX.md | 1792171994 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/common/C-07-summary.md | 1791942600 | B34-5 | ai-system-20261016-003#150 |
+| AI-General | common/C-07-summary.md | 1791942600 | B34-5 | ai-system-20261016-003#150 |
 | ai-system | external/ai-system/docs/common/C-10-handoff-mechanism.md | 1791942000 | B34-5 | ai-system-20261016-003#148 |
 | AI-General | common/C-10-handoff-mechanism.md | 1791942000 | B34-5 | ai-system-20261016-003#148 |
 | ai-system | external/ai-system/docs/common/C-09-rolling-mechanism.md | 1791941400 | B34-5 | ai-system-20261016-003#147 |
@@ -52,8 +54,6 @@
 | ai-system | external/ai-system/MIGRATION-GUIDE.md | 1791906620 | B34-4 | A20261016-001 |
 | ai-system | external/ai-system/MIGRATION.md | 1791906500 | B34-4 | A20261016-001 |
 | web-app-family | external/web-app-family/docs/projects/web-app-family/P-06-pagemap.md | 1791904480 | B34-4 | A20261013-004#183 |
-| ai-system | external/ai-system/docs/common/C-07-summary.md | 1791904420 | B34-4 | A20261013-004#182 |
-| AI-General | common/C-07-summary.md | 1791904420 | B34-4 | A20261013-004#182 |
 | web-app-family | external/web-app-family/docs/projects/web-app-family/P-08-api.md | 1791904360 | B34-4 | A20261013-004#180 |
 | web-app-family | external/web-app-family/docs/projects/web-app-family/P-05-sop.md | 1791904300 | B34-4 | A20261013-004#179 |
 | web-app-family | external/web-app-family/docs/projects/web-app-family/P-99-errors-map.md | 1791904240 | B34-4 | A20261013-004#178 |
@@ -85,7 +85,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/FILE-INDEX.md
-V: 1792171994
+V: 1792172138
 B: B34-5
 W: ai-system-20261016-003#auto
 ═══ */
