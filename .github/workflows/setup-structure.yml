@@ -149,6 +149,8 @@ jobs:
           echo "" >> "$OUTPUT"
           echo "等我說「確認」後，從 PROJECT-LIST.md 列出所有專案，並問我：「本次對話屬於哪個專案？」" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
+          echo "⚠️ 防呆（C-00 §3.4）：在確認本次對話所屬專案之前，禁止生成任何對話編號（含預設、繼承、猜測）。收到回答後，必須重新從 PROJECT-LIST.md 讀取該專案 code，並重新計算編號，禁止沿用任何先前自報的編號。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
           echo "等我回答後：" >> "$OUTPUT"
           echo "1. 從 PROJECT-LIST.md 讀取該專案的 code。" >> "$OUTPUT"
           echo "2. 從 R-01 §四 找出該專案最新序號，+1 生成新編號。" >> "$OUTPUT"
@@ -345,7 +347,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791909000
-# B: B34-4
-# W: ai-system-20261016-001#073
+# V: 1791913400
+# B: B34-5
+# W: ai-system-20261016-003#016
 # ═══ EOF ═══
