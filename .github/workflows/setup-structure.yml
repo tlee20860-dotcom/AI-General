@@ -1,7 +1,7 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v4）
+# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v5）
 # 位置：AI-General/.github/workflows/setup-structure.yml
-# 變更：廢除 REPOS.md，awk 直接讀 PROJECT-LIST.md
+# 變更：新增 FILE-INDEX / HISTORY-INDEX 自動生成
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -74,7 +74,6 @@ jobs:
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
-          # 2.1 共同語言表（C-11）
           if [ -f "docs/common/C-11-terms.md" ]; then
             echo "## 📖 共同語言表（C-11）" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
@@ -89,7 +88,6 @@ jobs:
             echo "" >> "$OUTPUT"
           fi
 
-          # 2.2 當前任務進度（從 PROGRESS.md 注入）
           if [ -f "docs/records/PROGRESS.md" ]; then
             echo "## 📊 當前任務進度" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
@@ -98,7 +96,6 @@ jobs:
             echo "" >> "$OUTPUT"
           fi
 
-          # 2.3 啟動指示
           echo "## 🚨 AI 啟動指示（最高優先）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "### 🔹 步驟 0：讀取規則並回報" >> "$OUTPUT"
@@ -182,7 +179,6 @@ jobs:
           echo "## 📚 核心訓練規則" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
-          # 加入所有 C-* 與 R-01
           for f in \
             docs/common/C-00-startup.md \
             docs/common/C-01-profile.md \
@@ -200,7 +196,6 @@ jobs:
             fi
           done
 
-          # 附加 PROJECT-LIST.md
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "## 📋 專案清單（PROJECT-LIST.md）" >> "$OUTPUT"
@@ -255,7 +250,6 @@ jobs:
             echo "AI 已讀取通用規則包（PACKAGE-CORE.md），本包包含專案文件與程式碼。" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
 
-            # 加入專案文件
             proj_docs_dir="$path/docs/projects/${name}"
             if [ -d "$proj_docs_dir" ]; then
               echo "---" >> "$OUTPUT"
@@ -269,7 +263,6 @@ jobs:
               done
             fi
 
-            # 加入程式碼
             if [ -d "$path" ]; then
               echo "---" >> "$OUTPUT"
               echo "" >> "$OUTPUT"
@@ -293,6 +286,154 @@ jobs:
             echo "/* ═══ EOF ═══ */" >> "$OUTPUT"
           done < /tmp/projects.txt
 
+      # 步驟 4.5：掃描 EOF，生成 FILE-INDEX.md
+      - name: Scan EOF and build FILE-INDEX.md
+        run: |
+          OUTPUT="docs/records/FILE-INDEX.md"
+          TMP_TABLE="/tmp/file-index-rows.txt"
+          > "$TMP_TABLE"
+
+          # 掃描清單
+          scan_files() {
+            local base="$1"        # 路徑前綴（如 "AI-General" 或 repo 名）
+            local dir="$2"         # 實際目錄
+            [ -d "$dir" ] || return 0
+            find "$dir" -type f \( -name "*.md" -o -name "*.yml" -o -name "*.js" -o -name "*.html" -o -name "*.css" \) \
+              -not -path "*/.git/*" \
+              -not -path "*/node_modules/*" \
+              -not -path "*/build-repo/*" \
+              -not -path "*/external/*/external/*" \
+              | while read -r f; do
+                tail -n 15 "$f" | sed 's/^[[:space:]]*\(#[/*!-]*\|<!--\)[[:space:]]*//;s/[[:space:]]*\*\/-->*[[:space:]]*$//' > /tmp/eof-tail.txt
+                F=$(grep -oE '^F: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^F: *//')
+                V=$(grep -oE '^V: *[0-9]+' /tmp/eof-tail.txt | head -1 | sed 's/^V: *//')
+                B=$(grep -oE '^B: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^B: *//')
+                W=$(grep -oE '^W: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^W: *//')
+                [ -z "$V" ] && continue
+                # 相對路徑
+                REL="${f#./}"
+                REL="${REL#docs/}"
+                echo "$base|$REL|$V|$B|$W" >> "$TMP_TABLE"
+              done
+          }
+
+          # AI-General 自身
+          scan_files "AI-General" "docs"
+          scan_files "AI-General" ".github"
+          find . -maxdepth 1 -name "*.md" -not -name "FILE-INDEX.md" -not -name "HISTORY-INDEX.md" -not -name "README.md" | while read -r f; do
+            tail -n 15 "$f" | sed 's/^[[:space:]]*\(#[/*!-]*\|<!--\)[[:space:]]*//;s/[[:space:]]*\*\/-->*[[:space:]]*$//' > /tmp/eof-tail.txt
+            F=$(grep -oE '^F: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^F: *//')
+            V=$(grep -oE '^V: *[0-9]+' /tmp/eof-tail.txt | head -1 | sed 's/^V: *//')
+            B=$(grep -oE '^B: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^B: *//')
+            W=$(grep -oE '^W: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^W: *//')
+            [ -z "$V" ] && continue
+            echo "AI-General|$f|$V|$B|$W" >> "$TMP_TABLE"
+          done
+
+          # external/ 各 repo
+          if [ -d "external" ]; then
+            for repo_dir in external/*/; do
+              [ -d "$repo_dir" ] || continue
+              repo_name=$(basename "$repo_dir")
+              scan_files "$repo_name" "$repo_dir"
+            done
+          fi
+
+          # 輸出 FILE-INDEX
+          {
+            echo "# FILE-INDEX（檔案索引）"
+            echo ""
+            echo "> ⚠️ 本檔由 GitHub Actions 自動生成（掃描所有檔案 EOF），請勿手動編輯。"
+            echo ""
+            echo "最後更新：$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            echo ""
+            echo "---"
+            echo ""
+            echo "| Repo | 檔案 | Version | Batch | Writer |"
+            echo "|---|---|---|---|---|"
+            sort -t'|' -k3 -nr "$TMP_TABLE" | while IFS='|' read -r repo file v b w; do
+              [ -z "$repo" ] && continue
+              echo "| $repo | $file | $v | $b | $w |"
+            done
+            echo ""
+            echo "/* ═══ EOF ═══"
+            echo "F: AI-General/docs/records/FILE-INDEX.md"
+            echo "V: $(date -u +%s)"
+            echo "B: B34-5"
+            echo "W: ai-system-20261016-003#auto"
+            echo "═══ */"
+          } > "$OUTPUT"
+
+          echo "FILE-INDEX 生成完成，行數：$(wc -l < $OUTPUT)"
+
+      # 步驟 4.6：比對舊 FILE-INDEX，append 差異到 HISTORY-INDEX
+      - name: Update HISTORY-INDEX.md
+        run: |
+          NEW="docs/records/FILE-INDEX.md"
+          OLD="/tmp/old-file-index.md"
+          HISTORY="docs/records/HISTORY-INDEX.md"
+
+          # 從 git 取上一版 FILE-INDEX
+          git show HEAD:"$NEW" > "$OLD" 2>/dev/null || touch "$OLD"
+
+          # 若舊檔不存在（首次），只建立 HISTORY 表頭
+          if [ ! -s "$OLD" ]; then
+            echo "首次生成，無歷史可比對"
+            if [ ! -f "$HISTORY" ]; then
+              {
+                echo "# HISTORY-INDEX（歷史歸屬）"
+                echo ""
+                echo "> ⚠️ 本檔由 GitHub Actions 自動生成（比對 FILE-INDEX 差異），請勿手動編輯。"
+                echo ""
+                echo "---"
+                echo ""
+                echo "| 檔案 | 舊版本 | 舊 Writer | 新版本 | 新 Writer | 取代時間 |"
+                echo "|---|---|---|---|---|---|"
+              } > "$HISTORY"
+            fi
+            exit 0
+          fi
+
+          # 抽取舊檔的 檔|V|W
+          awk -F'|' '/^\| / && $2 !~ /Repo|---/ {
+            gsub(/^ *| *$/, "", $3); gsub(/^ *| *$/, "", $5);
+            print $3 "|" $4 "|" $5
+          }' "$OLD" > /tmp/old-rows.txt
+
+          awk -F'|' '/^\| / && $2 !~ /Repo|---/ {
+            gsub(/^ *| *$/, "", $3); gsub(/^ *| *$/, "", $5);
+            print $3 "|" $4 "|" $5
+          }' "$NEW" > /tmp/new-rows.txt
+
+          NOW=$(date -u +'%Y-%m-%d %H:%M')
+
+          # 逐檔比對
+          while IFS='|' read -r file new_v new_w; do
+            [ -z "$file" ] && continue
+            old_line=$(grep -F "$file|" /tmp/old-rows.txt | head -1)
+            [ -z "$old_line" ] && continue
+            old_v=$(echo "$old_line" | cut -d'|' -f2)
+            old_w=$(echo "$old_line" | cut -d'|' -f3)
+            if [ "$old_v" != "$new_v" ]; then
+              echo "| $file | $old_v | $old_w | $new_v | $new_w | $NOW |" >> "$HISTORY"
+            fi
+          done < /tmp/new-rows.txt
+
+          echo "HISTORY-INDEX 更新完成"
+
+      # 步驟 4.7：push FILE-INDEX / HISTORY-INDEX 回 AI-General
+      - name: Push index files to AI-General
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/records/FILE-INDEX.md docs/records/HISTORY-INDEX.md
+          if git diff --cached --quiet; then
+            echo "索引無變化，跳過"
+            exit 0
+          fi
+          git commit -m "chore: auto-update index files [skip ci]"
+          git push || echo "push 失敗（可能為權限或無變化）"
+
       # 步驟 5：複製 PROJECT-LIST 到 build-repo
       - name: Copy PROJECT-LIST to build-repo
         run: |
@@ -314,7 +455,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791915700
+# V: 1791916600
 # B: B34-5
-# W: ai-system-20261016-003#048
+# W: ai-system-20261016-003#053
 # ═══ EOF ═══
