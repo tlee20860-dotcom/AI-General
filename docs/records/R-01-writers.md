@@ -1,9 +1,9 @@
 # R-01 AI 編寫者名單 + 專案索引
 
 最後更新：ai-system-20261016-003
-Version: 1791916000
+Version: 1791934800
 Batch: B34-5
-Writer: ai-system-20261016-003#049
+Writer: ai-system-20261016-003#134
 用途：追蹤專案 / 對話 / 編寫者 / 檔案歸屬 / Repo
 
 ---
@@ -17,7 +17,6 @@ Writer: ai-system-20261016-003#049
 | 範例 | 說明 |
 |---|---|
 | webapp-20261016-001 | 家庭 webapp 的第 1 個對話 |
-| ai-training-20261016-001 | 訓練 AI 的第 1 個對話 |
 | ai-system-20261016-001 | AI 對話系統的第 1 個對話 |
 
 **專案代碼**：由 PROJECT-LIST.md 的 `code` 欄位決定。
@@ -29,7 +28,7 @@ Writer: ai-system-20261016-003#049
 
 ### 1.3 Writer 欄位格式
 
-`{對話編號}#{回覆序號}`（如 `webapp-20261016-001#014`）
+`{對話編號}#{回覆序號}`
 
 ---
 
@@ -40,13 +39,7 @@ Writer: ai-system-20261016-003#049
 | 有本名單 | 取該專案最新序號 + 1 |
 | 無本名單 | 自建第一筆並交付本檔 |
 
-**專案識別**：
-
-| 步驟 | 動作 |
-|---|---|
-| 1 | 使用者選擇專案 |
-| 2 | AI 從 PROJECT-LIST.md 讀取該專案的 `code` |
-| 3 | AI 從本檔 §四 找該專案最新序號 |
+**⚠️ 防呆（見 C-00 §3.4）**：確認專案前，禁止生成任何編號。
 
 ---
 
@@ -61,18 +54,8 @@ Writer: ai-system-20261016-003#049
 | 領域 | W（Web App） |
 | 起始日期 | 2026-10-13 |
 | 程式碼 repo | tlee20860-dotcom/WEB-APP-Family |
+| 包編號 | 90 |
 | P-* 檔案位置 | WEB-APP-Family/docs/projects/web-app-family/ |
-
-### 訓練 AI（ai-training）
-
-| 欄位 | 值 |
-|---|---|
-| 專案名稱 | 訓練 AI |
-| 專案代碼 | ai-training |
-| 領域 | W |
-| 起始日期 | 2026-10-16 |
-| 程式碼 repo | tlee20860-dotcom/AI-training-files |
-| P-* 檔案位置 | AI-training-files/docs/projects/ai-training/ |
 
 ### AI 對話系統（ai-system）
 
@@ -83,6 +66,7 @@ Writer: ai-system-20261016-003#049
 | 領域 | system |
 | 起始日期 | 2026-10-16 |
 | 程式碼 repo | tlee20860-dotcom/AI-General |
+| 包編號 | （不適用，體系層無專案包） |
 | P-* 檔案位置 | 體系層（無 P-*，只有 C-*、W-*、R-*） |
 
 ---
@@ -91,14 +75,12 @@ Writer: ai-system-20261016-003#049
 
 **用途**：AI 提到 repo 時，一律使用實際名稱（見 C-02 §十三之一）。
 
-| Repo | 用途 | URL |
-|---|---|---|
-| AI-General | AI 對話系統（體系層） | github.com/tlee20860-dotcom/AI-General |
-| AI-training-build | 生成共享包（Actions 產出） | github.com/tlee20860-dotcom/AI-training-build |
-| WEB-APP-Family | 家庭 webapp 程式碼 | github.com/tlee20860-dotcom/WEB-APP-Family |
-| AI-training-files | 訓練 AI 專案 | github.com/tlee20860-dotcom/AI-training-files |
-
-**未來新增 repo 方式**：使用者在對話中說「新增 repo X（用途 / URL）」→ AI 更新本節。
+| Repo | 用途 | URL | 狀態 |
+|---|---|---|---|
+| AI-General | AI 對話系統（體系層） | github.com/tlee20860-dotcom/AI-General | ✅ 現役 |
+| **AI-packages** | 共享包（Actions 生成） | github.com/tlee20860-dotcom/AI-packages | ✅ 現役（原 AI-training-build） |
+| WEB-APP-Family | 家庭 webapp 程式碼 | github.com/tlee20860-dotcom/WEB-APP-Family | ✅ 現役 |
+| AI-training-files | 舊訓練 repo | github.com/tlee20860-dotcom/AI-training-files | ⚠️ 已停用掃描（保留不刪） |
 
 ---
 
@@ -108,7 +90,7 @@ Writer: ai-system-20261016-003#049
 |---|---|---|---|---|
 | 1 | ai-system-20261016-001 | AI 對話系統 | 2026-10-16 | 66 |
 | 2 | ai-system-20261016-002 | AI 對話系統 | 2026-10-16 | 10 |
-| 3 | ai-system-20261016-003 | AI 對話系統 | 2026-10-16 | 0 |
+| 3 | ai-system-20261016-003 | AI 對話系統 | 2026-10-16 | 約 134 |
 
 **說明**：
 
@@ -119,7 +101,6 @@ Writer: ai-system-20261016-003#049
 
 - 新對話 004 應為 **`webapp-20261016-001`（家庭 webapp 第 1 個對話）**。
 - 若它曾自報 `ai-system-20261016-004`，**該編號作廢**（見 C-00 §3.4 防呆條款）。
-- 請於新對話 004 中，以 `webapp-20261016-001` 加入 §四。
 
 ---
 
@@ -129,17 +110,19 @@ Writer: ai-system-20261016-003#049
 
 | 檔案 | Version | Writer |
 |---|---|---|
-| C-00-startup.md | 1791913200 | ai-system-20261016-003 |
-| C-01-profile.md | 1791910300 | ai-system-20261016-002 |
-| C-02-rules.md | 1791910300 | ai-system-20261016-002 |
+| C-00-startup.md | 1791931200 | ai-system-20261016-003 |
+| C-01-profile.md | 1791930000 | ai-system-20261016-003 |
+| C-02-rules.md | 1791928000 | ai-system-20261016-003 |
 | C-03-guide.md | 1791907700 | ai-system-20261016-001 |
-| C-04-delivery.md | 1791908500 | ai-system-20261016-001 |
-| C-05-learning.md | 1791914000 | ai-system-20261016-003 |
+| C-04-delivery.md | 1791921000 | ai-system-20261016-003 |
+| C-05-learning/general.md | 1791927000 | ai-system-20261016-003 |
+| C-05-learning/system.md | 1791922200 | ai-system-20261016-003 |
+| C-05-learning/w.md | 1791922200 | ai-system-20261016-003 |
 | C-06-token-log.md | 待更新 | 舊版 |
 | C-07-summary.md | 待更新 | 舊版 |
 | C-09-rolling-mechanism.md | 待更新 | 舊版 |
 | C-10-handoff-mechanism.md | 待更新 | 舊版 |
-| C-11-terms.md | 1791908600 | ai-system-20261016-001 |
+| C-11-terms.md | 1791932400 | ai-system-20261016-003 |
 
 ### AI-General/docs/skills/W/（L2 Web App 通用）
 
@@ -156,15 +139,19 @@ Writer: ai-system-20261016-003#049
 
 | 檔案 | Version | Writer |
 |---|---|---|
-| R-01-writers.md | 1791916000 | ai-system-20261016-003 |
-| PROJECT-LIST.md | 1791908200 | ai-system-20261016-001 |
+| R-01-writers.md | 1791934800 | ai-system-20261016-003 |
+| PROJECT-LIST.md | 1791918000 | ai-system-20261016-003 |
 | PROGRESS.md | 1791914000 | ai-system-20261016-003 |
+| SYSTEM-CONCLUSION.md | 1791933000 | ai-system-20261016-003 |
+| SYSTEM-HANDOFF.md | 1791933600 | ai-system-20261016-003 |
+| FILE-INDEX.md | （Actions 生成） | — |
+| HISTORY-INDEX.md | （Actions 生成） | — |
 
 ### AI-General/.github/workflows/
 
 | 檔案 | Version | Writer |
 |---|---|---|
-| setup-structure.yml | 1791915700 | ai-system-20261016-003 |
+| setup-structure.yml | 1791925800 | ai-system-20261016-003 |
 | setup-migration.yml | 1791906700 | ai-system-20261016-001 |
 | append_file.sh | 1791908100 | ai-system-20261016-001 |
 
@@ -181,19 +168,16 @@ Writer: ai-system-20261016-003#049
 
 | 檔案 | 舊版本 | 舊 Writer | 新版本 | 新 Writer | 取代時間 |
 |---|---|---|---|---|---|
-| C-01-profile.md | 1791904120 | A20261013-004#176 | 1791910300 | ai-system-20261016-002 | 2026-10-16 |
-| C-02-rules.md | 1791907900 | ai-system-20261016-001 | 1791908400 | ai-system-20261016-001 | 2026-10-16 |
-| C-02-rules.md | 1791908400 | ai-system-20261016-001 | 1791910300 | ai-system-20261016-002 | 2026-10-16 |
-| C-04-delivery.md | 1791907500 | ai-system-20261016-001 | 1791908500 | ai-system-20261016-001 | 2026-10-16 |
-| R-01-writers.md | 1791910500 | ai-system-20261016-002#010 | 1791912600 | ai-system-20261016-003#006 | 2026-10-16 |
-| R-01-writers.md | 1791912600 | ai-system-20261016-003#006 | 1791913700 | ai-system-20261016-003#019 | 2026-10-16 |
-| R-01-writers.md | 1791913700 | ai-system-20261016-003#019 | 1791916000 | ai-system-20261016-003#049 | 2026-10-16 |
-| C-00-startup.md | 1791903520 | A20261013-004#166 | 1791913200 | ai-system-20261016-003#012 | 2026-10-16 |
-| C-05-learning.md | 1791902800 | A20261013-004#136 | 1791914000 | ai-system-20261016-003#022 | 2026-10-16 |
-| setup-structure.yml | 1791908100 | ai-system-20261016-001 | 1791913400 | ai-system-20261016-003#016 | 2026-10-16 |
-| setup-structure.yml | 1791913400 | ai-system-20261016-003#016 | 1791915400 | ai-system-20261016-003#044 | 2026-10-16 |
-| setup-structure.yml | 1791915400 | ai-system-20261016-003#044 | 1791915700 | ai-system-20261016-003#048 | 2026-10-16 |
-| REPOS.md | （Actions 生成，從未入庫） | — | 已廢除 | ai-system-20261016-003#048 | 2026-10-16 |
+| C-01-profile.md | 1791910300 | ai-system-20261016-002 | 1791930000 | ai-system-20261016-003 | 2026-10-16 |
+| C-02-rules.md | 1791910300 | ai-system-20261016-002 | 1791928000 | ai-system-20261016-003 | 2026-10-16 |
+| C-04-delivery.md | 1791908500 | ai-system-20261016-001 | 1791921000 | ai-system-20261016-003 | 2026-10-16 |
+| C-11-terms.md | 1791908600 | ai-system-20261016-001 | 1791932400 | ai-system-20261016-003 | 2026-10-16 |
+| C-00-startup.md | 1791913200 | ai-system-20261016-003 | 1791931200 | ai-system-20261016-003 | 2026-10-16 |
+| setup-structure.yml | 1791908100 | ai-system-20261016-001 | 1791925800 | ai-system-20261016-003 | 2026-10-16 |
+| PROJECT-LIST.md | 1791908200 | ai-system-20261016-001 | 1791918000 | ai-system-20261016-003 | 2026-10-16 |
+| R-01-writers.md | 1791916000 | ai-system-20261016-003 | 1791934800 | ai-system-20261016-003 | 2026-10-16 |
+| C-05-learning.md | 1791914000 | ai-system-20261016-003 | 已廢除 | ai-system-20261016-003 | 2026-10-16 |
+| REPOS.md | （Actions 生成，從未入庫） | — | 已廢除 | ai-system-20261016-003 | 2026-10-16 |
 
 ---
 
@@ -206,7 +190,7 @@ Writer: ai-system-20261016-003#049
 | 1 | 使用者選擇專案 |
 | 2 | 讀 PROJECT-LIST.md 取該專案 `code` |
 | 3 | 讀本檔 §四 找該專案最新序號，+1 |
-| 4 | 生成編號（如 webapp-20261016-001） |
+| 4 | 生成編號 |
 | 5 | 每次回覆標：🆔 {編號} #{序號} |
 
 **⚠️ 防呆（見 C-00 §3.4）**：確認專案前，禁止生成任何編號。
@@ -251,12 +235,14 @@ Writer: ai-system-20261016-003#049
 | 共同語言表 | C-11-terms.md |
 | 專案清單 | PROJECT-LIST.md |
 | 任務進度 | PROGRESS.md |
+| 體系層結論 | SYSTEM-CONCLUSION.md |
+| 體系層交接 | SYSTEM-HANDOFF.md |
 
 ---
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/R-01-writers.md
-V: 1791916000
+V: 1791934800
 B: B34-5
-W: ai-system-20261016-003#049
+W: ai-system-20261016-003#134
 ═══ */
