@@ -45,3 +45,7 @@
 | records/FILE-INDEX.md |  1792167834  | B34-5 |  1792168087  | B34-5 | 2026-10-16 17:32 |
 | external/ai-system/docs/common/C-09-rolling-mechanism.md |  1791898780  | B34-3 |  1791941400  | B34-5 | 2026-10-16 17:32 |
 | common/C-09-rolling-mechanism.md |  1791898780  | B34-3 |  1791941400  | B34-5 | 2026-10-16 17:32 |
+| external/ai-system/docs/records/FILE-INDEX.md |  1792168087  | B34-5 |  1792171930  | B34-5 | 2026-10-16 17:33 |
+| records/FILE-INDEX.md |  1792168087  | B34-5 |  1792171930  | B34-5 | 2026-10-16 17:33 |
+| external/ai-system/docs/common/C-10-handoff-mechanism.md |  1791898840  | B34-3 |  1791942000  | B34-5 | 2026-10-16 17:33 |
+| common/C-10-handoff-mechanism.md |  1791898840  | B34-3 |  1791942000  | B34-5 | 2026-10-16 17:33 |

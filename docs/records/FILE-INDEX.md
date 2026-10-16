@@ -2,14 +2,16 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成（掃描所有檔案 EOF），請勿手動編輯。
 
-最後更新：2026-10-16 17:32:10 UTC
+最後更新：2026-10-16 17:33:14 UTC
 
 ---
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
-| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792168087 | B34-5 | ai-system-20261016-003#auto |
-| AI-General | records/FILE-INDEX.md | 1792168087 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792171930 | B34-5 | ai-system-20261016-003#auto |
+| AI-General | records/FILE-INDEX.md | 1792171930 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/common/C-10-handoff-mechanism.md | 1791942000 | B34-5 | ai-system-20261016-003#148 |
+| AI-General | common/C-10-handoff-mechanism.md | 1791942000 | B34-5 | ai-system-20261016-003#148 |
 | ai-system | external/ai-system/docs/common/C-09-rolling-mechanism.md | 1791941400 | B34-5 | ai-system-20261016-003#147 |
 | AI-General | common/C-09-rolling-mechanism.md | 1791941400 | B34-5 | ai-system-20261016-003#147 |
 | ai-system | external/ai-system/.github/workflows/cleanup-files.yml | 1791938400 | B34-5 | ai-system-20261016-003#139 |
@@ -80,12 +82,10 @@
 | web-app-family | external/web-app-family/docs/projects/web-app-family/P-12-conclusion.md | 1791899320 | B34-3 | A20261013-004#064 |
 | web-app-family | external/web-app-family/docs/projects/web-app-family/P-10-incident.md | 1791899200 | B34-3 | A20261013-004#061 |
 | web-app-family | external/web-app-family/docs/projects/web-app-family/P-09-data.md | 1791899140 | B34-3 | A20261013-004#060 |
-| ai-system | external/ai-system/docs/common/C-10-handoff-mechanism.md | 1791898840 | B34-3 | A20261013-004#057 |
-| AI-General | common/C-10-handoff-mechanism.md | 1791898840 | B34-3 | A20261013-004#057 |
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/FILE-INDEX.md
-V: 1792171930
+V: 1792171994
 B: B34-5
 W: ai-system-20261016-003#auto
 ═══ */
