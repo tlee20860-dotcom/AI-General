@@ -260,8 +260,8 @@ jobs:
             echo "AI 已讀取通用規則包（PACKAGE-CORE.md），本包包含專案文件與程式碼。" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
 
-            # 加入專案文件（從 AI-General/docs/projects/{name}/）
-            proj_docs_dir="docs/projects/${name}"
+            # 加入專案文件（從外部倉庫的 docs/projects/{name}/）
+            proj_docs_dir="$path/docs/projects/${name}"
             if [ -d "$proj_docs_dir" ]; then
               echo "---" >> "$OUTPUT"
               echo "" >> "$OUTPUT"
@@ -330,7 +330,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791906960
+# V: 1791908000
 # B: B34-4
 # W: A20261016-001
 # ═══ EOF ═══
