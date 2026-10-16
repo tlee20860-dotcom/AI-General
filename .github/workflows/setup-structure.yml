@@ -1,7 +1,10 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v8）
+# setup-structure.yml — 四倉架構 + 動態共享包（穩健版 v9）
 # 位置：AI-General/.github/workflows/setup-structure.yml
-# 變更：修正 paths / paths-ignore 衝突
+# 變更：
+#   - 補 C-03 / C-06 / C-11 進 01 迴圈
+#   - 補 C-11 進 02 迴圈
+#   - 90 依 domain 自動含技能包
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -111,7 +114,7 @@ jobs:
           echo "" >> "$OUTPUT"
           echo "等我說「確認」後，從 PROJECT-LIST.md 列出所有專案，並問我：「本次對話屬於哪個專案？」" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          echo "⚠️ 防呆（C-00 §3.4）：在確認本次對話所屬專案之前，禁止生成任何對話編號。收到回答後，必須重新從 PROJECT-LIST.md 讀取該專案 code，並重新計算編號，禁止沿用任何先前自報的編號。" >> "$OUTPUT"
+          echo "⚠️ 防呆（C-00 §3.4）：在確認本次對話所屬專案之前，禁止生成任何對話編號。收到回答後，必須重新從 PROJECT-LIST.md 讀取該專案 code，並重新計算編號。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "等我回答後：" >> "$OUTPUT"
           echo "1. 從 PROJECT-LIST.md 讀取該專案的 code。" >> "$OUTPUT"
@@ -165,10 +168,13 @@ jobs:
             docs/common/C-00-startup.md \
             docs/common/C-01-profile.md \
             docs/common/C-02-rules.md \
+            docs/common/C-03-guide.md \
             docs/common/C-04-delivery.md \
+            docs/common/C-06-token-log.md \
             docs/common/C-07-summary.md \
             docs/common/C-09-rolling-mechanism.md \
             docs/common/C-10-handoff-mechanism.md \
+            docs/common/C-11-terms.md \
             docs/records/R-01-writers.md
           do
             if [ -f "$f" ]; then
@@ -193,6 +199,11 @@ jobs:
             echo "" >> "$OUTPUT"
             bash .github/workflows/append_file.sh "docs/records/SYSTEM-CONCLUSION.md" "$OUTPUT"
           fi
+          if [ -f "docs/records/PROGRESS.md" ]; then
+            echo "---" >> "$OUTPUT"
+            echo "" >> "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/PROGRESS.md" "$OUTPUT"
+          fi
 
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
@@ -213,7 +224,8 @@ jobs:
           echo "" >> "$OUTPUT"
           echo "> 生成時間：$GEN_TIME" >> "$OUTPUT"
           echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"
-          echo "> 使用方式：搭配專案包一起上傳。" >> "$OUTPUT"
+          echo "> 使用方式：搭配專案包（如 90-web-app-family.md）一起上傳。" >> "$OUTPUT"
+          echo "> 專案包已內含該領域技能包，本包不需再單獨傳技能包。" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
@@ -299,6 +311,7 @@ jobs:
             docs/common/C-00-startup.md \
             docs/common/C-01-profile.md \
             docs/common/C-04-delivery.md \
+            docs/common/C-11-terms.md \
             docs/records/R-01-writers.md
           do
             if [ -f "$f" ]; then
@@ -321,24 +334,35 @@ jobs:
             bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT"
           fi
 
-      # 步驟 4：生成 10-SKILLS-W.md
-      - name: Build 10-SKILLS-W.md
+      # 步驟 4：生成技能包（10 / 20 / 30...）
+      - name: Build skills packages
         run: |
-          OUTPUT="build-repo/10-SKILLS-W.md"
           RUN_NO="${{ github.run_number }}"
           BUILD_NO=$(printf '%04d' $RUN_NO)
-          echo "# Web App 技能包（W-*）" > "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
-          echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          for f in docs/skills/W/*.md; do
-            if [ -f "$f" ]; then
-              bash .github/workflows/append_file.sh "$f" "$OUTPUT"
+          build_skill() {
+            local prefix="$1"
+            local outfile="$2"
+            local skilldir="docs/skills/${prefix}"
+            if [ ! -d "$skilldir" ]; then
+              return 0
             fi
-          done
+            OUTPUT="build-repo/${outfile}"
+            echo "# ${prefix} 技能包" > "$OUTPUT"
+            echo "" >> "$OUTPUT"
+            echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
+            echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"
+            echo "" >> "$OUTPUT"
+            for f in ${skilldir}/*.md; do
+              if [ -f "$f" ]; then
+                bash .github/workflows/append_file.sh "$f" "$OUTPUT"
+              fi
+            done
+          }
+          build_skill "W" "10-SKILLS-W.md"
+          build_skill "V" "20-SKILLS-V.md"
+          build_skill "D" "30-SKILLS-D.md"
 
-      # 步驟 5：動態生成所有專案包
+      # 步驟 5：動態生成所有專案包（含領域技能包）
       - name: Build all project packages dynamically
         run: |
           if [ ! -f "docs/records/PROJECT-LIST.md" ]; then
@@ -351,15 +375,16 @@ jobs:
             block && /^name:/ { name=$2 }
             block && /^package_no:/ { pkgno=$2 }
             block && /^package:/ { pkg=$2 }
+            block && /^domain:/ { domain=$2 }
             block && /^---/ {
-              if (name && pkgno && pkg && pkg != "（無，體系層不生成專案包）") print name "|external/" name "|" pkgno "|" pkg
-              name=""; pkgno=""; pkg=""; block=0
+              if (name && pkgno && pkg && pkg != "（無，體系層不生成專案包）") print name "|external/" name "|" pkgno "|" pkg "|" domain
+              name=""; pkgno=""; pkg=""; domain=""; block=0
             }
           ' docs/records/PROJECT-LIST.md > /tmp/projects.txt
 
           RUN_NO="${{ github.run_number }}"
           BUILD_NO=$(printf '%04d' $RUN_NO)
-          while IFS='|' read -r name path pkgno pkg; do
+          while IFS='|' read -r name path pkgno pkg domain; do
             [ -z "$name" ] && continue
             SHORT="${pkg#PACKAGE-}"
             OUTPUT="build-repo/${pkgno}-${SHORT}"
@@ -368,11 +393,12 @@ jobs:
             echo "" >> "$OUTPUT"
             echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"
             echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"
+            echo "> 領域：${domain}" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
             echo "## 📌 使用方式" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
-            echo "本檔案為「${name}」專案的完整上下文包。" >> "$OUTPUT"
-            echo "AI 已讀取專案層核心包（02-CORE-PROJECT.md），本包包含專案文件與程式碼。" >> "$OUTPUT"
+            echo "本檔案為「${name}」專案的完整上下文包（含專案文件、程式碼、領域技能包）。" >> "$OUTPUT"
+            echo "請搭配 02-CORE-PROJECT.md 一起上傳。" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
 
             proj_docs_dir="$path/docs/projects/${name}"
@@ -404,6 +430,21 @@ jobs:
                 bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT"
               done < /tmp/code_files.txt
               cd ../..
+            fi
+
+            # 依 domain 附加對應技能包
+            case "$domain" in
+              W) SKILL_FILE="build-repo/10-SKILLS-W.md" ;;
+              V) SKILL_FILE="build-repo/20-SKILLS-V.md" ;;
+              D) SKILL_FILE="build-repo/30-SKILLS-D.md" ;;
+              *) SKILL_FILE="" ;;
+            esac
+            if [ -n "$SKILL_FILE" ] && [ -f "$SKILL_FILE" ]; then
+              echo "---" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              echo "# 📚 領域技能包（${domain}）" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              cat "$SKILL_FILE" >> "$OUTPUT"
             fi
 
             echo "" >> "$OUTPUT"
@@ -551,7 +592,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791925800
+# V: 1791948000
 # B: B34-5
-# W: ai-system-20261016-003#117
+# W: ai-system-20261016-003#169
 # ═══ EOF ═══
