@@ -10,6 +10,12 @@ on:
     branches: [main, master]
     paths:
       - 'docs/**'
+      - '.github/workflows/**'
+      - '*.md'
+    paths-ignore:
+      - 'docs/records/FILE-INDEX.md'
+      - 'docs/records/HISTORY-INDEX.md'
+      - 'docs/records/REPOS.md'
   repository_dispatch:
     types: [web-app-family-updated, ai-training-updated]
   workflow_dispatch:
@@ -347,7 +353,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791913400
+# V: 1791915400
 # B: B34-5
-# W: ai-system-20261016-003#016
+# W: ai-system-20261016-003#044
 # ═══ EOF ═══
