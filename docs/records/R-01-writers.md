@@ -1,9 +1,9 @@
 # R-01 AI 編寫者名單 + 專案索引
 
-最後更新：B35-0
-Version: 1792108800
-Batch: B35-0
-Writer: A20261016-001#001
+最後更新：A20261016-001
+Version: 1791908700
+Batch: B34-4
+Writer: ai-system-20261016-001
 用途：追蹤專案 / 對話 / 編寫者 / 檔案歸屬 / Repo
 
 ---
@@ -12,15 +12,24 @@ Writer: A20261016-001#001
 
 ### 1.1 對話編號
 
-格式：A{YYYYMMDD}-{序號3位}
+格式：`{專案代碼}-{YYYYMMDD}-{專案內序號3位}`
+
+| 範例 | 說明 |
+|---|---|
+| webapp-20261016-001 | 家庭 webapp 的第 1 個對話 |
+| ai-training-20261016-001 | 訓練 AI 的第 1 個對話 |
+| ai-system-20261016-001 | AI 對話系統的第 1 個對話 |
+
+**專案代碼**：由 PROJECT-LIST.md 的 `code` 欄位決定。
+**專案內序號**：從 `001` 開始，跨日期累計，各專案獨立。
 
 ### 1.2 回覆序號
 
-格式：#001 ~ #999（同對話累加）
+格式：`#{序號}`（如 `#001`）
 
 ### 1.3 Writer 欄位格式
 
-A{YYMMDD}-{序號}#{回覆序號}
+`{對話編號}#{回覆序號}`（如 `webapp-20261016-001#014`）
 
 ---
 
@@ -28,43 +37,66 @@ A{YYMMDD}-{序號}#{回覆序號}
 
 | 情境 | 動作 |
 |---|---|
-| 有本名單 | 取最新編號 + 1（同日）或 -001（新日） |
+| 有本名單 | 取該專案最新序號 + 1 |
 | 無本名單 | 自建第一筆並交付本檔 |
 
 **專案識別**：
 
 | 步驟 | 動作 |
 |---|---|
-| 1 | AI 讀 P-01-index.md 判斷當前專案 |
-| 2 | 若 P-01 不存在 → AI 主動問「是否新增專案名稱？」 |
-| 3 | 專案名確認後寫入 §三 |
+| 1 | 使用者選擇專案 |
+| 2 | AI 從 PROJECT-LIST.md 讀取該專案的 `code` |
+| 3 | AI 從本檔 §四 找該專案最新序號 |
 
 ---
 
 ## 三、專案清單
 
-### 家庭 webapp
+### 家庭 webapp（webapp）
 
 | 欄位 | 值 |
 |---|---|
 | 專案名稱 | 家庭 webapp |
+| 專案代碼 | webapp |
 | 領域 | W（Web App） |
 | 起始日期 | 2026-10-13 |
-| 編寫者 | A20261013-001 ~ A20261013-004 |
-| 對話列表 | A20261013-001 / 002 / 003 / 004 |
-| 對話編號格式 | A{YYYYMMDD}-{序號}（不變） |
-| 程式碼 repo | tlee20860-dotcom/v2.Family |
+| 程式碼 repo | tlee20860-dotcom/WEB-APP-Family |
+| P-* 檔案位置 | WEB-APP-Family/docs/projects/web-app-family/ |
+
+### 訓練 AI（ai-training）
+
+| 欄位 | 值 |
+|---|---|
+| 專案名稱 | 訓練 AI |
+| 專案代碼 | ai-training |
+| 領域 | W |
+| 起始日期 | 2026-10-16 |
+| 程式碼 repo | tlee20860-dotcom/AI-training-files |
+| P-* 檔案位置 | AI-training-files/docs/projects/ai-training/ |
+
+### AI 對話系統（ai-system）
+
+| 欄位 | 值 |
+|---|---|
+| 專案名稱 | AI 對話系統 |
+| 專案代碼 | ai-system |
+| 領域 | system |
+| 起始日期 | 2026-10-16 |
+| 程式碼 repo | tlee20860-dotcom/AI-General |
+| P-* 檔案位置 | 體系層（無 P-*，只有 C-*、W-*、R-*） |
 
 ---
 
-## 三之一、Repo 清單（D-134）
+## 三之一、Repo 清單
 
 **用途**：AI 提到 repo 時，一律使用實際名稱（見 C-02 §十三之一）。
 
 | Repo | 用途 | URL |
 |---|---|---|
-| AI-training-files | AI 訓練檔案（C / W / P / R） | github.com/tlee20860-dotcom/AI-training-files |
-| v2.Family | 家庭 webapp 程式碼 | github.com/tlee20860-dotcom/v2.Family |
+| AI-General | AI 對話系統（體系層） | github.com/tlee20860-dotcom/AI-General |
+| AI-training-build | 生成共享包（Actions 產出） | github.com/tlee20860-dotcom/AI-training-build |
+| WEB-APP-Family | 家庭 webapp 程式碼 | github.com/tlee20860-dotcom/WEB-APP-Family |
+| AI-training-files | 訓練 AI 專案 | github.com/tlee20860-dotcom/AI-training-files |
 
 **未來新增 repo 方式**：使用者在對話中說「新增 repo X（用途 / URL）」→ AI 更新本節。
 
@@ -72,98 +104,69 @@ A{YYMMDD}-{序號}#{回覆序號}
 
 ## 四、編寫者清單
 
-| # | 編號 | 對話建立時間 | 首次交付批次 | 累計回覆數 |
+| # | 對話編號 | 所屬專案 | 建立時間 | 累計回覆 |
 |---|---|---|---|---|
-| 1 | A20261013-001 | 2026-10-13 16:30 | B32-1 | 14 |
-| 2 | A20261013-002 | 2026-10-13 18:00 | B32-1 | 13（失敗） |
-| 3 | A20261013-003 | 2026-10-13 20:00 | B33-1 | 85 |
-| 4 | A20261013-004 | 2026-10-14 16:30 | B34-1 | 164 |
-| 5 | **A20261016-001** | **2026-10-16** | **（待定）** | **1** |
+| 1 | ai-system-20261016-001 | AI 對話系統 | 2026-10-16 | 66 |
 
 **說明**：
-- A20261013-002 因交付格式錯誤，不計入正式交付。
-- A20261013-004 為前次對話，已完成 B34-1 ~ B34-4 + 重組計畫。
-- A20261016-001 為本對話，目前處於 R-01 更新階段。
+
+- 舊編號（A20261013-001 ~ A20261016-001）已廢止，改用新格式。
+- 專案內序號從 `001` 開始，跨日期累計。
 
 ---
 
 ## 五、檔案歸屬（現役）
 
-### docs/C-*（L1 AI 通用）
+### AI-General/docs/common/（L1 AI 通用）
 
-| 檔案 | Version | Batch | Writer |
-|---|---|---|---|
-| C-00-startup.md | 1791898600 | B34-3 | A261013-004#055 |
-| C-01-profile.md | 1791896060 | B34-1 | A261013-004#016 |
-| C-02-rules.md | 1791903340 | B34-4 | A261013-004#162 |
-| C-03-guide.md | 1791898720 | B34-3 | A261013-004#056 |
-| C-04-delivery.md | 1791902320 | B34-4 | A261013-004#107 |
-| C-05-learning.md | 1791902800 | B34-4 | A261013-004#136 |
-| C-06-token-log.md | 1791897660 | B34-2 | A261013-004#036 |
-| C-07-summary.md | 1791896360 | B34-1 | A261013-004#018 |
-| C-09-rolling-mechanism.md | 1791898780 | B34-3 | A261013-004#057 |
-| C-10-handoff-mechanism.md | 1791898840 | B34-3 | A261013-004#057 |
+| 檔案 | Version | Writer |
+|---|---|---|
+| C-00-startup.md | 待更新 | 舊版 |
+| C-01-profile.md | 待更新 | 舊版 |
+| C-02-rules.md | 1791908400 | ai-system-20261016-001 |
+| C-03-guide.md | 1791907700 | ai-system-20261016-001 |
+| C-04-delivery.md | 1791908500 | ai-system-20261016-001 |
+| C-05-learning.md | 待更新 | 舊版 |
+| C-06-token-log.md | 待更新 | 舊版 |
+| C-07-summary.md | 待更新 | 舊版 |
+| C-09-rolling-mechanism.md | 待更新 | 舊版 |
+| C-10-handoff-mechanism.md | 待更新 | 舊版 |
+| C-11-terms.md | 1791908600 | ai-system-20261016-001 |
 
-### docs/W-*（L2 Web App 通用）
+### AI-General/docs/skills/W/（L2 Web App 通用）
 
-| 檔案 | Version | Batch | Writer |
-|---|---|---|---|
-| W-01-firebase.md | 1791899500 | B34-3 | A261013-004#065 |
-| W-02-functions.md | 1791899560 | B34-3 | A261013-004#065 |
-| W-03-esmodule.md | 1791899620 | B34-3 | A261013-004#065 |
-| W-04-pwa.md | 1791899680 | B34-3 | A261013-004#065 |
-| W-05-schema.md | 1791899740 | B34-3 | A261013-004#065 |
+| 檔案 | Version | Writer |
+|---|---|---|
+| W-00-startup.md | 1791903760 | 舊版 |
+| W-01-firebase.md | 1791899500 | 舊版 |
+| W-02-functions.md | 1791899560 | 舊版 |
+| W-03-esmodule.md | 1791899620 | 舊版 |
+| W-04-pwa.md | 1791899680 | 舊版 |
+| W-05-schema.md | 1791899740 | 舊版 |
 
-### docs/P-*（L3 本專案）
+### AI-General/docs/records/（L4 機械記錄）
 
-| 檔案 | Version | Batch | Writer |
-|---|---|---|---|
-| P-01-index.md | 1791898900 | B34-3 | A261013-004#058 |
-| P-02-progress.md | 1791902860 | B34-4 | A261013-004#136 |
-| P-03-manifest.md | 1791902560 | B34-4 | A261013-004#109 |
-| P-04-decisions.md | 1791899080 | B34-3 | A261013-004#059 |
-| P-05-sop.md | 1791899800 | B34-3 | A261013-004#067 |
-| P-06-pagemap.md | 1791899980 | B34-3 | A261013-004#068 |
-| P-07-uispec.md | 1791899860 | B34-3 | A261013-004#067 |
-| P-08-api.md | 1791900040 | B34-3 | A261013-004#069 |
-| P-09-data.md | 1791899140 | B34-3 | A261013-004#060 |
-| P-10-incident.md | 1791899200 | B34-3 | A261013-004#061 |
-| P-12-conclusion.md | 1791899320 | B34-3 | A261013-004#064 |
-| P-13-handoff.md | 1791902920 | B34-4 | A261013-004#136 |
-| P-14-decisions.md | 1791899380 | B34-3 | A261013-004#064 |
-| P-15-reorg-plan.md | 1791903160 | B34-4 | A261013-004#156 |
-| P-99-errors-map.md | 1791899920 | B34-3 | A261013-004#067 |
+| 檔案 | Version | Writer |
+|---|---|---|
+| R-01-writers.md | 1791908700 | ai-system-20261016-001 |
+| PROJECT-LIST.md | 1791908200 | ai-system-20261016-001 |
+| REPOS.md | （Actions 生成） | — |
+| PROGRESS.md | 1791907800 | ai-system-20261016-001 |
 
-### docs/R-*（L4 機械記錄）
+### AI-General/.github/workflows/
 
-| 檔案 | Version | Batch | Writer |
-|---|---|---|---|
-| R-01-writers.md | 1792108800 | B35-0 | A261016-001#001 |
+| 檔案 | Version | Writer |
+|---|---|---|
+| setup-structure.yml | 1791908100 | ai-system-20261016-001 |
+| setup-migration.yml | 1791906700 | ai-system-20261016-001 |
+| append_file.sh | 1791908100 | ai-system-20261016-001 |
 
-### 程式碼（B34-4 交付，20 檔）
+### AI-General 根目錄
 
-| 檔案 | Version | Batch | Writer |
-|---|---|---|---|
-| js/lib/code-registry.js | 1791900400 | B34-4 | A261013-004#076 |
-| js/lib/id-resolver.js | 1791900460 | B34-4 | A261013-004#076 |
-| functions/api/_entity.js | 1791901060 | B34-4 | A261013-004#087 |
-| code-list.html | 1791900580 | B34-4 | A261013-004#077 |
-| js/pages/code-list.js | 1791902680 | B34-4 | A261013-004#121 |
-| js/ui/dropdown-plus.js | 1791901780 | B34-4 | A261013-004#100 |
-| js/shared/yearrange-card.js | 1791902620 | B34-4 | A261013-004#118 |
-| sw.js | 1791902140 | B34-4 | A261013-004#104 |
-| js/entity/entity-definitions.js | 1791901900 | B34-4 | A261013-004#102 |
-| js/entity/entity-helpers.js | 1791902740 | B34-4 | A261013-004#131 |
-| js/entity/entity-modal.js | 1791901240 | B34-4 | A261013-004#090 |
-| js/core/api.js | 1791900880 | B34-4 | A261013-004#082 |
-| functions/api/[[path]].js | 1791900940 | B34-4 | A261013-004#083 |
-| js/config/constants.js | 1791901300 | B34-4 | A261013-004#091 |
-| js/config/column-registry.js | 1791901480 | B34-4 | A261013-004#094 |
-| js/ui/modal.js | 1791901420 | B34-4 | A261013-004#093 |
-| js/ui/form-builder.js | 1791901960 | B34-4 | A261013-004#103 |
-| js/lib/expense-modal.js | 1791902020 | B34-4 | A261013-004#103 |
-| js/lib/income-modal.js | 1791902080 | B34-4 | A261013-004#103 |
-| js/pages/settings.js | 1791901600 | B34-4 | A261013-004#096 |
+| 檔案 | Version | Writer |
+|---|---|---|
+| MIGRATION.md | 1791906500 | ai-system-20261016-001 |
+| MIGRATION-GUIDE.md | 1791906620 | ai-system-20261016-001 |
 
 ---
 
@@ -171,21 +174,8 @@ A{YYMMDD}-{序號}#{回覆序號}
 
 | 檔案 | 舊版本 | 舊 Writer | 新 Writer | 取代時間 |
 |---|---|---|---|---|
-| docs/C-02-rules.md | 1791902260 | #106 | #162 | 2026-10-14 18:55 |
-| docs/C-04-delivery.md | 1791896240 | #018 | #107 | 2026-10-14 18:38 |
-| docs/C-05-learning.md | 1791902200 | #105 | #136 | 2026-10-14 18:46 |
-| docs/P-02-progress.md | 1791902500 | #109 | #136 | 2026-10-14 18:47 |
-| docs/P-13-handoff.md | 1791902920 | #136 | （待下一版） | — |
-| docs/P-15-reorg-plan.md | 1791903100 | #154 | #156 | 2026-10-14 18:52 |
-| docs/R-01-writers.md | 1791902980 | #136 | #164 | 2026-10-14 18:56 |
-| docs/R-01-writers.md | 1791903400 | #164 | A261016-001#001 | 2026-10-16 |
-| js/pages/code-list.js | 1791900700 | #079 | #121 | 2026-10-14 18:44 |
-| js/shared/yearrange-card.js | 1791901540 | #096 | #118 | 2026-10-14 18:43 |
-| js/entity/entity-helpers.js | 1791901180 | #089 | #131 | 2026-10-14 18:45 |
-| docs/C-08-architecture.md | — | — | （已刪除） | 2026-10-14 17:00 |
-| docs/C-09-rolling-conclusion.md | 1791897780 | #038 | （改名 P-12） | 2026-10-14 18:40 |
-| docs/C-10-handoff.md | 1791897720 | #037 | （改名 P-13） | 2026-10-14 18:40 |
-| docs/P-11-writers.md | 1791895600 | A261013-003#085 | （改名 R-01） | 2026-10-14 17:47 |
+| C-02-rules.md | 1791907900 | ai-system-20261016-001 | 1791908400 | 2026-10-16 |
+| C-04-delivery.md | 1791907500 | ai-system-20261016-001 | 1791908500 | 2026-10-16 |
 
 ---
 
@@ -195,30 +185,24 @@ A{YYMMDD}-{序號}#{回覆序號}
 
 | 步驟 | 動作 |
 |---|---|
-| 1 | 讀本檔 §四 |
-| 2 | 取最新編號（同日 + 1，不同日 -001） |
-| 3 | 自報編號 |
-| 4 | 每次回覆標：🆔 A{編號} #{序號} |
+| 1 | 使用者選擇專案 |
+| 2 | 讀 PROJECT-LIST.md 取該專案 `code` |
+| 3 | 讀本檔 §四 找該專案最新序號，+1 |
+| 4 | 生成編號（如 webapp-20261016-001） |
+| 5 | 每次回覆標：🆔 {編號} #{序號} |
 
-### 專案識別流程
+### 每次回覆開頭格式
 
-| 步驟 | 動作 |
-|---|---|
-| 1 | 讀 P-01-index.md |
-| 2 | 依 P-01 §一「專案」欄判斷當前專案 |
-| 3 | 若 P-01 不存在 → 主動問「是否新增專案名稱？」 |
+> 🆔 {對話編號} #{回覆序號}
+> 📂 所屬專案：{專案顯示名稱}（第 {N} 個對話）
 
-### Repo 識別流程（D-134）
+### Repo 識別流程
 
 | 步驟 | 動作 |
 |---|---|
 | 1 | 讀本檔 §三之一 |
 | 2 | 找對應 repo |
 | 3 | 用實際名稱（不用代稱） |
-
-### 使用者查詢「某檔最後編寫」
-
-AI 查 §五，回報：檔案 / 時間 / 編寫者 / 批次 / Version
 
 ---
 
@@ -244,15 +228,15 @@ AI 查 §五，回報：檔案 / 時間 / 編寫者 / 批次 / Version
 | 啟動卡 | C-00-startup.md |
 | 通用規則 | C-02-rules.md |
 | 交付格式 | C-04-delivery.md |
-| 議題結論 | P-12-conclusion.md |
-| 交接快照 | P-13-handoff.md |
-| 重組計畫 | P-15-reorg-plan.md |
+| 共同語言表 | C-11-terms.md |
+| 專案清單 | PROJECT-LIST.md |
+| 任務進度 | PROGRESS.md |
 
 ---
 
 /* ═══ EOF ═══
-F: docs/R-01-writers.md
-V: 1792108800
-B: B35-0
-W: A20261016-001#001
+F: AI-General/docs/records/R-01-writers.md
+V: 1791908700
+B: B34-4
+W: ai-system-20261016-001
 ═══ */
