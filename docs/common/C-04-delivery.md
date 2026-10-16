@@ -1,7 +1,7 @@
 # C-04 交付格式
 
 最後更新：B34-4
-Version: 1791907500
+Version: 1791908500
 Batch: B34-4
 Writer: A20261016-001
 用途：跨專案通用交付規範
@@ -52,7 +52,9 @@ Writer: A20261016-001
 >
 > 交付時間：YYYY-MM-DD HH:mm
 > Unix epoch：{10 位}
-> 編寫者：A{YYMMDD}-{序號}#{回覆序號}
+> 編寫者：{對話編號}#{回覆序號}
+
+**對話編號格式**：{專案代碼}-{YYYYMMDD}-{專案內序號3位}（見 C-02 §9.1）
 
 ---
 
@@ -138,7 +140,9 @@ Writer: A20261016-001
 
 > 📦 B32-2 [1791886800]
 >
-> docs/C-02-rules.md      V:1791886800 W:A20261013-001#014
+> docs/C-02-rules.md      V:1791886800 W:webapp-20261016-001#014
+
+**編寫者格式**：{對話編號}#{回覆序號}
 
 ---
 
@@ -152,7 +156,7 @@ Writer: A20261016-001
 |---|---|---|---|---|
 | 1 | AI-General/docs/common/C-02-rules.md | ⏳ 待交付 | 加入規則X、修改規則Z | — |
 | 2 | AI-General/docs/common/C-04-delivery.md | ⏳ 待交付 | 加入格式Y | — |
-| 3 | AI-General/docs/common/C-11-terms.md | ✅ 已交付 | 加入詞彙 | #003 |
+| 3 | AI-General/docs/common/C-11-terms.md | ✅ 已交付 | 加入詞彙 | webapp-20261016-001#003 |
 
 **狀態定義**：
 
@@ -339,7 +343,7 @@ C-09 滾動式結論的格式**與本檔（C-04 交付格式）完全一致**。
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-04-delivery.md
-V: 1791907500
+V: 1791908500
 B: B34-4
 W: A20261016-001
 ═══ */
