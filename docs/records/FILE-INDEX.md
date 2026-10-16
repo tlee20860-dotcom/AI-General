@@ -2,14 +2,16 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成（掃描所有檔案 EOF），請勿手動編輯。
 
-最後更新：2026-10-16 17:38:03 UTC
+最後更新：2026-10-16 17:39:06 UTC
 
 ---
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
-| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792172138 | B34-5 | ai-system-20261016-003#auto |
-| AI-General | records/FILE-INDEX.md | 1792172138 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792172283 | B34-5 | ai-system-20261016-003#auto |
+| AI-General | records/FILE-INDEX.md | 1792172283 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/common/C-02-rules.md | 1791944400 | B34-5 | ai-system-20261016-003#155 |
+| AI-General | common/C-02-rules.md | 1791944400 | B34-5 | ai-system-20261016-003#155 |
 | ai-system | external/ai-system/docs/common/C-06-token-log.md | 1791943800 | B34-5 | ai-system-20261016-003#154 |
 | AI-General | common/C-06-token-log.md | 1791943800 | B34-5 | ai-system-20261016-003#154 |
 | ai-system | external/ai-system/docs/common/C-07-summary.md | 1791942600 | B34-5 | ai-system-20261016-003#150 |
@@ -33,8 +35,6 @@
 | AI-General | common/C-00-startup.md | 1791931200 | B34-5 | ai-system-20261016-003#129 |
 | ai-system | external/ai-system/docs/common/C-01-profile.md | 1791930000 | B34-5 | ai-system-20261016-003#127 |
 | AI-General | common/C-01-profile.md | 1791930000 | B34-5 | ai-system-20261016-003#127 |
-| ai-system | external/ai-system/docs/common/C-02-rules.md | 1791928000 | B34-5 | ai-system-20261016-003#123 |
-| AI-General | common/C-02-rules.md | 1791928000 | B34-5 | ai-system-20261016-003#123 |
 | ai-system | external/ai-system/docs/common/C-05-learning/general.md | 1791927000 | B34-5 | ai-system-20261016-003#121 |
 | AI-General | common/C-05-learning/general.md | 1791927000 | B34-5 | ai-system-20261016-003#121 |
 | ai-system | external/ai-system/.github/workflows/setup-structure.yml | 1791925800 | B34-5 | ai-system-20261016-003#117 |
@@ -85,7 +85,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/FILE-INDEX.md
-V: 1792172283
+V: 1792172346
 B: B34-5
 W: ai-system-20261016-003#auto
 ═══ */
