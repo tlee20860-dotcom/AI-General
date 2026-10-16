@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包
+# setup-structure.yml — 四倉架構 + 動態共享包（穩健版）
 # 位置：AI-General/.github/workflows/setup-structure.yml
 # ============================================
 
@@ -184,6 +184,7 @@ jobs:
           echo "## 📚 核心訓練規則" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
+          # 用穩健函數輸出每個檔案
           for f in \
             docs/common/C-00-startup.md \
             docs/common/C-01-profile.md \
@@ -192,12 +193,7 @@ jobs:
             docs/records/R-01-writers.md
           do
             if [ -f "$f" ]; then
-              echo "---" >> "$OUTPUT"
-              echo "" >> "$OUTPUT"
-              echo "## 📄 $f" >> "$OUTPUT"
-              echo "" >> "$OUTPUT"
-              cat "$f" >> "$OUTPUT"
-              echo "" >> "$OUTPUT"
+              bash .github/workflows/append_file.sh "$f" "$OUTPUT"
             fi
           done
 
@@ -206,7 +202,9 @@ jobs:
           echo "" >> "$OUTPUT"
           echo "## 📋 專案清單（PROJECT-LIST.md）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          cat docs/records/PROJECT-LIST.md >> "$OUTPUT" 2>/dev/null || echo "（讀取失敗）" >> "$OUTPUT"
+          if [ -f "docs/records/PROJECT-LIST.md" ]; then
+            bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT"
+          fi
 
       # 步驟 4：生成 PACKAGE-SKILLS-W.md
       - name: Build PACKAGE-SKILLS-W.md
@@ -218,12 +216,7 @@ jobs:
           echo "" >> "$OUTPUT"
           for f in docs/skills/W/*.md; do
             if [ -f "$f" ]; then
-              echo "---" >> "$OUTPUT"
-              echo "" >> "$OUTPUT"
-              echo "## 📄 $f" >> "$OUTPUT"
-              echo "" >> "$OUTPUT"
-              cat "$f" >> "$OUTPUT"
-              echo "" >> "$OUTPUT"
+              bash .github/workflows/append_file.sh "$f" "$OUTPUT"
             fi
           done
 
@@ -260,7 +253,7 @@ jobs:
             echo "AI 已讀取通用規則包（PACKAGE-CORE.md），本包包含專案文件與程式碼。" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
 
-            # 加入專案文件（從外部倉庫的 docs/projects/{name}/）
+            # 加入專案文件
             proj_docs_dir="$path/docs/projects/${name}"
             if [ -d "$proj_docs_dir" ]; then
               echo "---" >> "$OUTPUT"
@@ -269,17 +262,12 @@ jobs:
               echo "" >> "$OUTPUT"
               for f in ${proj_docs_dir}/*.md; do
                 if [ -f "$f" ]; then
-                  echo "---" >> "$OUTPUT"
-                  echo "" >> "$OUTPUT"
-                  echo "## 📄 $f" >> "$OUTPUT"
-                  echo "" >> "$OUTPUT"
-                  cat "$f" >> "$OUTPUT"
-                  echo "" >> "$OUTPUT"
+                  bash .github/workflows/append_file.sh "$f" "$OUTPUT"
                 fi
               done
             fi
 
-            # 加入程式碼（從外部 checkout 的倉庫）
+            # 加入程式碼
             if [ -d "$path" ]; then
               echo "---" >> "$OUTPUT"
               echo "" >> "$OUTPUT"
@@ -291,17 +279,11 @@ jobs:
                 -not -path "./node_modules/*" \
                 -not -path "./.github/*" \
                 -not -path "./docs/*" \
-                | sort | while read -r file; do
+                | sort > /tmp/code_files.txt
+              while read -r file; do
                 clean_path="${file#./}"
-                echo "---" >> "../../$OUTPUT"
-                echo "" >> "../../$OUTPUT"
-                echo "## 📄 $clean_path" >> "../../$OUTPUT"
-                echo "" >> "../../$OUTPUT"
-                echo '```' >> "../../$OUTPUT"
-                cat "$file" >> "../../$OUTPUT"
-                echo '```' >> "../../$OUTPUT"
-                echo "" >> "../../$OUTPUT"
-              done
+                bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT"
+              done < /tmp/code_files.txt
               cd ../..
             fi
 
@@ -330,7 +312,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1791908000
+# V: 1791908100
 # B: B34-4
 # W: A20261016-001
 # ═══ EOF ═══
