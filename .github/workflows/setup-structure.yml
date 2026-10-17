@@ -7,7 +7,6 @@
 #   - 保留：R-01 / PROJECT-LIST 讀取與生成（供舊源檔）
 #   - 停止：FILE-INDEX / HISTORY-INDEX 生成（由 STATE-INDEX 取代）
 #   - 專案清單：yml 頂部 PROJECT_REPOS（新增專案時更新此處）
-#   - 源檔修改完成後，改用 v10b（切換版）移除舊檔
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -68,7 +67,7 @@ jobs:
           if [ -n "$PROJECT_REPOS" ]; then
             echo "  來源：yml PROJECT_REPOS"
             echo "$PROJECT_REPOS" | while IFS='|' read -r name path repo pkgno pkg domain display; do
-              [ -z "$repo" ] && continue
+              if [ -z "$repo" ]; then continue; fi
               echo "  Checkout: $repo -> $path"
               git clone --depth 1 "https://x-access-token:${{ secrets.CROSS_REPO_PAT }}@github.com/$repo.git" "$path" 2>/dev/null || echo "    (clone 失敗，跳過)"
             done
@@ -106,7 +105,7 @@ jobs:
 
           if [ -d "external" ]; then
             for p01 in external/*/docs/projects/*/P-01-index.md; do
-              [ -f "$p01" ] || continue
+              if [ ! -f "$p01" ]; then continue; fi
 
               name=$(awk '/^---$/{c++; next} c==1 && /^name:/{sub(/^name:[ ]*/, ""); print; exit}' "$p01")
               code=$(awk '/^---$/{c++; next} c==1 && /^code:/{sub(/^code:[ ]*/, ""); print; exit}' "$p01")
@@ -115,12 +114,12 @@ jobs:
               repo=$(awk '/^---$/{c++; next} c==1 && /^repo:/{sub(/^repo:[ ]*/, ""); print; exit}' "$p01")
               display=$(awk '/^---$/{c++; next} c==1 && /^display:/{sub(/^display:[ ]*/, ""); print; exit}' "$p01")
 
-              [ -z "$name" ] && name=$(basename "$(dirname "$p01")")
-              [ -z "$display" ] && display="$name"
-              [ -z "$domain" ] && domain="-"
-              [ -z "$pkgno" ] && pkgno="-"
-              [ -z "$repo" ] && repo="-"
-              [ -z "$code" ] && code="$name"
+              name=${name:-$(basename "$(dirname "$p01")")}
+              display=${display:-$name}
+              domain=${domain:--}
+              pkgno=${pkgno:--}
+              repo=${repo:--}
+              code=${code:-$name}
 
               echo "$display|$code|$domain|$pkgno|$repo" >> /tmp/p01-list.txt
               echo "  找到專案：$display (code=$code, domain=$domain, pkgno=$pkgno)"
@@ -144,7 +143,7 @@ jobs:
           scan_files() {
             local base="$1"
             local dir="$2"
-            [ -d "$dir" ] || return 0
+            if [ ! -d "$dir" ]; then return 0; fi
             find "$dir" -type f \( -name "*.md" -o -name "*.yml" -o -name "*.js" -o -name "*.html" -o -name "*.css" \) \
               -not -path "*/.git/*" \
               -not -path "*/node_modules/*" \
@@ -154,7 +153,7 @@ jobs:
                 V=$(grep -oE '^V: *[0-9]+' /tmp/eof-tail.txt | head -1 | sed 's/^V: *//' || true)
                 B=$(grep -oE '^B: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^B: *//' || true)
                 W=$(grep -oE '^W: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^W: *//' || true)
-                [ -z "$V" ] && continue
+                if [ -z "$V" ]; then continue; fi
                 REL="${f#./}"
                 REL="${REL#docs/}"
                 echo "$base|$REL|$V|$B|$W" >> "$TMP_TABLE"
@@ -165,7 +164,7 @@ jobs:
           scan_files "AI-General" ".github"
           if [ -d "external" ]; then
             for repo_dir in external/*/; do
-              [ -d "$repo_dir" ] || continue
+              if [ ! -d "$repo_dir" ]; then continue; fi
               repo_name=$(basename "$repo_dir")
               scan_files "$repo_name" "$repo_dir"
             done
@@ -194,7 +193,7 @@ jobs:
             echo "|---|---|---|---|---|"
             if [ -s "/tmp/p01-list.txt" ]; then
               while IFS='|' read -r display code domain pkgno repo; do
-                [ -z "$display" ] && continue
+                if [ -z "$display" ]; then continue; fi
                 echo "| $display | $code | $domain | $pkgno | $repo |"
               done < /tmp/p01-list.txt
             fi
@@ -207,7 +206,7 @@ jobs:
             echo "|---|---|---|---|---|"
             if [ -s "$TMP_TABLE" ]; then
               sort -t'|' -k3 -nr "$TMP_TABLE" | while IFS='|' read -r repo file v b w; do
-                [ -z "$repo" ] && continue
+                if [ -z "$repo" ]; then continue; fi
                 echo "| $repo | $file | $v | $b | $w |"
               done
             fi
@@ -238,7 +237,7 @@ jobs:
             echo "F: AI-General/docs/records/STATE-INDEX.md"
             echo "V: $(date -u +%s)"
             echo "B: B34-5"
-            echo "W: ai-system-20261017-004#015"
+            echo "W: ai-system-20261017-004#018"
             echo "═══ */"
           } > "$OUTPUT"
 
@@ -254,10 +253,10 @@ jobs:
           WARN_COUNT=0
 
           while IFS= read -r f; do
-            [ -z "$f" ] && continue
-            echo "$f" | grep -q "STATE-INDEX.md" && continue
-            echo "$f" | grep -q "build-repo" && continue
-            echo "$f" | grep -qE "(\.git|node_modules)" && continue
+            if [ -z "$f" ]; then continue; fi
+            if echo "$f" | grep -q "STATE-INDEX.md"; then continue; fi
+            if echo "$f" | grep -q "build-repo"; then continue; fi
+            if echo "$f" | grep -qE "(\.git|node_modules)"; then continue; fi
 
             for dep in "R-01-writers" "PROJECT-LIST" "FILE-INDEX" "HISTORY-INDEX"; do
               if grep -q "$dep" "$f" 2>/dev/null; then
@@ -617,9 +616,9 @@ jobs:
           fi
 
           while IFS='|' read -r name path pkgno pkg domain display; do
-            [ -z "$name" ] && continue
-            [ -z "$pkg" ] && continue
-            [ "$pkg" = "（無，體系層不生成專案包）" ] && continue
+            if [ -z "$name" ]; then continue; fi
+            if [ -z "$pkg" ]; then continue; fi
+            if [ "$pkg" = "（無，體系層不生成專案包）" ]; then continue; fi
 
             SHORT="${pkg#PACKAGE-}"
             OUTPUT="build-repo/${pkgno}-${SHORT}"
@@ -654,17 +653,18 @@ jobs:
               echo "" >> "$OUTPUT"
               echo "# 💻 專案程式碼" >> "$OUTPUT"
               echo "" >> "$OUTPUT"
-              cd "$path"
-              find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" -o -name "*.json" \) \
-                -not -path "./.git/*" \
-                -not -path "./node_modules/*" \
-                -not -path "./.github/*" \
-                -not -path "./docs/*" \
-                | sort > /tmp/code_files.txt
-              while read -r file; do
-                bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT"
-              done < /tmp/code_files.txt
-              cd ../..
+              ( 
+                cd "$path" || exit 1
+                find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" -o -name "*.json" \) \
+                  -not -path "./.git/*" \
+                  -not -path "./node_modules/*" \
+                  -not -path "./.github/*" \
+                  -not -path "./docs/*" \
+                  | sort > /tmp/code_files.txt
+                while read -r file; do
+                  bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT"
+                done < /tmp/code_files.txt
+              )
             fi
 
             case "$domain" in
@@ -722,7 +722,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792214400
+# V: 1792215600
 # B: B34-5
-# W: ai-system-20261017-004#015
+# W: ai-system-20261017-004#018
 # ═══ EOF ═══
