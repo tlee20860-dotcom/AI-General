@@ -2,7 +2,7 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成（掃描各 P-01 YAML + 所有檔案 EOF），請勿手動編輯。
 
-最後更新：2026-10-17 05:55:15 UTC
+最後更新：2026-10-17 05:57:21 UTC
 
 ---
 
@@ -18,7 +18,9 @@
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
+| AI-General | common/C-00-startup.md | 1792218000 | B34-5 | ai-system-20261017-004#020 |
 | AI-General | .github/workflows/setup-structure.yml | 1792216800 | B34-5 | ai-system-20261017-004#019 |
+| AI-General | records/STATE-INDEX.md | 1792216516 | B34-5 | ai-system-20261017-004#019 |
 | AI-General | records/FILE-INDEX.md | 1792203866 | B34-5 | ai-system-20261016-003#auto |
 | AI-General | records/SYSTEM-HANDOFF.md | 1791956000 | B34-5 | ai-system-20261016-003#248 |
 | AI-General | records/SYSTEM-CONCLUSION.md | 1791956000 | B34-5 | ai-system-20261016-003#248 |
@@ -33,7 +35,6 @@
 | web-app-family | external/web-app-family/.github/workflows/notify.yml | 1791936000 | B34-5 | ai-system-20261016-003#135 |
 | AI-General | records/R-01-writers.md | 1791934800 | B34-5 | ai-system-20261016-003#134 |
 | AI-General | common/C-11-terms.md | 1791932400 | B34-5 | ai-system-20261016-003#130 |
-| AI-General | common/C-00-startup.md | 1791931200 | B34-5 | ai-system-20261016-003#129 |
 | AI-General | common/C-01-profile.md | 1791930000 | B34-5 | ai-system-20261016-003#127 |
 | AI-General | common/C-05-learning/general.md | 1791927000 | B34-5 | ai-system-20261016-003#121 |
 | AI-General | common/C-05-learning/system.md | 1791922200 | B34-5 | ai-system-20261016-003#111 |
@@ -92,7 +93,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792216516
+V: 1792216642
 B: B34-5
 W: ai-system-20261017-004#019
 ═══ */
