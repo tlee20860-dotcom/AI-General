@@ -1,9 +1,9 @@
 # SYSTEM-HANDOFF（體系層交接快照）
 
 最後更新：ai-system-20261016-003
-Version: 1791933600
+Version: 1791950000
 Batch: B34-5
-Writer: ai-system-20261016-003#133
+Writer: ai-system-20261016-003#225
 上限：80 行
 用途：體系層對話交接快照
 
@@ -14,31 +14,29 @@ Writer: ai-system-20261016-003#133
 | 欄位 | 值 |
 |---|---|
 | 對話編號 | ai-system-20261016-003 |
-| 本次範圍 | 啟動包拆分、C-05 拆檔、體系層上下通順機制、Action 重構、專案清單重整 |
-| 累計回覆 | 約 133 條 |
-| 狀態 | 大部分完成，剩 4 項待處理 |
+| 本次範圍 | 共享包機制優化、廢除 R-01 討論、體系全面自動化藍圖設計 |
+| 累計回覆 | 約 225 條 |
+| 狀態 | 藍圖完成，待執行重構 |
 
 ---
 
 ## 二、議題進度
 
-**指向**：SYSTEM-CONCLUSION.md §一（完整議題清單）
+**指向**：SYSTEM-CONCLUSION.md §一
 
-**未結案議題**：
-
-| # | 議題 |
-|---|---|
-| 11 | README + FILE-INDEX + HISTORY-INDEX |
-| 15 | SYSTEM-HANDOFF.md 新增（本檔） |
-| 23 | AI-packages 舊檔清理 |
+**本對話重點結論**：
+1. **全面精簡**：C-* 合併去水、P-* 合併為 7 檔。
+2. **全面自動化**：廢除手動 R-01、PROJECT-LIST，改由 Action 生成 `STATE-INDEX.md`。
+3. **SSOT 集中**：各專案資訊改寫於 `P-01-index.md` 的 YAML frontmatter。
+4. **新增專案防呆**：AI 必須先索取「Repo 完整名稱」，未取得不進下一步。
 
 ---
 
 ## 三、關鍵決策
 
-**指向**：SYSTEM-CONCLUSION.md §三（完整決策記錄）
+**指向**：SYSTEM-CONCLUSION.md §三
 
-**本次新增決策**：D-138 ~ D-147（見 CONCLUSION）。
+**新增決策**：D-148 ~ D-152（廢 R-01、P-01 改 YAML、Action 統管等）。
 
 ---
 
@@ -46,23 +44,23 @@ Writer: ai-system-20261016-003#133
 
 | # | 優先確認 |
 |---|---|
-| 1 | R-01 是否已更新（含 ai-training 移除、AI-packages 改名） |
-| 2 | WEB-APP-Family / AI-training-files 的 notify.yml 是否已交付 |
-| 3 | AI-packages 舊檔（8 個）是否已清理 |
-| 4 | AI-packages 是否已有 README.md |
-| 5 | 01-CORE-SYSTEM.md 是否真的在 AI-packages（#118 已確認） |
+| 1 | 是否已讀取使用者貼上的「體系重組藍圖」？ |
+| 2 | 是否已列出「內容去向對照表」與「不可刪清單」給使用者確認？ |
+| 3 | 是否確認 C-02 合併後的行數未超過 800 行？ |
 
 ---
 
-## 五、未完成事項
+## 五、未完成事項（新對話需執行）
 
 | # | 項目 |
 |---|---|
-| 1 | R-01-writers.md §三、§三之一、§五、§六 更新 |
-| 2 | WEB-APP-Family/notify.yml 改 paths-ignore |
-| 3 | AI-training-files/notify.yml 停用 |
-| 4 | AI-packages/README.md 新增 |
-| 5 | AI-packages 舊檔清理（8 個） |
+| 1 | 廢除 R-01、PROJECT-LIST（內容分散至 C-02、P-01、Action） |
+| 2 | 更新 P-01（加 YAML frontmatter） |
+| 3 | 精簡 C-02（合併 C-03、C-06、C-07、C-09、C-10，去水） |
+| 4 | 精簡 P-04（合併 P-05~P-10、P-14、P-15 為專案百科） |
+| 5 | 修改 setup-structure.yml（移除舊掃描，改生成 STATE-INDEX） |
+| 6 | 加入 Action 引用校驗機制 |
+| 7 | 更新 C-00 新增專案流程（先要 repo） |
 
 ---
 
@@ -70,17 +68,15 @@ Writer: ai-system-20261016-003#133
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 交付 R-01（依賴已齊） |
-| 2 | 交付 2 個 notify.yml |
-| 3 | 交付 AI-packages/README.md |
-| 4 | 清理 8 個舊檔 |
-| 5 | 交付完成後，測試新對話啟動流程 |
+| 1 | 開新對話，上傳 01-CORE-SYSTEM.md |
+| 2 | 貼上 #224 的啟動指令（體系重構藍圖） |
+| 3 | 執行「體系全面重構」，完成後舊系統正式退役 |
 
 ---
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-HANDOFF.md
-V: 1791933600
+V: 1791950000
 B: B34-5
-W: ai-system-20261016-003#133
+W: ai-system-20261016-003#225
 ═══ */
