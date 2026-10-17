@@ -8,7 +8,6 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
-AI-General|.github/PATCH.md|1792262000|B34-5|ai-system-20261017-005#081
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792258800|B34-5|ai-system-20261017-005#074
 AI-General|docs/common/C-04-output.md|1792258200|B34-5|ai-system-20261017-005#072
 AI-General|docs/common/C-02-rules.md|1792258200|B34-5|ai-system-20261017-005#072
