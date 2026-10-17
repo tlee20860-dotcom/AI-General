@@ -426,7 +426,7 @@ Writer: refactor-final（未編號）
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-02-rules.md
-V: 1792252800
+V: 1792258200
 B: B34-5
-W: ai-system-20261017-005#010
+W: ai-system-20261017-005#072
 ═══ */
