@@ -8,9 +8,9 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792282000|B34-6|ai-system-20261018-006#007
 AI-General|docs/common/C-00-startup.md|1792282000|B34-6|ai-system-20261018-006#007
 AI-General|docs/common/C-05-learning/system.md|1792263500|B34-5|ai-system-20261017-005#085
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792263000|B34-5|ai-system-20261017-005#084
 AI-General|docs/records/PROGRESS.md|1792263000|B34-5|ai-system-20261017-005#084
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792262500|B34-5|ai-system-20261017-005#083
 AI-General|docs/common/C-03-flow.md|1792262500|B34-5|ai-system-20261017-005#083
