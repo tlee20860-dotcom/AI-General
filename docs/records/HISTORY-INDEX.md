@@ -81,3 +81,7 @@
 | records/FILE-INDEX.md |  1792202019  | B34-5 |  1792202158  | B34-5 | 2026-10-17 02:21 |
 | external/ai-system/docs/common/C-04-delivery.md |  1791921000  | B34-5 |  1791953600  | B34-5 | 2026-10-17 02:21 |
 | common/C-04-delivery.md |  1791921000  | B34-5 |  1791953600  | B34-5 | 2026-10-17 02:21 |
+| external/ai-system/docs/records/FILE-INDEX.md |  1792202158  | B34-5 |  1792203675  | B34-5 | 2026-10-17 02:22 |
+| records/FILE-INDEX.md |  1792202158  | B34-5 |  1792203675  | B34-5 | 2026-10-17 02:22 |
+| external/ai-system/docs/records/SYSTEM-HANDOFF.md |  1791950000  | B34-5 |  1791956000  | B34-5 | 2026-10-17 02:22 |
+| records/SYSTEM-HANDOFF.md |  1791950000  | B34-5 |  1791956000  | B34-5 | 2026-10-17 02:22 |
