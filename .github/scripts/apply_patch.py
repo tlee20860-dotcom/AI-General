@@ -32,10 +32,10 @@ for rel_path, content_block in matches:
         
     new_content = content
     
-    # 同時支援 OLD (純字串) 與 REGEX (正則)
-    pairs = re.findall(r"<<<<<<< (OLD|REGEX)\n(.*?)\n=======\n(.*?)\n>>>>>>> NEW", content_block, re.S)
+    # 支援 OLD (單次唯一)、REGEX (正則)、REPLACE_ALL (全量替換)
+    pairs = re.findall(r"<<<<<<< (OLD|REGEX|REPLACE_ALL)\n(.*?)\n=======\n(.*?)\n>>>>>>> NEW", content_block, re.S)
     if not pairs:
-        errors.append(f"{rel_path}: No OLD/REGEX pairs found")
+        errors.append(f"{rel_path}: No OLD/REGEX/REPLACE_ALL pairs found")
         continue
         
     for mode, old, new in pairs:
@@ -48,8 +48,16 @@ for rel_path, content_block in matches:
                     print(f"[SKIP] {rel_path}: Already applied")
                 else:
                     errors.append(f"{rel_path}: Regex OLD not found, NEW not present")
-            else:
-                errors.append(f"{rel_path}: Regex OLD matched multiple times")
+        elif mode == "REPLACE_ALL":
+            count = new_content.count(old)
+            if count > 0:
+                new_content = new_content.replace(old, new)
+                print(f"[OK] {rel_path}: Replaced ALL {count} instances")
+            elif count == 0:
+                if new in new_content:
+                    print(f"[SKIP] {rel_path}: Already applied")
+                else:
+                    errors.append(f"{rel_path}: REPLACE_ALL OLD not found, NEW not present")
         else:
             count = new_content.count(old)
             if count == 1:
@@ -76,7 +84,6 @@ for rel_path, new_content in planned:
         f.write(new_content)
     print(f"[WRITE] {rel_path}")
 
-# 執行成功後重置
 with open(patch_file, "w", encoding="utf-8") as f:
     f.write("# 請在此貼上新的替換指令\n")
 print("[RESET] PATCH.md reset")
