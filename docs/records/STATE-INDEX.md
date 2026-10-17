@@ -12,7 +12,7 @@ AI-General|docs/common/C-05-engine.md|1792252800|B34-5|ai-system-20261017-004#12
 AI-General|docs/common/C-04-output.md|1792252800|B34-5|ai-system-20261017-004#120
 AI-General|docs/common/C-03-flow.md|1792252800|B34-5|ai-system-20261017-004#120
 AI-General|docs/common/C-02-rules.md|1792252800|B34-5|ai-system-20261017-004#120
-AI-General|docs/common/C-00-startup.md|1792252800|B34-5|ai-system-20261017-004#120
+AI-General|docs/common/C-00-startup.md|1792252800|B34-5|ai-system-20261017-005#001
 AI-General|docs/common/C-05-learning/general.md|1792226400|B34-5|ai-system-20261017-004#032
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792225200|B34-5|ai-system-20261017-004#029
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792221600|B34-5|ai-system-20261017-004#024
