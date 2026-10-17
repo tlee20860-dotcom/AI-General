@@ -16,6 +16,7 @@ AI-General|docs/common/C-04-output.md|1792252800|B34-5|ai-system-20261017-005#01
 AI-General|docs/common/C-03-flow.md|1792252800|B34-5|ai-system-20261017-005#010
 AI-General|docs/common/C-02-rules.md|1792252800|B34-5|ai-system-20261017-005#010
 AI-General|docs/common/C-00-startup.md|1792252800|B34-5|ai-system-20261017-005#010
+AI-General|.github/PATCH.md|1792252800|B34-5|ai-system-20261017-005#064
 AI-General|docs/common/C-05-learning/general.md|1792226400|B34-5|ai-system-20261017-004#032
 AI-General|docs/common/C-05-learning/system.md|1791922200|B34-5|ai-system-20261016-003#111
 AI-General|docs/skills/W/W-00-startup.md|1791903760|B34-4|A20261013-004#169
