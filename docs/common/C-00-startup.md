@@ -11,10 +11,10 @@
 （以下為原本的 C-00 內容）
 
 # C-00 啟動卡（AI 首次必讀）
-最後更新：B34-5
-Version: 1791931200
+最後更新：ai-system-20261017-004
+Version: 1792218000
 Batch: B34-5
-Writer: ai-system-20261016-003#129
+Writer: ai-system-20261017-004#020
 用途：你只需上傳此檔即可啟動新對話
 
 ---
@@ -43,7 +43,7 @@ Writer: ai-system-20261016-003#129
 |---|---|
 | 1 | 讀完此檔 |
 | 2 | 回報「已讀取 startup」 |
-| 3 | 檢查 R-01-writers.md（AI 名單 + Repo 清單） |
+| 3 | 檢查 STATE-INDEX.md（專案總覽 + 檔案清單） |
 | 4 | **讀取 SYSTEM-HANDOFF.md（若存在）** |
 | 5 | **讀取 SYSTEM-CONCLUSION.md（若存在）** |
 | 6 | 回報共享包構建編號 |
@@ -59,13 +59,14 @@ Writer: ai-system-20261016-003#129
 | SYSTEM-HANDOFF.md | 體系層交接快照（≤ 80 行） |
 | SYSTEM-CONCLUSION.md | 體系層滾動式累積結論 + 議題表 + 決策記錄 |
 
-**R-01 說明**：
+**STATE-INDEX 說明**：
 
 | 章節 | 內容 |
 |---|---|
-| §三 | 專案清單 |
-| §三之一 | Repo 清單（**提到 repo 一律用實際名稱**） |
-| §四 | 編寫者清單 |
+| §一 | 專案總覽（專案顯示名稱 / code / domain / package_no / repo） |
+| §二 | 檔案清單（Repo / 檔案 / Version / Batch / Writer） |
+| §三 | 歷史歸屬 |
+| §四 | 已廢除檔案 |
 
 ---
 
@@ -84,8 +85,8 @@ Writer: ai-system-20261016-003#129
 
 | 情境 | 動作 |
 |---|---|
-| 有 R-01-writers.md | 取該專案最新序號 + 1 |
-| 無 R-01-writers.md | 自建第一筆，並交付 R-01 |
+| 有 STATE-INDEX.md | 從 §二 取該專案最新 W 欄位序號 + 1 |
+| 無 STATE-INDEX.md | 自建第一筆，並手動維護 |
 
 ### 3.3 回覆序號
 
@@ -101,10 +102,10 @@ Writer: ai-system-20261016-003#129
 | # | 規則 |
 |---|---|
 | 1 | 使用者回答本次對話所屬專案之前，**禁止生成任何對話編號**（含預設、繼承、猜測） |
-| 2 | 收到專案回答後，**必須重新從 PROJECT-LIST.md 讀取該專案的 `code`** |
-| 3 | 編號必須**重新計算**（從 R-01 §四 取該專案最新序號 +1） |
+| 2 | 收到專案回答後，**必須重新從 STATE-INDEX.md §一 讀取該專案的 `code`** |
+| 3 | 編號必須**重新計算**（從 STATE-INDEX.md §二 取該專案最新序號 +1） |
 | 4 | 若在確認專案前已自報編號，該編號**必須作廢**，重新生成後再輸出 |
-| 5 | 若發現新對話曾自報錯誤編號，AI **必須主動指出並要求更正 R-01** |
+| 5 | 若發現新對話曾自報錯誤編號，AI **必須主動指出並要求更正 STATE-INDEX** |
 
 **違反 → 視為任務失敗。**
 
@@ -258,17 +259,17 @@ Writer: ai-system-20261016-003#129
 | 重組計畫 | P-15-reorg-plan.md |
 | 錯誤摘要 | P-99-errors-map.md |
 
-### L4 機械記錄（R-*）
+### L4 機械記錄（R-* / STATE-INDEX）
 
 | 主題 | 檔案 |
 |---|---|
-| AI 名單 + 專案清單 + **Repo 清單** | R-01-writers.md |
-| 檔案索引（Actions 生成） | FILE-INDEX.md |
-| 歷史歸屬（Actions 生成） | HISTORY-INDEX.md |
+| **體系狀態索引（專案清單 + 檔案清單 + 歷史）** | **STATE-INDEX.md** |
+| 檔案索引（Actions 生成） | （已併入 STATE-INDEX.md） |
+| 歷史歸屬（Actions 生成） | （已併入 STATE-INDEX.md） |
 
 ---
 
-## 十、啟動機制（D-136 修正）
+## 十、啟動機制
 
 ### 10.1 核心：上傳共享包
 
@@ -284,13 +285,13 @@ Writer: ai-system-20261016-003#129
 
 | # | 檔案 | 內容 |
 |---|---|---|
-| 1 | 01-CORE-SYSTEM.md | C-00 + C-01 + C-02 + C-04 + C-05(general+system) + C-07 + C-09 + C-10 + R-01 + SYSTEM-HANDOFF + SYSTEM-CONCLUSION + PROJECT-LIST |
+| 1 | 01-CORE-SYSTEM.md | C-00 + C-01 + C-02 + C-04 + C-05(general+system) + C-07 + C-09 + C-10 + STATE-INDEX + SYSTEM-HANDOFF + SYSTEM-CONCLUSION |
 
 **方式 2（專案層）**：上傳 2 檔
 
 | # | 檔案 | 內容 |
 |---|---|---|
-| 1 | 02-CORE-PROJECT.md | C-00 + C-01 + C-04 + C-05(general+w) + R-01 + PROJECT-LIST |
+| 1 | 02-CORE-PROJECT.md | C-00 + C-01 + C-04 + C-05(general+w) + STATE-INDEX |
 | 2 | 90-{專案}.md 等 | 專案文件 + 程式碼 |
 
 ### 10.3 包編號對照
@@ -323,9 +324,10 @@ Writer: ai-system-20261016-003#129
 |---|---|
 | 1 | 使用者說「新增專案 X」 |
 | 2 | AI 依 §十一 問領域 |
-| 3 | AI 更新 PROJECT-LIST.md（含 package_no） |
-| 4 | AI 更新 R-01 §三 |
-| 5 | GitHub Actions 自動產生對應編號的共享包 |
+| 3 | **AI 向使用者索取新專案的「Repo 完整名稱」** |
+| 4 | AI 更新 `setup-structure.yml` 的 `PROJECT_REPOS` 陣列 |
+| 5 | AI 提醒使用者更新該專案的 `P-01-index.md` YAML |
+| 6 | GitHub Actions 自動產生對應編號的共享包 |
 
 ---
 
@@ -359,7 +361,9 @@ Writer: ai-system-20261016-003#129
 | 3b | **新領域** → AI 主動建議建 `{X}-*` 6 檔 |
 | 4 | 使用者確認 → AI 產出 6 檔草稿 |
 | 5 | AI 依使用者回饋迭代 |
-| **6** | **產出該專案的 `notify.yml`**（參考既有 notify 內容，改 dispatch type） |
+| **6** | **索取「新建的 Repo 完整名稱」**（若未取得，不准進入下一步） |
+| 7 | 更新 `setup-structure.yml` 的 `PROJECT_REPOS` |
+| 8 | 產出該專案的 `notify.yml` |
 
 **6 檔模板**：
 
@@ -383,7 +387,7 @@ Writer: ai-system-20261016-003#129
 | L1 | C-* | AI 協作通用（規則 / 流程 / 格式） |
 | L2 | W-* | Web App 通用（技術規則） |
 | L3 | P-* | 本專案專屬（索引 / 進度 / 資料） |
-| L4 | R-* | 機械記錄（名單 / 索引 / Repo） |
+| L4 | STATE-INDEX.md | 機械記錄（專案清單 / 檔案索引 / 歷史） |
 
 **詳細**：C-02 §零點八
 
@@ -400,8 +404,8 @@ Writer: ai-system-20261016-003#129
 | 1. 啟動 | 上傳 01-CORE-SYSTEM.md | 讀規則、回報構建編號與 4 項摘要 | — |
 | 2. 選專案 | 說「確認」 | 列所有專案、問哪個 | — |
 | 3. 生成編號 | 回答專案 | **重新計算編號**（防呆 §3.4） | 🆔 編號 |
-| 4. 更新 R-01 | 說「繼續」→「確認」 | 輸出完整 R-01 | R-01 更新 |
-| 5. 需求 | 說「已更新」→ 提需求 | 分析、提方案、等確認 | — |
+| 4. 報告編號 | 說「繼續」 | 報告「編號已記錄，Action 下次執行自動寫入 STATE-INDEX」 | — |
+| 5. 需求 | 說「繼續」→ 提需求 | 分析、提方案、等確認 | — |
 | 6. 討論 | 說「確認」 | **只記錄修改點，不交付**（C-02 §19.1） | 檔案狀態總表 |
 | 7. 交付 | 說「開始交付」→「確認清單」 | 逐批交付 | 檔案更新 |
 
@@ -433,7 +437,7 @@ Writer: ai-system-20261016-003#129
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-00-startup.md
-V: 1791931200
+V: 1792218000
 B: B34-5
-W: ai-system-20261016-003#129
+W: ai-system-20261017-004#020
 ═══ */
