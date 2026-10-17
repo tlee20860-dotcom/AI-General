@@ -1,44 +1,35 @@
-name: Execute Patch Multi
+name: Apply Patch
 
 on:
+  workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/PATCH.md'
-  workflow_dispatch:
+      - "PATCH.md"
+
+permissions:
+  contents: write
 
 jobs:
-  patch:
+  apply:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Run Patch
-        run: |
-          python3 -c "
-import re
-with open('.github/workflows/PATCH.md') as f:
-    text = f.read()
-blocks = re.findall(r'## 修改目標\s*\n?\`(.*?)\`.*?<<<<<<< OLD\n(.*?)=======\n(.*?)>>>>>>> NEW', text, re.DOTALL)
-for t, o, n in blocks:
-    t = t.strip()
-    try:
-        with open(t, 'r') as f: c = f.read()
-        if c.count(o) == 1:
-            with open(t, 'w') as f: f.write(c.replace(o, n))
-            print(f'Success: {t}')
-        else:
-            print(f'Error or multiple matches: {t}')
-    except Exception as e:
-        print(f'Failed {t}: {e}')
-          "
-          rm -f .github/workflows/PATCH.md
-      - name: Commit
+          python-version: "3.x"
+
+      - name: Apply patch
+        run: python .github/scripts/apply_patch.py
+
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "fix: multi-patch [skip ci]" || echo "No changes"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "Apply PATCH.md"
           git push
