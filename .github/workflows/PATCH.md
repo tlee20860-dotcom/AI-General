@@ -1,4 +1,4 @@
-# PATCH
+<!-- Trigger Commit: 20261017-005 -->
 
 ## FILE: docs/common/C-00-startup.md
 <<<<<<< OLD
