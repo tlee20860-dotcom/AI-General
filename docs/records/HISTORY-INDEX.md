@@ -69,3 +69,7 @@
 | records/FILE-INDEX.md |  1792172346  | B34-5 |  1792172508  | B34-5 | 2026-10-16 23:44 |
 | external/ai-system/.github/workflows/setup-structure.yml |  1791925800  | B34-5 |  1791948000  | B34-5 | 2026-10-16 23:44 |
 | .github/workflows/setup-structure.yml |  1791925800  | B34-5 |  1791948000  | B34-5 | 2026-10-16 23:44 |
+| external/ai-system/docs/records/FILE-INDEX.md |  1792172508  | B34-5 |  1792194269  | B34-5 | 2026-10-17 01:53 |
+| records/FILE-INDEX.md |  1792172508  | B34-5 |  1792194269  | B34-5 | 2026-10-17 01:53 |
+| external/ai-system/docs/records/SYSTEM-HANDOFF.md |  1791933600  | B34-5 |  1791950000  | B34-5 | 2026-10-17 01:53 |
+| records/SYSTEM-HANDOFF.md |  1791933600  | B34-5 |  1791950000  | B34-5 | 2026-10-17 01:53 |
