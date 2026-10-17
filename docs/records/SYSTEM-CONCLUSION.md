@@ -1,9 +1,9 @@
 # SYSTEM-CONCLUSION（體系層滾動結論）
 
-最後更新：ai-system-20261016-003
-Version: 1791956000
+最後更新：ai-system-20261017-004
+Version: 1792221600
 Batch: B34-5
-Writer: ai-system-20261016-003#248
+Writer: ai-system-20261017-004#024
 用途：體系層滾動式累積結論（議題 + 設計 + 決策）
 
 ---
@@ -44,6 +44,10 @@ Writer: ai-system-20261016-003#248
 | 30 | 全體系精簡藍圖 | ✅ |
 | 31 | 兩階段確認機制 | ✅ |
 | 32 | Action 順序 B 腳本 | ✅ |
+| **33** | **雙軌重構：先加後減** | **✅ 已決策，v10a 已上線** |
+| **34** | **P-01 加 YAML** | **⏳ 待交付（批次 5）** |
+| **35** | **v10b 切換版（廢除舊檔）** | **⏳ 待執行（最後一步）** |
+| **36** | **C-00 新增專案先索取 Repo** | **✅ 已寫入 C-00** |
 
 ---
 
@@ -90,17 +94,17 @@ Writer: ai-system-20261016-003#248
 | SYSTEM-CONCLUSION.md | 滾動結論（議題 + 決策） |
 | SYSTEM-HANDOFF.md | 交接快照（≤ 80 行） |
 
-### 2.6 全新精簡與自動化藍圖（待下一對話執行）
+### 2.6 全新精簡與自動化藍圖（v10a 已執行，v10b 待執行）
 
-| 動作 | 內容 |
-|---|---|
-| 廢除 | R-01、PROJECT-LIST |
-| 合併 C 檔 | C-05、C-06、C-07、C-09、C-10 併入 C-02 與 SYSTEM.md |
-| 合併 P 檔 | P-05~P-10、P-14、P-15 併入 P-04（專案百科） |
-| 自動化 | Action 生成 `STATE-INDEX.md`（含檔案清單、編寫者、專案總覽） |
-| SSOT | P-01 頂部改用 YAML frontmatter（name / code / domain / package_no / repo） |
-| 防呆自檢 | AI 交付大檔須附「完整性自檢表」，且採「兩階段確認」 |
-| Action 替換 | 重構時採「先刪舊、再改名」順序 B，由 AI 提供腳本執行 |
+| 動作 | 內容 | 狀態 |
+|---|---|---|
+| 廢除 | R-01、PROJECT-LIST | ⏳ v10b 執行 |
+| 維持分檔 | C-05~C-10 保留分檔，由 Action 合併 | ✅ D-161 決策 |
+| 自動化 | Action 生成 `STATE-INDEX.md`（含檔案清單、編寫者、專案總覽） | ✅ v10a 已上線 |
+| SSOT | P-01 頂部改用 YAML frontmatter（name / code / domain / package_no / repo） | ⏳ 批次 5 |
+| 防呆自檢 | AI 交付大檔須附「完整性自檢表」 | ✅ 既有 |
+| 兩階段確認 | 先問「確認完整」，再提示貼上，最後等「已更新」 | ✅ D-162 |
+| Action 替換 | 重構時採「先加後減」，由 AI 提供腳本執行 | ✅ v10a 雙軌版 |
 
 ---
 
@@ -110,7 +114,7 @@ Writer: ai-system-20261016-003#248
 |---|---|---|
 | D-136~D-147 | （見前次紀錄，略） | 共享包與防呆機制 |
 | D-148 | 廢除 R-01 | 手動記錄全面交給 Action |
-| D-149 | FILE-INDEX 加編寫者彙總 | 取代獨立 WRITERS-INDEX |
+| D-149 | FILE-INDEX 加編寫者彙總 | 取代獨立 WRITERS-INDEX（已由 STATE-INDEX 取代） |
 | D-150 | 新增 K 領域（discuss） | 純對話專案 |
 | D-151 | 舊專案 P-* 對齊 | 刪除體系引用 |
 | D-152 | 新增 Action 校驗 | 掃描 md 引用，缺漏拋警告 |
@@ -122,6 +126,12 @@ Writer: ai-system-20261016-003#248
 | D-158 | 兩階段確認機制 | 交付後先問「確認完整」，再提示「已更新」 |
 | D-159 | Action 重構腳本化 | AI 產腳本，Action 執行「先刪舊、再改名」 |
 | D-160 | 行數防呆 | Action 檢查暴減，防 AI 偷懶刪內容 |
+| **D-161** | **源檔分檔，Action 合併；禁止手動合併源檔** | 重構時合併類動作一律轉為「改 Action 配置」，不手動合併 C-* / P-* / W-*。 |
+| **D-162** | **兩階段確認機制（正式寫入 C-04）** | 交付後先問「確認完整」，等回覆後才提示貼上；貼上後回「已更新」才算完成。 |
+| **D-163** | **R-01 正式廢除（由 v10b 執行）** | 內容分散至 C-02、P-01 YAML、STATE-INDEX。 |
+| **D-164** | **PROJECT-LIST 正式廢除（由 v10b 執行）** | 專案資訊改由 P-01 YAML + `setup-structure.yml` 的 `PROJECT_REPOS` 提供。 |
+| **D-165** | **P-01 加 YAML frontmatter** | 各專案 P-01-index.md 頂部需加 name/code/domain/package_no/repo。 |
+| **D-166** | **專案清單由 yml 頂部 PROJECT_REPOS 提供** | 新增專案時，由使用者提供 Repo，AI 負責更新此處。 |
 
 ---
 
@@ -138,7 +148,7 @@ Writer: ai-system-20261016-003#248
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-CONCLUSION.md
-V: 1791956000
+V: 1792221600
 B: B34-5
-W: ai-system-20261016-003#248
+W: ai-system-20261017-004#024
 ═══ */
