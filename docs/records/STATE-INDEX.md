@@ -2,7 +2,7 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成，請勿手動編輯。
 
-最後更新：2026-10-17 10:14:44 UTC
+最後更新：2026-10-17 10:42:02 UTC
 
 ---
 
@@ -18,8 +18,9 @@
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
+| AI-General | common/C-02-rules.md | 1792233000 | B34-5 | ai-system-20261017-004#078 |
+| AI-General | records/STATE-INDEX.md | 1792232086 | B34-5 | ai-system-20261017-004#028 |
 | AI-General | common/C-00-startup.md | 1792230600 | B34-5 | ai-system-20261017-004#067 |
-| AI-General | records/STATE-INDEX.md | 1792227999 | B34-5 | ai-system-20261017-004#028 |
 | AI-General | common/C-05-learning/general.md | 1792226400 | B34-5 | ai-system-20261017-004#032 |
 | AI-General | common/C-03-guide.md | 1792226400 | B34-5 | ai-system-20261017-004#032 |
 | AI-General | records/SYSTEM-HANDOFF.md | 1792225200 | B34-5 | ai-system-20261017-004#029 |
@@ -29,7 +30,6 @@
 | AI-General | records/PROGRESS.md | 1792221600 | B34-5 | ai-system-20261017-004#024 |
 | AI-General | common/C-11-terms.md | 1792220400 | B34-5 | ai-system-20261017-004#023 |
 | AI-General | common/C-04-delivery.md | 1792220400 | B34-5 | ai-system-20261017-004#023 |
-| AI-General | common/C-02-rules.md | 1792219200 | B34-5 | ai-system-20261017-004#022 |
 | AI-General | common/C-06-token-log.md | 1791943800 | B34-5 | ai-system-20261016-003#154 |
 | AI-General | common/C-07-summary.md | 1791942600 | B34-5 | ai-system-20261016-003#150 |
 | AI-General | common/C-10-handoff-mechanism.md | 1791942000 | B34-5 | ai-system-20261016-003#148 |
@@ -89,7 +89,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792232086
+V: 1792233723
 B: B34-5
 W: ai-system-20261017-004#028
 ═══ */
