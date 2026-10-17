@@ -8,11 +8,11 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
+AI-General|docs/records/SYSTEM-HANDOFF.md|1792262500|B34-5|ai-system-20261017-005#083
 AI-General|docs/common/C-03-flow.md|1792262500|B34-5|ai-system-20261017-005#083
 AI-General|docs/common/C-02-rules.md|1792262500|B34-5|ai-system-20261017-005#083
 AI-General|docs/common/C-04-output.md|1792262000|B34-5|ai-system-20261017-005#082
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792258800|B34-5|ai-system-20261017-005#074
-AI-General|docs/records/SYSTEM-HANDOFF.md|1792256400|B34-5|ai-system-20261017-005#011
 AI-General|docs/records/PROGRESS.md|1792256400|B34-5|ai-system-20261017-005#011
 AI-General|docs/common/C-05-engine.md|1792252800|B34-5|ai-system-20261017-005#010
 AI-General|docs/common/C-00-startup.md|1792252800|B34-5|ai-system-20261017-005#010
