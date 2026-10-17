@@ -2,7 +2,6 @@ import sys
 import os
 import re
 
-# 強制以當前工作目錄（Repo 根目錄）為基準
 patch_file = ".github/PATCH.md"
 
 if not os.path.exists(patch_file):
@@ -32,23 +31,37 @@ for rel_path, content_block in matches:
         content = f.read()
         
     new_content = content
-    pairs = re.findall(r"<<<<<<< OLD\n(.*?)\n=======\n(.*?)\n>>>>>>> NEW", content_block, re.S)
+    
+    # 同時支援 OLD (純字串) 與 REGEX (正則)
+    pairs = re.findall(r"<<<<<<< (OLD|REGEX)\n(.*?)\n=======\n(.*?)\n>>>>>>> NEW", content_block, re.S)
     if not pairs:
-        errors.append(f"{rel_path}: No OLD/NEW pairs found")
+        errors.append(f"{rel_path}: No OLD/REGEX pairs found")
         continue
         
-    for old, new in pairs:
-        count = new_content.count(old)
-        if count == 1:
-            new_content = new_content.replace(old, new, 1)
-            print(f"[OK] {rel_path}: Replaced 1 instance")
-        elif count == 0:
-            if new in new_content:
-                print(f"[SKIP] {rel_path}: Already applied")
+    for mode, old, new in pairs:
+        if mode == "REGEX":
+            new_content, count = re.subn(old, new, new_content, count=1)
+            if count == 1:
+                print(f"[OK] {rel_path}: Regex replaced 1 instance")
+            elif count == 0:
+                if re.search(new, new_content):
+                    print(f"[SKIP] {rel_path}: Already applied")
+                else:
+                    errors.append(f"{rel_path}: Regex OLD not found, NEW not present")
             else:
-                errors.append(f"{rel_path}: OLD not found, NEW not present")
+                errors.append(f"{rel_path}: Regex OLD matched multiple times")
         else:
-            errors.append(f"{rel_path}: OLD found {count} times (not unique)")
+            count = new_content.count(old)
+            if count == 1:
+                new_content = new_content.replace(old, new, 1)
+                print(f"[OK] {rel_path}: Replaced 1 instance")
+            elif count == 0:
+                if new in new_content:
+                    print(f"[SKIP] {rel_path}: Already applied")
+                else:
+                    errors.append(f"{rel_path}: OLD not found, NEW not present")
+            else:
+                errors.append(f"{rel_path}: OLD found {count} times (not unique)")
             
     if new_content != content:
         planned.append((rel_path, new_content))
