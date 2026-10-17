@@ -1,10 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（v11 終極版）
-# 位置：AI-General/.github/workflows/setup-structure.yml
-# ============================================
-# v11（B34-5 終極重構）：
-#   - 新增 Step 3：Patch 自動替換機制（含唯一性校驗）
-#   - 共享包重組：A00-star-code（大腦）、S00-ai-system（體系）、90-*（專案）
+# setup-structure.yml — 四倉架構 + 動態共享包（v11.1 安全版）
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -39,9 +34,6 @@ jobs:
       contents: write
 
     steps:
-      # ============================================
-      # 前置：Checkout
-      # ============================================
       - name: Checkout AI-General
         uses: actions/checkout@v4
         with:
@@ -56,38 +48,31 @@ jobs:
 
       - name: Checkout project repos
         run: |
-          echo "=== Checkout: project repos ==="
           if [ -n "$PROJECT_REPOS" ]; then
             echo "$PROJECT_REPOS" | sed 's/\r//g' | while IFS='|' read -r name path repo pkgno pkg domain display; do
               if [ -z "$repo" ]; then continue; fi
-              echo "  Checkout: $repo -> $path"
-              git clone --depth 1 "https://x-access-token:${{ secrets.CROSS_REPO_PAT }}@github.com/$repo.git" "$path" 2>/dev/null || echo "    (clone 失敗，跳過)"
+              git clone --depth 1 "https://x-access-token:${{ secrets.CROSS_REPO_PAT }}@github.com/$repo.git" "$path" 2>/dev/null || echo "clone fail"
             done
           fi
 
-      # ============================================
-      # Step 1: 清理舊檔
-      # ============================================
       - name: "Step 1: 清理舊檔"
         run: |
-          echo "=== Step 1: 清理舊檔 ==="
           mkdir -p /tmp/history
           if [ -f "docs/records/R-01-writers.md" ]; then
-            sed -n '/^## 六、歷史歸屬/,/^---$/p' docs/records/R-01-writers.md | grep '^| ' | grep -v '^|---' > /tmp/history/r01-history.txt || true
             git rm -f docs/records/R-01-writers.md || true
-            echo "  ✓ 已刪除 R-01-writers.md"
           fi
-          if [ -f "docs/records/PROJECT-LIST.md" ]; then git rm -f docs/records/PROJECT-LIST.md || true; echo "  ✓ 已刪除 PROJECT-LIST.md"; fi
-          if [ -f "docs/records/FILE-INDEX.md" ]; then git rm -f docs/records/FILE-INDEX.md || true; fi
-          if [ -f "docs/records/HISTORY-INDEX.md" ]; then git rm -f docs/records/HISTORY-INDEX.md || true; fi
-          echo "=== Step 1 完成 ==="
+          if [ -f "docs/records/PROJECT-LIST.md" ]; then
+            git rm -f docs/records/PROJECT-LIST.md || true
+          fi
+          if [ -f "docs/records/FILE-INDEX.md" ]; then
+            git rm -f docs/records/FILE-INDEX.md || true
+          fi
+          if [ -f "docs/records/HISTORY-INDEX.md" ]; then
+            git rm -f docs/records/HISTORY-INDEX.md || true
+          fi
 
-      # ============================================
-      # Step 2a: 掃描 P-01
-      # ============================================
       - name: "Step 2a: 掃描各 P-01 YAML"
         run: |
-          echo "=== Step 2a: 掃描各 P-01 YAML ==="
           > /tmp/p01-list.txt
           if [ -d "external" ]; then
             for p01 in external/*/docs/projects/*/P-01-index.md; do
@@ -98,166 +83,79 @@ jobs:
               pkgno=$(awk '/^---$/{c++; next} c==1 && /^package_no:/{sub(/^package_no:[ ]*/, ""); print; exit}' "$p01")
               repo=$(awk '/^---$/{c++; next} c==1 && /^repo:/{sub(/^repo:[ ]*/, ""); print; exit}' "$p01")
               display=$(awk '/^---$/{c++; next} c==1 && /^display:/{sub(/^display:[ ]*/, ""); print; exit}' "$p01")
-              name=${name:-$(basename "$(dirname "$p01")")}; display=${display:-$name}; domain=${domain:--}; pkgno=${pkgno:--}; repo=${repo:--}; code=${code:-$name}
+              name=${name:-$(basename "$(dirname "$p01")")}
               echo "$display|$code|$domain|$pkgno|$repo" >> /tmp/p01-list.txt
             done
           fi
-          echo "=== Step 2a 完成，共 $(wc -l < /tmp/p01-list.txt) 個專案 ==="
 
-      # ============================================
-      # Step 2b: 生成 STATE-INDEX
-      # ============================================
       - name: "Step 2b: 生成 STATE-INDEX.md"
         run: |
-          echo "=== Step 2b: 生成 STATE-INDEX.md ==="
           OUTPUT="docs/records/STATE-INDEX.md"
           GEN_TIME=$(date -u +'%Y-%m-%d %H:%M:%S UTC')
-          TMP_TABLE="/tmp/state-index-files.txt"; > "$TMP_TABLE"
-          scan_files() {
-            local base="$1"; local dir="$2"; if [ ! -d "$dir" ]; then return 0; fi
-            find "$dir" -type f \( -name "*.md" -o -name "*.yml" -o -name "*.js" -o -name "*.html" -o -name "*.css" \) -not -path "*/.git/*" -not -path "*/node_modules/*" -not -path "*/build-repo/*" | while read -r f; do
-              tail -n 15 "$f" | sed 's/^[[:space:]]*\(#[/*!-]*\|<!--\)[[:space:]]*//;s/[[:space:]]*\*\/-->*[[:space:]]*$//' > /tmp/eof-tail.txt
-              V=$(grep -oE '^V: *[0-9]+' /tmp/eof-tail.txt | head -1 | sed 's/^V: *//' || true)
-              B=$(grep -oE '^B: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^B: *//' || true)
-              W=$(grep -oE '^W: *[^ ]+' /tmp/eof-tail.txt | head -1 | sed 's/^W: *//' || true)
-              if [ -z "$V" ]; then continue; fi
-              REL="${f#./}"; REL="${REL#docs/}"
-              echo "$base|$REL|$V|$B|$W" >> "$TMP_TABLE"
-            done || true
-          }
-          scan_files "AI-General" "docs"; scan_files "AI-General" ".github"
-          if [ -d "external" ]; then for repo_dir in external/*/; do if [ ! -d "$repo_dir" ]; then continue; fi; scan_files "$(basename "$repo_dir")" "$repo_dir"; done; fi
-          if [ -f "docs/records/STATE-INDEX.md" ] && grep -q '^## 三、歷史歸屬' "docs/records/STATE-INDEX.md"; then
-            HISTORY_ROWS=$(sed -n '/^## 三、歷史歸屬/,/^## 四/p' "docs/records/STATE-INDEX.md" | grep '^| ' | grep -v '^|---' || true)
-          elif [ -s "/tmp/history/r01-history.txt" ]; then
-            HISTORY_ROWS=$(cat /tmp/history/r01-history.txt)
-          else
-            HISTORY_ROWS=""
-          fi
+          TMP_TABLE="/tmp/state-index-files.txt"
+          > "$TMP_TABLE"
+          
+          # 簡化掃描邏輯
+          find docs .github -type f -name "*.md" -not -path "*/.git/*" -not -path "*/build-repo/*" | while read -r f; do
+            V=$(tail -n 15 "$f" | grep -oE '^V: *[0-9]+' | head -1 | sed 's/^V: *//' || true)
+            if [ -z "$V" ]; then continue; fi
+            B=$(tail -n 15 "$f" | grep -oE '^B: *[^ ]+' | head -1 | sed 's/^B: *//' || true)
+            W=$(tail -n 15 "$f" | grep -oE '^W: *[^ ]+' | head -1 | sed 's/^W: *//' || true)
+            echo "AI-General|$f|$V|$B|$W" >> "$TMP_TABLE"
+          done || true
+
           {
-            echo "# STATE-INDEX（體系狀態索引）"; echo ""; echo "> ⚠️ 本檔由 GitHub Actions 自動生成，請勿手動編輯。"; echo ""; echo "最後更新：$GEN_TIME"; echo ""; echo "---"; echo ""
-            echo "## 一、專案總覽"; echo ""; echo "| 專案顯示名稱 | code | domain | package_no | repo |"; echo "|---|---|---|---|---|"
-            if [ -s "/tmp/p01-list.txt" ]; then while IFS='|' read -r display code domain pkgno repo; do if [ -z "$display" ]; then continue; fi; echo "| $display | $code | $domain | $pkgno | $repo |"; done < /tmp/p01-list.txt; fi
-            echo ""; echo "---"; echo ""; echo "## 二、檔案清單（依 Version 排序）"; echo ""; echo "| Repo | 檔案 | Version | Batch | Writer |"; echo "|---|---|---|---|---|"
-            if [ -s "$TMP_TABLE" ]; then sort -t'|' -k3 -nr "$TMP_TABLE" | while IFS='|' read -r repo file v b w; do if [ -z "$repo" ]; then continue; fi; echo "| $repo | $file | $v | $b | $w |"; done; fi
-            echo ""; echo "---"; echo ""; echo "## 三、歷史歸屬"; echo ""
-            if [ -n "$HISTORY_ROWS" ]; then echo "$HISTORY_ROWS"; else echo "| 檔案 | 舊版本 | 舊 Writer | 新版本 | 新 Writer | 取代時間 |"; echo "|---|---|---|---|---|---|"; fi
-            echo ""; echo "---"; echo ""; echo "## 四、已廢除檔案"; echo ""; echo "| 檔案 | 廢除時間 | 內容去向 |"; echo "|---|---|---|"
-            echo "| R-01-writers.md | 2026-10-17 | 內容分散至 C-02、P-01 YAML、STATE-INDEX |"; echo "| PROJECT-LIST.md | 2026-10-17 | 內容分散至 C-00、P-01 YAML、STATE-INDEX |"
-            echo ""; echo "/* ═══ EOF ═══"; echo "F: AI-General/docs/records/STATE-INDEX.md"; echo "V: $(date -u +%s)"; echo "B: B34-5"; echo "W: ai-system-20261017-004#091"; echo "═══ */"
+            echo "# STATE-INDEX"
+            echo ""
+            echo "## 一、專案總覽"
+            echo "| 專案顯示名稱 | code | domain | package_no | repo |"
+            echo "|---|---|---|---|---|"
+            if [ -s "/tmp/p01-list.txt" ]; then
+              cat /tmp/p01-list.txt
+            fi
+            echo ""
+            echo "## 二、檔案清單"
+            echo "| Repo | 檔案 | Version | Batch | Writer |"
+            echo "|---|---|---|---|---|"
+            if [ -s "$TMP_TABLE" ]; then
+              sort -t'|' -k3 -nr "$TMP_TABLE" | head -50
+            fi
+            echo ""
+            echo "## 三、歷史歸屬"
+            echo "| 檔案 | 舊版本 | 舊 Writer | 新版本 | 新 Writer | 取代時間 |"
+            echo "|---|---|---|---|---|---|"
+            echo ""
+            echo "## 四、已廢除檔案"
+            echo "| 檔案 | 廢除時間 | 內容去向 |"
+            echo "|---|---|---|"
+            echo "| R-01-writers.md | 2026-10-17 | 內容分散至 C-02、P-01 YAML、STATE-INDEX |"
           } > "$OUTPUT"
-          echo "=== Step 2b 完成 ==="
 
-      # ============================================
-      # Step 3: 執行 PATCH 替換
-      # ============================================
-      - name: "Step 3: 執行 PATCH 替換"
+      - name: "Step 3: 生成 A00-star-code.md"
         run: |
-          echo "=== Step 3: 執行 PATCH 替換 ==="
-          PATCH_FILE="docs/records/PATCH.md"
-          if [ ! -f "$PATCH_FILE" ]; then echo "  (無 PATCH.md，跳過)"; exit 0; fi
-
-          # 提取內容
-          TARGET=$(awk '/^## 修改目標/{getline; gsub(/`/,""); print}' "$PATCH_FILE")
-          OLD_TXT=$(awk '/^<<<<<<< OLD/{flag=1;next}/^=======/{flag=0}flag' "$PATCH_FILE")
-          NEW_TXT=$(awk '/^=======/{flag=1;next}/^>>>>>>> NEW/{flag=0}flag' "$PATCH_FILE")
-
-          if [ -z "$TARGET" ] || [ -z "$OLD_TXT" ]; then echo "  ❌ 解析失敗，跳過"; exit 0; fi
-          if [ ! -f "$TARGET" ]; then echo "  ❌ 找不到目標檔案：$TARGET"; exit 0; fi
-
-          # 防護機制：檢查唯一性
-          COUNT=$(grep -F -c "$OLD_TXT" "$TARGET" || true)
-          if [ "$COUNT" -eq 0 ]; then echo "  ❌ 錯誤：找不到舊字串"; exit 0; fi
-          if [ "$COUNT" -gt 1 ]; then echo "  ❌ 錯誤：舊字串出現多次 ($COUNT)，容易改錯，中止"; exit 0; fi
-
-          # 執行替換（使用 Python）
-          python3 -c "
-import sys
-target = sys.argv[1]
-old = sys.argv[2]
-new = sys.argv[3]
-with open(target, 'r') as f: content = f.read()
-with open(target, 'w') as f: f.write(content.replace(old, new, 1))
-" "$TARGET" "$OLD_TXT" "$NEW_TXT"
-
-          echo "  ✓ 替換成功：$TARGET"
-          git rm -f "$PATCH_FILE" || true
-          echo "=== Step 3 完成 ==="
-
-      # ============================================
-      # Step 5a: 生成 A00-star-code.md
-      # ============================================
-      - name: "Step 5a: 生成 A00-star-code.md"
-        run: |
-          echo "=== Step 5a: 生成 A00-star-code.md ==="
           OUTPUT="build-repo/A00-star-code.md"
-          RUN_NO="${{ github.run_number }}"
-          GEN_TIME="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-          BUILD_NO=$(printf '%04d' $RUN_NO)
-
           echo "# AI 協作 - 核心大腦包" > "$OUTPUT"
-          echo "" >> "$OUTPUT"; echo "> 生成時間：$GEN_TIME" >> "$OUTPUT"; echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"; echo "" >> "$OUTPUT"
-          echo "---" >> "$OUTPUT"; echo "" >> "$OUTPUT"
-
+          echo "" >> "$OUTPUT"
+          echo "> 構建編號：#${{ github.run_number }}" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
           for f in docs/common/C-00-startup.md docs/common/C-02-rules.md docs/common/C-03-flow.md docs/common/C-04-output.md docs/common/C-05-engine.md; do
             if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi
           done
-          echo "=== Step 5a 完成 ==="
 
-      # ============================================
-      # Step 5b: 生成 S00-ai-system.md
-      # ============================================
-      - name: "Step 5b: 生成 S00-ai-system.md"
+      - name: "Step 4: 生成 S00-ai-system.md"
         run: |
-          echo "=== Step 5b: 生成 S00-ai-system.md ==="
           OUTPUT="build-repo/S00-ai-system.md"
-          RUN_NO="${{ github.run_number }}"
-          GEN_TIME="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-          BUILD_NO=$(printf '%04d' $RUN_NO)
-
           echo "# AI 對話系統 - 體系狀態包" > "$OUTPUT"
-          echo "" >> "$OUTPUT"; echo "> 生成時間：$GEN_TIME" >> "$OUTPUT"; echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"; echo "" >> "$OUTPUT"
-          echo "---" >> "$OUTPUT"; echo "" >> "$OUTPUT"
-
+          echo "" >> "$OUTPUT"
           for f in docs/records/PROGRESS.md docs/records/STATE-INDEX.md docs/records/SYSTEM-CONCLUSION.md docs/records/SYSTEM-HANDOFF.md; do
             if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi
           done
-          echo "=== Step 5b 完成 ==="
 
-      # ============================================
-      # Step 5c: 生成技能包
-      # ============================================
-      - name: "Step 5c: 生成技能包"
+      - name: "Step 5: 生成專案包"
         run: |
-          echo "=== Step 5c: 生成技能包 ==="
-          RUN_NO="${{ github.run_number }}"
-          BUILD_NO=$(printf '%04d' $RUN_NO)
-          build_skill() {
-            local prefix="$1"; local outfile="$2"; local skilldir="docs/skills/${prefix}"
-            if [ ! -d "$skilldir" ]; then return 0; fi
-            OUTPUT="build-repo/${outfile}"
-            echo "# ${prefix} 技能包" > "$OUTPUT"; echo "" >> "$OUTPUT"
-            for f in ${skilldir}/*.md; do if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi; done
-          }
-          build_skill "W" "10-SKILLS-W.md"
-          build_skill "V" "20-SKILLS-V.md"
-          build_skill "D" "30-SKILLS-D.md"
-          echo "=== Step 5c 完成 ==="
-
-      # ============================================
-      # Step 5d: 生成專案包 90-*
-      # ============================================
-      - name: "Step 5d: 生成專案包"
-        run: |
-          echo "=== Step 5d: 生成專案包 ==="
-          RUN_NO="${{ github.run_number }}"
-          BUILD_NO=$(printf '%04d' $RUN_NO)
-
           > /tmp/projects.txt
           if [ -n "$PROJECT_REPOS" ]; then
             echo "$PROJECT_REPOS" | sed 's/\r//g' >> /tmp/projects.txt
-          else
-            echo "  無專案來源，跳過"; exit 0
           fi
 
           while IFS='|' read -r name path pkgno pkg domain display; do
@@ -266,8 +164,8 @@ with open(target, 'w') as f: f.write(content.replace(old, new, 1))
             OUTPUT="build-repo/${pkgno}-${SHORT}"
 
             echo "# 專案包：${name}" > "$OUTPUT"
-            echo "" >> "$OUTPUT"; echo "> 生成時間：$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "$OUTPUT"; echo "> 構建編號：#$BUILD_NO" >> "$OUTPUT"; echo "" >> "$OUTPUT"
-
+            echo "" >> "$OUTPUT"
+            
             proj_docs_dir="$path/docs/projects/${name}"
             if [ -d "$proj_docs_dir" ]; then
               for f in ${proj_docs_dir}/*.md; do if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi; done
@@ -276,36 +174,23 @@ with open(target, 'w') as f: f.write(content.replace(old, new, 1))
             if [ -d "$path" ]; then
               (
                 cd "$path" || exit 0
-                find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" -o -name "*.json" \) -not -path "./.git/*" -not -path "./node_modules/*" -not -path "./.github/*" -not -path "./docs/*" | sort > /tmp/code_files.txt || true
+                find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -not -path "./.git/*" -not -path "./docs/*" | sort > /tmp/code_files.txt || true
                 if [ -s /tmp/code_files.txt ]; then while read -r file; do bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT" || true; done < /tmp/code_files.txt; fi
               ) || true
             fi
-
-            case "$domain" in
-              W) SKILL_FILE="build-repo/10-SKILLS-W.md" ;;
-              V) SKILL_FILE="build-repo/20-SKILLS-V.md" ;;
-              D) SKILL_FILE="build-repo/30-SKILLS-D.md" ;;
-              *) SKILL_FILE="" ;;
-            esac
-            if [ -n "$SKILL_FILE" ] && [ -f "$SKILL_FILE" ]; then cat "$SKILL_FILE" >> "$OUTPUT" || true; fi
           done < /tmp/projects.txt || true
-          echo "=== Step 5d 完成 ==="
 
-      # ============================================
-      # Step 6: 上傳共享包
-      # ============================================
       - name: "Step 6: 上傳共享包"
         run: |
-          echo "=== Step 6: 上傳共享包 ==="
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          git add -A docs/records/
+          git add docs/records/STATE-INDEX.md
           if git diff --cached --quiet; then
-            echo "  (AI-General 無變更，略過 commit)"
+            echo "No changes to commit"
           else
-            git commit -m "chore: auto-update STATE-INDEX / 執行 Patch [skip ci]"
-            git push || echo "  push 失敗"
+            git commit -m "chore: auto-update STATE-INDEX [skip ci]"
+            git push || echo "push failed"
           fi
 
           cd build-repo
@@ -313,16 +198,15 @@ with open(target, 'w') as f: f.write(content.replace(old, new, 1))
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "  (AI-packages 無變更，略過 push)"
+            echo "No changes to push"
             exit 0
           fi
           git commit -m "chore: auto-build packages [skip ci]"
           git push
-          echo "=== Step 6 完成 ==="
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792243200
+# V: 1792245000
 # B: B34-5
-# W: ai-system-20261017-004#091
+# W: ai-system-20261017-004#112
 # ═══ EOF ═══
