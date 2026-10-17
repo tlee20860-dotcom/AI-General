@@ -2,14 +2,16 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成（掃描所有檔案 EOF），請勿手動編輯。
 
-最後更新：2026-10-17 01:55:58 UTC
+最後更新：2026-10-17 02:21:15 UTC
 
 ---
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
-| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792202019 | B34-5 | ai-system-20261016-003#auto |
-| AI-General | records/FILE-INDEX.md | 1792202019 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/records/FILE-INDEX.md | 1792202158 | B34-5 | ai-system-20261016-003#auto |
+| AI-General | records/FILE-INDEX.md | 1792202158 | B34-5 | ai-system-20261016-003#auto |
+| ai-system | external/ai-system/docs/common/C-04-delivery.md | 1791953600 | B34-5 | ai-system-20261016-003#236 |
+| AI-General | common/C-04-delivery.md | 1791953600 | B34-5 | ai-system-20261016-003#236 |
 | ai-system | external/ai-system/docs/records/SYSTEM-CONCLUSION.md | 1791951200 | B34-5 | ai-system-20261016-003#228 |
 | AI-General | records/SYSTEM-CONCLUSION.md | 1791951200 | B34-5 | ai-system-20261016-003#228 |
 | ai-system | external/ai-system/docs/records/SYSTEM-HANDOFF.md | 1791950000 | B34-5 | ai-system-20261016-003#225 |
@@ -43,8 +45,6 @@
 | AI-General | common/C-05-learning/general.md | 1791927000 | B34-5 | ai-system-20261016-003#121 |
 | ai-system | external/ai-system/docs/common/C-05-learning/system.md | 1791922200 | B34-5 | ai-system-20261016-003#111 |
 | AI-General | common/C-05-learning/system.md | 1791922200 | B34-5 | ai-system-20261016-003#111 |
-| ai-system | external/ai-system/docs/common/C-04-delivery.md | 1791921000 | B34-5 | ai-system-20261016-003#108 |
-| AI-General | common/C-04-delivery.md | 1791921000 | B34-5 | ai-system-20261016-003#108 |
 | ai-system | external/ai-system/docs/records/PROJECT-LIST.md | 1791918000 | B34-5 | ai-system-20261016-003#096 |
 | AI-General | records/PROJECT-LIST.md | 1791918000 | B34-5 | ai-system-20261016-003#096 |
 | ai-system | external/ai-system/docs/records/PROGRESS.md | 1791914000 | B34-5 | ai-system-20261016-003#022 |
@@ -85,7 +85,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/FILE-INDEX.md
-V: 1792202158
+V: 1792203675
 B: B34-5
 W: ai-system-20261016-003#auto
 ═══ */
