@@ -397,5 +397,5 @@ Writer: refactor-final（未編號）
 F: AI-General/docs/common/C-04-output.md
 V: 1792252800
 B: B34-5
-W: refactor-final（未編號）
+W: ai-system-20261017-004#120
 ═══ */
