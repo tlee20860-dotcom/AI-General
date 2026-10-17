@@ -1,60 +1,7 @@
-name: Execute Patch
-
-on:
-  push:
-    paths:
-      - '.github/workflows/PATCH.md'
-  workflow_dispatch:
-
+name: Test Patch
+on: [push, workflow_dispatch]
 jobs:
-  patch:
+  test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run Patch
-        run: |
-          PATCH_FILE=".github/workflows/PATCH.md"
-          TARGET=$(grep -m 1 '^`docs/' "$PATCH_FILE" | tr -d '\r' | tr -d '`' || true)
-          if [ -z "$TARGET" ] || [ ! -f "$TARGET" ]; then
-            echo "Error: Target not found"
-            exit 1
-          fi
-          
-          awk '/^<<<<<<< OLD/{flag=1;next}/^=======/{flag=0}flag' "$PATCH_FILE" > /tmp/old.txt
-          awk '/^=======/{flag=1;next}/^>>>>>>> NEW/{flag=0}flag' "$PATCH_FILE" > /tmp/new.txt
-          
-          if [ ! -s /tmp/old.txt ]; then
-            echo "Error: Old string not found"
-            exit 1
-          fi
-          
-          MATCH_COUNT=$(grep -F -c -f /tmp/old.txt "$TARGET" || true)
-          if [ "$MATCH_COUNT" -ne 1 ]; then
-            echo "Error: Multiple or zero matches"
-            exit 1
-          fi
-          
-          python3 -c "
-import sys
-target = sys.argv[1]
-with open('/tmp/old.txt', 'r') as f: old = f.read().strip('\n')
-with open('/tmp/new.txt', 'r') as f: new = f.read().strip('\n')
-with open(target, 'r') as f: content = f.read()
-with open(target, 'w') as f: f.write(content.replace(old, new, 1))
-" "$TARGET"
-          
-          git rm -f "$PATCH_FILE"
-
-      - name: Commit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "chore: auto-patch [skip ci]" || echo "No changes"
-          git push || echo "Push failed"
+      - run: echo "Hello Patch"
