@@ -3,7 +3,7 @@ import os
 import re
 
 # 強制以當前工作目錄（Repo 根目錄）為基準
-patch_file = ".github/workflows/PATCH.md"
+patch_file = ".github/PATCH.md"
 
 if not os.path.exists(patch_file):
     print("PATCH.md not found")
@@ -16,7 +16,6 @@ if "## FILE:" not in text:
     print("PATCH.md is empty or reset. Exiting safely.")
     sys.exit(0)
 
-# 完美正則：只抓取 ## FILE: 後面的路徑與區塊內容，完全忽略前面的任何註解
 pattern = re.compile(r"## FILE:\s*(.*?)\n(.*?)(?=## FILE:|\Z)", re.S)
 matches = pattern.findall(text)
 
