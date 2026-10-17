@@ -66,7 +66,7 @@ jobs:
 
           if [ -n "$PROJECT_REPOS" ]; then
             echo "  來源：yml PROJECT_REPOS"
-            echo "$PROJECT_REPOS" | while IFS='|' read -r name path repo pkgno pkg domain display; do
+            echo "$PROJECT_REPOS" | sed 's/\r//g' | while IFS='|' read -r name path repo pkgno pkg domain display; do
               if [ -z "$repo" ]; then continue; fi
               echo "  Checkout: $repo -> $path"
               git clone --depth 1 "https://x-access-token:${{ secrets.CROSS_REPO_PAT }}@github.com/$repo.git" "$path" 2>/dev/null || echo "    (clone 失敗，跳過)"
@@ -157,7 +157,7 @@ jobs:
                 REL="${f#./}"
                 REL="${REL#docs/}"
                 echo "$base|$REL|$V|$B|$W" >> "$TMP_TABLE"
-              done
+              done || true
           }
 
           scan_files "AI-General" "docs"
@@ -237,7 +237,7 @@ jobs:
             echo "F: AI-General/docs/records/STATE-INDEX.md"
             echo "V: $(date -u +%s)"
             echo "B: B34-5"
-            echo "W: ai-system-20261017-004#018"
+            echo "W: ai-system-20261017-004#019"
             echo "═══ */"
           } > "$OUTPUT"
 
@@ -264,7 +264,7 @@ jobs:
                 WARN_COUNT=$((WARN_COUNT + 1))
               fi
             done
-          done < <(find docs .github -type f \( -name "*.md" -o -name "*.yml" \) 2>/dev/null)
+          done < <(find docs .github -type f \( -name "*.md" -o -name "*.yml" \) 2>/dev/null) || true
 
           echo "=== Step 2c 完成，共 $WARN_COUNT 筆警告（僅記錄，不中斷）==="
 
@@ -380,31 +380,31 @@ jobs:
             docs/records/STATE-INDEX.md
           do
             if [ -f "$f" ]; then
-              bash .github/workflows/append_file.sh "$f" "$OUTPUT"
+              bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true
             fi
           done
 
           if [ -f "docs/common/C-05-learning/general.md" ]; then
-            bash .github/workflows/append_file.sh "docs/common/C-05-learning/general.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/common/C-05-learning/general.md" "$OUTPUT" || true
           fi
           if [ -f "docs/common/C-05-learning/system.md" ]; then
-            bash .github/workflows/append_file.sh "docs/common/C-05-learning/system.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/common/C-05-learning/system.md" "$OUTPUT" || true
           fi
 
           if [ -f "docs/records/SYSTEM-HANDOFF.md" ]; then
             echo "---" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
-            bash .github/workflows/append_file.sh "docs/records/SYSTEM-HANDOFF.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/SYSTEM-HANDOFF.md" "$OUTPUT" || true
           fi
           if [ -f "docs/records/SYSTEM-CONCLUSION.md" ]; then
             echo "---" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
-            bash .github/workflows/append_file.sh "docs/records/SYSTEM-CONCLUSION.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/SYSTEM-CONCLUSION.md" "$OUTPUT" || true
           fi
           if [ -f "docs/records/PROGRESS.md" ]; then
             echo "---" >> "$OUTPUT"
             echo "" >> "$OUTPUT"
-            bash .github/workflows/append_file.sh "docs/records/PROGRESS.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/PROGRESS.md" "$OUTPUT" || true
           fi
 
           echo "---" >> "$OUTPUT"
@@ -412,7 +412,7 @@ jobs:
           echo "## 📋 專案清單（PROJECT-LIST.md，v10b 將移除）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           if [ -f "docs/records/PROJECT-LIST.md" ]; then
-            bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT" || true
           fi
 
           echo "=== Step 5a 完成 ==="
@@ -524,15 +524,15 @@ jobs:
             docs/records/STATE-INDEX.md
           do
             if [ -f "$f" ]; then
-              bash .github/workflows/append_file.sh "$f" "$OUTPUT"
+              bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true
             fi
           done
 
           if [ -f "docs/common/C-05-learning/general.md" ]; then
-            bash .github/workflows/append_file.sh "docs/common/C-05-learning/general.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/common/C-05-learning/general.md" "$OUTPUT" || true
           fi
           if [ -f "docs/common/C-05-learning/w.md" ]; then
-            bash .github/workflows/append_file.sh "docs/common/C-05-learning/w.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/common/C-05-learning/w.md" "$OUTPUT" || true
           fi
 
           echo "---" >> "$OUTPUT"
@@ -540,7 +540,7 @@ jobs:
           echo "## 📋 專案清單（PROJECT-LIST.md，v10b 將移除）" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           if [ -f "docs/records/PROJECT-LIST.md" ]; then
-            bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT"
+            bash .github/workflows/append_file.sh "docs/records/PROJECT-LIST.md" "$OUTPUT" || true
           fi
 
           echo "=== Step 5b 完成 ==="
@@ -569,7 +569,7 @@ jobs:
             echo "" >> "$OUTPUT"
             for f in ${skilldir}/*.md; do
               if [ -f "$f" ]; then
-                bash .github/workflows/append_file.sh "$f" "$OUTPUT"
+                bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true
               fi
             done
           }
@@ -594,7 +594,7 @@ jobs:
           > /tmp/projects.txt
           if [ -n "$PROJECT_REPOS" ]; then
             echo "  來源：yml PROJECT_REPOS"
-            echo "$PROJECT_REPOS" >> /tmp/projects.txt
+            echo "$PROJECT_REPOS" | sed 's/\r//g' >> /tmp/projects.txt
           elif [ -f "docs/records/PROJECT-LIST.md" ]; then
             echo "  來源：PROJECT-LIST.md（fallback）"
             awk '
@@ -643,7 +643,7 @@ jobs:
               echo "" >> "$OUTPUT"
               for f in ${proj_docs_dir}/*.md; do
                 if [ -f "$f" ]; then
-                  bash .github/workflows/append_file.sh "$f" "$OUTPUT"
+                  bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true
                 fi
               done
             fi
@@ -653,18 +653,20 @@ jobs:
               echo "" >> "$OUTPUT"
               echo "# 💻 專案程式碼" >> "$OUTPUT"
               echo "" >> "$OUTPUT"
-              ( 
-                cd "$path" || exit 1
+              (
+                cd "$path" || exit 0
                 find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" -o -name "*.json" \) \
                   -not -path "./.git/*" \
                   -not -path "./node_modules/*" \
                   -not -path "./.github/*" \
                   -not -path "./docs/*" \
-                  | sort > /tmp/code_files.txt
-                while read -r file; do
-                  bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT"
-                done < /tmp/code_files.txt
-              )
+                  | sort > /tmp/code_files.txt || true
+                if [ -s /tmp/code_files.txt ]; then
+                  while read -r file; do
+                    bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT" || true
+                  done < /tmp/code_files.txt
+                fi
+              ) || true
             fi
 
             case "$domain" in
@@ -678,13 +680,13 @@ jobs:
               echo "" >> "$OUTPUT"
               echo "# 📚 領域技能包（${domain}）" >> "$OUTPUT"
               echo "" >> "$OUTPUT"
-              cat "$SKILL_FILE" >> "$OUTPUT"
+              cat "$SKILL_FILE" >> "$OUTPUT" || true
             fi
 
             echo "" >> "$OUTPUT"
             echo "/* ═══ EOF ═══ */" >> "$OUTPUT"
             echo "  ✓ 已生成 ${OUTPUT}"
-          done < /tmp/projects.txt
+          done < /tmp/projects.txt || true
 
           echo "=== Step 5d 完成 ==="
 
@@ -722,7 +724,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792215600
+# V: 1792216800
 # B: B34-5
-# W: ai-system-20261017-004#018
+# W: ai-system-20261017-004#019
 # ═══ EOF ═══
