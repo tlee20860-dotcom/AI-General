@@ -1,9 +1,9 @@
 # C-04 輸出規範與檢查（Output & Check）
 
-最後更新：refactor-final
-Version: 1792252800
+最後更新：ai-system-20261017-005
+Version: 1792262000
 Batch: B34-5
-Writer: refactor-final（未編號）
+Writer: ai-system-20261017-005#082
 用途：F-List 格式、K-List 檢查、批次交付、狀態總表、Patch 模式、EOF 與批次號規則。
 
 ---
@@ -363,7 +363,7 @@ Writer: refactor-final（未編號）
 | 4 | **精準對標** | 交付前必先讀取當前檔案，精準複製當下原始碼的縮排與符號。 |
 | 5 | **拆解原則** | 長段落修改請拆成多個小區塊，一個 `FILE` 底下可有多組 `OLD/NEW`。 |
 | 6 | **EOF 同步更新** | 交付 Patch 時，必須包含一段針對檔案底部 `V:`（時間戳）與 `W:`（編寫者）的替換區塊，確保版本同步。 |
-| 6 | **EOF 同步更新** | 交付 Patch 時，必須包含一段針對檔案底部 `V:`（時間戳）與 `W:`（編寫者）的替換區塊，確保版本同步。 |
+| 7 | **表格替換防呆** | 禁止盲猜 `OLD`。若無截圖確認當前內容，必須使用 `REGEX` 或最末行錨點，嚴防疊加錯位。 |
 
 ---
 
@@ -407,7 +407,7 @@ Writer: refactor-final（未編號）
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-04-output.md
-V: 1792258200
+V: 1792262000
 B: B34-5
-W: ai-system-20261017-005#072
+W: ai-system-20261017-005#082
 ═══ */
