@@ -2,7 +2,7 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成，請勿手動編輯。
 
-最後更新：2026-10-17 11:54:37 UTC
+最後更新：2026-10-17 11:55:02 UTC
 
 ---
 
@@ -18,13 +18,13 @@
 
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
+| AI-General | common/C-04-output.md | 1792249200 | B34-5 | refactor-stage3（未編號） |
 | AI-General | common/C-03-flow.md | 1792249200 | B34-5 | refactor-stage3（未編號） |
 | AI-General | common/C-02-rules.md | 1792249200 | B34-5 | refactor-stage3（未編號） |
 | AI-General | common/C-05-engine.md | 1792245600 | B34-5 | refactor-stage3（未編號） |
 | AI-General | common/C-00-startup.md | 1792245600 | B34-5 | refactor-stage3（未編號） |
 | AI-General | common/docs/common/C-05-engine.md | 1792242000 | B34-5 | ai-system-20261017-004#090 |
-| AI-General | common/C-04-output.md | 1792242000 | B34-5 | ai-system-20261017-004#090 |
-| AI-General | records/STATE-INDEX.md | 1792238001 | B34-5 | ai-system-20261017-004#028 |
+| AI-General | records/STATE-INDEX.md | 1792238078 | B34-5 | ai-system-20261017-004#028 |
 | AI-General | common/C-05-learning/general.md | 1792226400 | B34-5 | ai-system-20261017-004#032 |
 | AI-General | records/SYSTEM-HANDOFF.md | 1792225200 | B34-5 | ai-system-20261017-004#029 |
 | AI-General | .github/workflows/setup-structure.yml | 1792224000 | B34-5 | ai-system-20261017-004#028 |
@@ -91,7 +91,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792238078
+V: 1792238103
 B: B34-5
 W: ai-system-20261017-004#028
 ═══ */
