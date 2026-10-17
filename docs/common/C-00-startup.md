@@ -1,4 +1,4 @@
-# A00 啟動核心（最高優先）
+# A00 啟動核心（測試 Patch 成功！）
 
 最後更新：refactor-final
 Version: 1792252800
