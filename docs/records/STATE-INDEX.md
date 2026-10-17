@@ -2,7 +2,7 @@
 
 > ⚠️ 本檔由 GitHub Actions 自動生成，請勿手動編輯。
 
-最後更新：2026-10-17 07:03:55 UTC
+最後更新：2026-10-17 09:06:37 UTC
 
 ---
 
@@ -25,7 +25,7 @@
 | web-app-family | external/web-app-family/docs/projects/web-app-family/P-01-index.md | 1792222800 | B34-5 | ai-system-20261017-004#027 |
 | AI-General | records/SYSTEM-CONCLUSION.md | 1792221600 | B34-5 | ai-system-20261017-004#024 |
 | AI-General | records/PROGRESS.md | 1792221600 | B34-5 | ai-system-20261017-004#024 |
-| AI-General | records/STATE-INDEX.md | 1792220499 | B34-5 | ai-system-20261017-004#028 |
+| AI-General | records/STATE-INDEX.md | 1792220636 | B34-5 | ai-system-20261017-004#028 |
 | AI-General | common/C-11-terms.md | 1792220400 | B34-5 | ai-system-20261017-004#023 |
 | AI-General | common/C-04-delivery.md | 1792220400 | B34-5 | ai-system-20261017-004#023 |
 | AI-General | common/C-02-rules.md | 1792219200 | B34-5 | ai-system-20261017-004#022 |
@@ -89,7 +89,7 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792220636
+V: 1792227999
 B: B34-5
 W: ai-system-20261017-004#028
 ═══ */
