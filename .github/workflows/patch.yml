@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - ".github/workflows/PATCH.md"
+      - ".github/PATCH.md"
 
 permissions:
   contents: write
@@ -23,7 +23,7 @@ jobs:
           python-version: "3.x"
 
       - name: Apply patch
-        run: python .github/scripts/apply_patch.py
+        run: python3 .github/scripts/apply_patch.py
 
       - name: Commit and push
         run: |
