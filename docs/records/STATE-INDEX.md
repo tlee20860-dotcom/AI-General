@@ -8,6 +8,7 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792256400|B34-5|ai-system-20261017-005#011
 AI-General|docs/records/PROGRESS.md|1792256400|B34-5|ai-system-20261017-005#011
 AI-General|docs/common/C-05-engine.md|1792252800|B34-5|ai-system-20261017-005#010
 AI-General|docs/common/C-04-output.md|1792252800|B34-5|ai-system-20261017-005#010
@@ -16,7 +17,6 @@ AI-General|docs/common/C-02-rules.md|1792252800|B34-5|ai-system-20261017-005#010
 AI-General|docs/common/C-00-startup.md|1792252800|B34-5|ai-system-20261017-005#010
 AI-General|docs/common/C-05-learning/general.md|1792226400|B34-5|ai-system-20261017-004#032
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792225200|B34-5|ai-system-20261017-004#029
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792221600|B34-5|ai-system-20261017-004#024
 AI-General|docs/common/C-05-learning/system.md|1791922200|B34-5|ai-system-20261016-003#111
 AI-General|docs/skills/W/W-00-startup.md|1791903760|B34-4|A20261013-004#169
 AI-General|docs/skills/W/W-05-schema.md|1791899740|B34-3|A20261013-004#065
