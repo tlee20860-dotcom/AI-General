@@ -1,9 +1,9 @@
 # SYSTEM-HANDOFF（體系層交接快照）
 
 最後更新：ai-system-20261017-004
-Version: 1792221600
+Version: 1792225200
 Batch: B34-5
-Writer: ai-system-20261017-004#024
+Writer: ai-system-20261017-004#029
 上限：80 行
 用途：體系層對話交接快照
 
@@ -14,9 +14,9 @@ Writer: ai-system-20261017-004#024
 | 欄位 | 值 |
 |---|---|
 | 對話編號 | ai-system-20261017-004 |
-| 本次範圍 | 體系重構雙軌切換（v10a 上線、源檔更新、v10b 待執行） |
-| 累計回覆 | 約 24 條 |
-| 狀態 | 雙軌並存中（v10a 已綠燈，v10b 未執行） |
+| 本次範圍 | 體系重構雙軌切換（v10a 上線、源檔更新、v10b 已執行） |
+| 累計回覆 | 約 29 條 |
+| 狀態 | 重構完成，待驗證共享包 |
 
 ---
 
@@ -25,11 +25,11 @@ Writer: ai-system-20261017-004#024
 **指向**：SYSTEM-CONCLUSION.md §一
 
 **本對話重點結論**：
-1. **雙軌重構**：先上線 v10a（新舊並存），再更新源檔（C-00~C-11），最後執行 v10b（廢除舊檔）。
-2. **Action 穩定性**：解決 `set -e` 陷阱，所有迴圈與空檔案判斷加 `|| true` 防護。
-3. **P-01 加 YAML**：各專案 P-01 頂部需加 `name/code/domain/package_no/repo`，供 Action 掃描。
-4. **專案清單**：改由 `setup-structure.yml` 的 `PROJECT_REPOS` 提供。
-5. **兩階段確認**：寫入 C-04，強制 AI 交付後先問「確認完整」。
+1. **雙軌重構**：v10a 上線 → 源檔更新 → v10b 刪舊檔，已全數完成。
+2. **Action 穩定性**：解決 `set -e` 陷阱，迴圈與空檔案防護已加入。
+3. **P-01 加 YAML**：專案層 P-01 已加上 frontmatter，供 Action 掃描。
+4. **專案清單**：已全面轉移至 `setup-structure.yml` 的 `PROJECT_REPOS`。
+5. **兩階段確認**：已寫入 C-04，強制 AI 遵守。
 
 ---
 
@@ -37,7 +37,7 @@ Writer: ai-system-20261017-004#024
 
 **指向**：SYSTEM-CONCLUSION.md §三
 
-**本次新增決策**：D-161 ~ D-166（源檔分檔、兩階段確認、廢除 R-01/PROJECT-LIST、P-01 YAML、PROJECT_REPOS）。
+**本次新增決策**：D-161 ~ D-166。
 
 ---
 
@@ -45,19 +45,19 @@ Writer: ai-system-20261017-004#024
 
 | # | 優先確認 |
 |---|---|
-| 1 | v10a 是否已成功上線（Action 綠燈）？ |
-| 2 | C-00、C-02、C-04、C-11、SYSTEM-*、PROGRESS 是否已全部更新？ |
-| 3 | WEB-APP-Family 的 P-01 是否已加 YAML frontmatter？ |
-| 4 | 是否已執行 v10b 切換版（刪除 R-01 / PROJECT-LIST）？ |
+| 1 | v10b 執行後，R-01、PROJECT-LIST 是否已從 repo 消失？ |
+| 2 | `STATE-INDEX.md` 的 §一 專案總覽是否已抓到 P-01 的 YAML？ |
+| 3 | 新的 `01-CORE-SYSTEM.md` 是否已不含 R-01？ |
 
 ---
 
-## 五、未完成事項（新對話需執行）
+## 五、未完成事項與驗證方式
 
-| # | 項目 |
-|---|---|
-| 1 | 更新 P-01（加 YAML frontmatter） |
-| 2 | 執行 v10b（移除 R-01/PROJECT-LIST 讀取、生成，加入 Step 1 刪除邏輯） |
+| # | 項目 | 交付方式 / 操作步驟 |
+|---|---|---|
+| 1 | 驗證 R-01 是否已刪除 | 至 GitHub `AI-General/docs/records/` 檢查 `R-01-writers.md` 是否已消失。 |
+| 2 | 驗證 STATE-INDEX 是否正確 | 下載最新的 `01-CORE-SYSTEM.md`，檢查 STATE-INDEX §一 是否有 `webapp` 專案。 |
+| 3 | 下一階段任務規劃 | 待使用者提出新需求。 |
 
 ---
 
@@ -65,16 +65,15 @@ Writer: ai-system-20261017-004#024
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 完成批次 5（P-01 YAML） |
-| 2 | 執行 v10b 切換版（正式廢除舊檔） |
-| 3 | 驗證共享包內容是否只剩 STATE-INDEX |
+| 1 | 確認本次重構完全成功，舊檔已清空。 |
+| 2 | 開新對話測試，看 AI 是否能正確讀取 STATE-INDEX 並生成編號。 |
 
 ---
 
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-HANDOFF.md
-V: 1792221600
+V: 1792225200
 B: B34-5
-W: ai-system-20261017-004#024
+W: ai-system-20261017-004#029
 ═══ */
