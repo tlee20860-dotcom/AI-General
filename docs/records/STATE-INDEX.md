@@ -8,6 +8,7 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+AI-General|docs/common/C-00-startup.md|1792305500|ai-system-20261018-008#038
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792301500|ai-system-20261018-007#109
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792301500|ai-system-20261018-007#109
 AI-General|docs/records/PROGRESS.md|1792301500|ai-system-20261018-007#109
@@ -17,7 +18,6 @@ AI-General|docs/common/C-02-rules.md|1792300500|ai-system-20261018-007#104
 AI-General|docs/common/C-05-engine.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-04-output.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-03-flow.md|1792300000|ai-system-20261018-007#102
-AI-General|docs/common/C-00-startup.md|1792299500|ai-system-20261018-007#098
 AI-General|docs/common/C-05-learning/system.md|1792289500|ai-system-20261018-006#051
 AI-General|docs/common/C-05-learning/general.md|1792226400|ai-system-20261017-004#032
 AI-General|docs/skills/W/W-00-startup.md|1791903760|A20261013-004#169
