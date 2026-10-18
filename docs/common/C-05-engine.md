@@ -1,9 +1,8 @@
 # C-05 系統引擎（System Engine）
 
-最後更新：refactor-final
-Version: 1792252800
-Batch: B34-5
-Writer: refactor-final（未編號）
+最後更新：ai-system-20261018-007
+Version: 1792293000
+Writer: ai-system-20261018-007#029
 用途：Token 管理與公式、20/50 自我檢查、交接快照機制。
 
 ---
@@ -98,7 +97,6 @@ Writer: refactor-final（未編號）
 
 | 欄位 | 說明 |
 |---|---|
-| 批次 | 當前批次號 |
 | 對話編號 | 本次對話的編號 |
 | 對話輪數 N | 對話的總輪數 |
 | 每輪平均新增 k | 全部上傳 + 回覆 ÷ N |
@@ -371,7 +369,7 @@ Writer: refactor-final（未編號）
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-05-engine.md
-V: 1792252800
-B: B34-5
-W: ai-system-20261017-005#010
+V: 1792293000
+B(歷史): B34-5
+W: ai-system-20261018-007#029
 ═══ */
