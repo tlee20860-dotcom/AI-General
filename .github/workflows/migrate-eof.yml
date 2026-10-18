@@ -57,3 +57,9 @@ jobs:
             git commit -m "chore: migrate EOF B -> B(歷史)"
             git push
           fi
+
+# ═══ EOF ═══
+# F: AI-General/.github/workflows/migrate-eof.yml
+# V: 1792293000
+# W: ai-system-20261018-007#030
+# ═══ EOF ═══
