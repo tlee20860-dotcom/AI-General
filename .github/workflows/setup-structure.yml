@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（v12.3）
+# setup-structure.yml — 四倉架構 + 動態共享包（v12.4）
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -39,6 +39,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 2
 
       - name: Checkout AI-packages
         uses: actions/checkout@v4
@@ -54,6 +55,17 @@ jobs:
               if [ -z "$repo" ]; then continue; fi
               git clone --depth 1 "https://x-access-token:${{ secrets.CROSS_REPO_PAT }}@github.com/$repo.git" "$path" 2>/dev/null || echo "clone fail"
             done
+          fi
+
+      - name: "Step 0: 驗證交付格式（report 模式）"
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- '*.md' 2>/dev/null || true)
+          export CHANGED_FILES="$CHANGED"
+          export VALIDATE_MODE="report"
+          if [ -f ".github/scripts/validate_delivery.py" ]; then
+            python3 .github/scripts/validate_delivery.py || true
+          else
+            echo "[SKIP] validate_delivery.py 不存在"
           fi
 
       - name: "Step 1: 清理舊檔"
@@ -286,7 +298,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792319000
+# V: 1792336500
 # B(歷史): B34-6
-# W: ai-system-20261018-008#103
+# W: ai-system-20261019-009#045
 # ═══ EOF ═══
