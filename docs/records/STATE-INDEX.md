@@ -8,8 +8,8 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792297200|ai-system-20261018-007#070
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792297000|ai-system-20261018-007#069
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792297000|ai-system-20261018-007#069
 AI-General|docs/records/PROGRESS.md|1792297000|ai-system-20261018-007#069
 AI-General|docs/common/C-03-flow.md|1792296800|ai-system-20261018-007#067
 AI-General|docs/common/C-06-patterns.md|1792296000|ai-system-20261018-007#063
