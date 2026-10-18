@@ -12,6 +12,7 @@ AI-General|docs/common/C-04-output.md|1792312000|ai-system-20261018-008#086
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792311000|ai-system-20261018-008#077
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792311000|ai-system-20261018-008#077
 AI-General|docs/records/PROGRESS.md|1792311000|ai-system-20261018-008#077
+AI-General|.github/PATCH.md|1792306000|ai-system-20261018-008#042
 AI-General|docs/common/C-05-engine.md|1792305600|ai-system-20261018-008#039
 AI-General|docs/common/C-00-startup.md|1792305500|ai-system-20261018-008#038
 AI-General|docs/common/C-11-terms.md|1792301000|ai-system-20261018-007#106
