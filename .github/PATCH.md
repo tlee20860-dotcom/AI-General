@@ -1,12 +1,14 @@
-## 修改目標: `.github/workflows/apply-patch.yml`
+## 修改目標: `.github/workflows/migrate-eof.yml`
 
 <<<<<<< REGEX
-jobs:\n  apply:\n    runs-on: ubuntu-latest
+( *)git push\n( *)fi
 =======
-jobs:
-  apply:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      workflows: write
+\1git push
+\2fi
+
+# ═══ EOF ═══
+# F: AI-General/.github/workflows/migrate-eof.yml
+# V: 1792293000
+# W: ai-system-20261018-007#030
+# ═══ EOF ═══
 >>>>>>> NEW
