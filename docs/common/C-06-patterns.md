@@ -1,8 +1,8 @@
 # C-06 系統設計模式庫（Patterns）
 
 最後更新：ai-system-20261018-007
-Version: 1792296000
-Writer: ai-system-20261018-007#063
+Version: 1792301000
+Writer: ai-system-20261018-007#106
 用途：沉澱體系與專案開發的最佳實踐（Best Practices），供 AI 提架構方案時參考。
 
 ---
@@ -74,6 +74,6 @@ Writer: ai-system-20261018-007#063
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-06-patterns.md
-V: 1792296000
-W: ai-system-20261018-007#063
+V: 1792301000
+W: ai-system-20261018-007#106
 ═══ */
