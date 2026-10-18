@@ -8,7 +8,7 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/common/C-00-startup.md|1792326000|ai-system-20261018-008#135
+AI-General|docs/common/C-00-startup.md|1792332000|ai-system-20261019-009#037
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792325000|ai-system-20261018-008#132
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792325000|ai-system-20261018-008#132
 AI-General|docs/records/PROGRESS.md|1792325000|ai-system-20261018-008#132
