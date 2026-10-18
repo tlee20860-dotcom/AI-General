@@ -1,9 +1,8 @@
 # C-06 系統設計模式庫（Patterns）
 
-最後更新：ai-system-20261018-006
-Version: 1792285000
-Batch: B34-6
-Writer: ai-system-20261018-006#040
+最後更新：ai-system-20261018-007
+Version: 1792296000
+Writer: ai-system-20261018-007#063
 用途：沉澱體系與專案開發的最佳實踐（Best Practices），供 AI 提架構方案時參考。
 
 ---
@@ -56,9 +55,25 @@ Writer: ai-system-20261018-006#040
 
 ---
 
+## 五、跨倉庫安全批量遷移（Report / Apply 雙模式）
+
+**痛點**：當需要修改 `.github/workflows/` 內的文件，或需要一次性修改多個倉庫的大量文件（如批次號廢除、EOF 格式升級）時，會遇到 GitHub 權限攔截，且直接修改容易引發不可逆的錯誤或版本衝突。
+
+**方案**：
+1. **權限通行證**：在 Workflow 的 `checkout` 步驟，使用 `token: ${{ secrets.CROSS_REPO_PAT }}` 取代預設的 `GITHUB_TOKEN`，以取得修改 Workflow 與跨倉庫 Push 的權限。
+2. **雙階段執行（Report / Apply）**：編寫專用遷移腳本（如 `migrate_eof.py`），並搭配 `workflow_dispatch` 的選項。第一步執行 `report` 模式（僅掃描並列出影響範圍，不寫入），確認報告無誤後，第二步執行 `apply` 模式（實際寫入並推送）。
+
+**優勢**：
+1. **極高安全性**：先預演（report）再執行（apply），避免改錯檔案。
+2. **突破平台限制**：利用 PAT 繞過預設 Token 無法修改 workflow 的防護。
+3. **批量處理效率**：一次掃描與修正多個專案倉庫，免除手動逐檔修改。
+
+**適用場景**：體系規則大重構、舊檔案批量遷移、跨倉庫自動化同步。
+
+---
+
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-06-patterns.md
-V: 1792285000
-B(歷史): B34-6
-W: ai-system-20261018-006#040
+V: 1792296000
+W: ai-system-20261018-007#063
 ═══ */
