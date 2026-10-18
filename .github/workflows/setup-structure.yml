@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（v11.7 最終版）
+# setup-structure.yml — 四倉架構 + 動態共享包（v11.8）
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -89,9 +89,8 @@ jobs:
           find docs .github -type f -name "*.md" -not -path "*/.git/*" -not -path "*/build-repo/*" | while read -r f; do
             V=$(tail -n 15 "$f" | grep -oE '^V: *[0-9]+' | head -1 | sed 's/^V: *//' || true)
             if [ -z "$V" ]; then continue; fi
-            B=$(tail -n 15 "$f" | grep -oE '^B: *[^ ]+' | head -1 | sed 's/^B: *//' || true)
             W=$(tail -n 15 "$f" | grep -oE '^W: *[^ ]+' | head -1 | sed 's/^W: *//' || true)
-            echo "AI-General|$f|$V|$B|$W" >> "$TMP_TABLE"
+            echo "AI-General|$f|$V|$W" >> "$TMP_TABLE"
           done || true
 
           {
@@ -103,8 +102,8 @@ jobs:
             if [ -s "/tmp/p01-list.txt" ]; then cat /tmp/p01-list.txt; fi
             echo ""
             echo "## 二、檔案清單"
-            echo "| Repo | 檔案 | Version | Batch | Writer |"
-            echo "|---|---|---|---|---|"
+            echo "| Repo | 檔案 | Version | Writer |"
+            echo "|---|---|---|---|"
             if [ -s "$TMP_TABLE" ]; then sort -t'|' -k3 -nr "$TMP_TABLE" | head -50; fi
             echo ""
             echo "## 三、歷史歸屬"
@@ -183,8 +182,13 @@ jobs:
           echo "" >> "$OUTPUT"
           if [ -f ".github/workflows/apply-patch.yml" ]; then bash .github/workflows/append_file.sh ".github/workflows/apply-patch.yml" "$OUTPUT" || true; fi
 
+          echo "" >> "$OUTPUT"
+          echo "### 📄 檔案：setup-structure.yml (打包腳本自身)" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          if [ -f ".github/workflows/setup-structure.yml" ]; then bash .github/workflows/append_file.sh ".github/workflows/setup-structure.yml" "$OUTPUT" || true; fi
+
           while IFS='|' read -r name path repo pkgno pkg domain display; do
-            if [ -z "$name" ] || [ -d "$path" ]; then continue; fi
+            if [ -z "$name" ] || [ ! -d "$path" ]; then continue; fi
             if [ -d "$path/.github/workflows" ]; then
               echo "" >> "$OUTPUT"
               echo "## 🏢 專案層：${repo} (${name}) 的呼叫器" >> "$OUTPUT"
@@ -239,7 +243,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792289500
-# B: B34-6
-# W: ai-system-20261018-006#051
+# V: 1792293000
+# B(歷史): B34-6
+# W: ai-system-20261018-007#030
 # ═══ EOF ═══
