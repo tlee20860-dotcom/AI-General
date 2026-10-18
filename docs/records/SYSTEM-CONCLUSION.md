@@ -1,9 +1,9 @@
 # SYSTEM-CONCLUSION（體系層滾動結論）
 
 最後更新：ai-system-20261018-006
-Version: 1792284000
+Version: 1792287000
 Batch: B34-6
-Writer: ai-system-20261018-006#030
+Writer: ai-system-20261018-006#047
 用途：體系層滾動式累積結論（議題 + 設計 + 決策）
 
 ---
@@ -55,6 +55,7 @@ Writer: ai-system-20261018-006#030
 | 41 | 體系包直通修正 | ✅ |
 | 42 | 修復 Action 變數錯位與 Patch 腳本 | ✅ |
 | 43 | Infra 中央廚房重構 (03-INFRA.md) | ✅ |
+| 44 | 新增設計模式庫 (C-06) | ✅ |
 
 ---
 
@@ -67,6 +68,7 @@ Writer: ai-system-20261018-006#030
 | 01 | 01-CORE-SYSTEM.md | 體系核心 |
 | 02 | 02-CORE-PROJECT.md | 專案核心 |
 | 03 | 03-INFRA.md | 基礎設施總包（中央廚房） |
+| 06 | 06-PATTERNS.md | 設計模式庫 |
 | 10 | 10-SKILLS-W.md | Web App 技能 |
 | 20 | 20-SKILLS-V.md | VBA 技能（未來） |
 | 30 | 30-SKILLS-D.md | 資料分析技能（未來） |
@@ -81,6 +83,7 @@ Writer: ai-system-20261018-006#030
 | 體系層 | 01-CORE-SYSTEM.md |
 | 專案層 | 02-CORE-PROJECT.md + 90-{專案}.md |
 | 腳本修改 | 01-CORE-SYSTEM.md + 03-INFRA.md |
+| 架構設計 | 01-CORE-SYSTEM.md + 06-PATTERNS.md |
 
 ### 2.3 共享包頂部資訊
 
@@ -116,6 +119,7 @@ Writer: ai-system-20261018-006#030
 | Action 替換 | 重構時採「先加後減」 | ✅ |
 | Patch 腳本 | `.github/scripts/apply_patch.py` 支援正則 | ✅ 已上線 |
 | 中央廚房 | 腳本統一由體系管理，專案只留呼叫器 | ✅ 已上線 |
+| 模式庫 | 建立 C-06，提架構前必看 | ✅ 已上線 |
 
 ---
 
@@ -149,6 +153,7 @@ Writer: ai-system-20261018-006#030
 | **D-173** | **轉交指令的 Code Block 規範** | 凡是「轉交指令」（如【轉交體系】或【轉交專案】），內容**必須**用 Markdown Code Block 包裹，防止手機複製時格式跑版。一般對話則嚴禁濫用 Code Block。 |
 | **D-174** | **體系包直通** | 若使用者上傳 A00 + S00 且明確表示要進行體系修正，AI 直接生成體系對話編號，不列專案清單、不列 4 選項，直接進入 STATE_DISCUSS。 |
 | **D-175** | **中央廚房（依賴注入）** | 自動化腳本統一由 AI-General 管理（SSOT），專案端只保留呼叫器，共享包產出單一 `03-INFRA.md` 供對比。 |
+| **D-176** | **設計模式庫 (C-06)** | 建立 `C-06-patterns.md`，並在 S-List 加入 S-005。涉及架構設計、新專案時，必先查閱此庫。 |
 
 ---
 
@@ -165,7 +170,7 @@ Writer: ai-system-20261018-006#030
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-CONCLUSION.md
-V: 1792284000
+V: 1792287000
 B: B34-6
-W: ai-system-20261018-006#030
+W: ai-system-20261018-006#047
 ═══ */
