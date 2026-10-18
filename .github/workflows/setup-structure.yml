@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（v11.1 安全版）
+# setup-structure.yml — 四倉架構 + 動態共享包（v11.5 中央廚房版）
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -58,18 +58,10 @@ jobs:
       - name: "Step 1: 清理舊檔"
         run: |
           mkdir -p /tmp/history
-          if [ -f "docs/records/R-01-writers.md" ]; then
-            git rm -f docs/records/R-01-writers.md || true
-          fi
-          if [ -f "docs/records/PROJECT-LIST.md" ]; then
-            git rm -f docs/records/PROJECT-LIST.md || true
-          fi
-          if [ -f "docs/records/FILE-INDEX.md" ]; then
-            git rm -f docs/records/FILE-INDEX.md || true
-          fi
-          if [ -f "docs/records/HISTORY-INDEX.md" ]; then
-            git rm -f docs/records/HISTORY-INDEX.md || true
-          fi
+          if [ -f "docs/records/R-01-writers.md" ]; then git rm -f docs/records/R-01-writers.md || true; fi
+          if [ -f "docs/records/PROJECT-LIST.md" ]; then git rm -f docs/records/PROJECT-LIST.md || true; fi
+          if [ -f "docs/records/FILE-INDEX.md" ]; then git rm -f docs/records/FILE-INDEX.md || true; fi
+          if [ -f "docs/records/HISTORY-INDEX.md" ]; then git rm -f docs/records/HISTORY-INDEX.md || true; fi
 
       - name: "Step 2a: 掃描各 P-01 YAML"
         run: |
@@ -91,11 +83,9 @@ jobs:
       - name: "Step 2b: 生成 STATE-INDEX.md"
         run: |
           OUTPUT="docs/records/STATE-INDEX.md"
-          GEN_TIME=$(date -u +'%Y-%m-%d %H:%M:%S UTC')
           TMP_TABLE="/tmp/state-index-files.txt"
           > "$TMP_TABLE"
           
-          # 簡化掃描邏輯
           find docs .github -type f -name "*.md" -not -path "*/.git/*" -not -path "*/build-repo/*" | while read -r f; do
             V=$(tail -n 15 "$f" | grep -oE '^V: *[0-9]+' | head -1 | sed 's/^V: *//' || true)
             if [ -z "$V" ]; then continue; fi
@@ -110,16 +100,12 @@ jobs:
             echo "## 一、專案總覽"
             echo "| 專案顯示名稱 | code | domain | package_no | repo |"
             echo "|---|---|---|---|---|"
-            if [ -s "/tmp/p01-list.txt" ]; then
-              cat /tmp/p01-list.txt
-            fi
+            if [ -s "/tmp/p01-list.txt" ]; then cat /tmp/p01-list.txt; fi
             echo ""
             echo "## 二、檔案清單"
             echo "| Repo | 檔案 | Version | Batch | Writer |"
             echo "|---|---|---|---|---|"
-            if [ -s "$TMP_TABLE" ]; then
-              sort -t'|' -k3 -nr "$TMP_TABLE" | head -50
-            fi
+            if [ -s "$TMP_TABLE" ]; then sort -t'|' -k3 -nr "$TMP_TABLE" | head -50; fi
             echo ""
             echo "## 三、歷史歸屬"
             echo "| 檔案 | 舊版本 | 舊 Writer | 新版本 | 新 Writer | 取代時間 |"
@@ -154,9 +140,7 @@ jobs:
       - name: "Step 5: 生成專案包"
         run: |
           > /tmp/projects.txt
-          if [ -n "$PROJECT_REPOS" ]; then
-            echo "$PROJECT_REPOS" | sed 's/\r//g' >> /tmp/projects.txt
-          fi
+          if [ -n "$PROJECT_REPOS" ]; then echo "$PROJECT_REPOS" | sed 's/\r//g' >> /tmp/projects.txt; fi
 
           while IFS='|' read -r name path repo pkgno pkg domain display; do
             if [ -z "$name" ] || [ -z "$pkg" ]; then continue; fi
@@ -174,13 +158,53 @@ jobs:
             if [ -d "$path" ]; then
               (
                 cd "$path" || exit 0
-                find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -not -path "./.git/*" -not -path "./docs/*" | sort > /tmp/code_files.txt || true
+                find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -not -path "./.git/*" -not -path "./docs/*" -not -path "./.github/*" | sort > /tmp/code_files.txt || true
                 if [ -s /tmp/code_files.txt ]; then while read -r file; do bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT" || true; done < /tmp/code_files.txt; fi
               ) || true
             fi
           done < /tmp/projects.txt || true
 
-      - name: "Step 6: 上傳共享包"
+      - name: "Step 6: 生成基礎設施總包 (03-INFRA.md)"
+        run: |
+          OUTPUT="build-repo/03-INFRA.md"
+          echo "# 基礎設施總包 (INFRA)" > "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "> ⚠️ 給 AI 的指示：本包包含體系唯一腳本與各專案呼叫器。AI 必須對比版本，並確認當前對話所屬 Repo 進行修改。" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+
+          echo "## 🏢 體系層：AI-General（唯一腳本）" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "### 📄 檔案：apply_patch.py" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          if [ -f ".github/scripts/apply_patch.py" ]; then bash .github/workflows/append_file.sh ".github/scripts/apply_patch.py" "$OUTPUT" || true; fi
+          
+          echo "" >> "$OUTPUT"
+          echo "### 📄 檔案：apply-patch.yml (體系觸發器)" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          if [ -f ".github/workflows/apply-patch.yml" ]; then bash .github/workflows/append_file.sh ".github/workflows/apply-patch.yml" "$OUTPUT" || true; fi
+
+          while IFS='|' read -r name path repo pkgno pkg domain display; do
+            if [ -z "$name" ] || [ -d "$path" ]; then continue; fi
+            if [ -d "$path/.github/workflows" ]; then
+              echo "" >> "$OUTPUT"
+              echo "## 🏢 專案層：${repo} (${name}) 的呼叫器" >> "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              (
+                cd "$path" || exit 0
+                find .github/workflows -type f -name "*.yml" | sort > /tmp/infra_files.txt || true
+                if [ -s /tmp/infra_files.txt ]; then 
+                  while read -r file; do 
+                    echo "### 📄 檔案：${file}" >> "../../$OUTPUT"
+                    echo "" >> "../../$OUTPUT"
+                    bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT" || true
+                    echo "" >> "../../$OUTPUT"
+                  done < /tmp/infra_files.txt
+                fi
+              ) || true
+            fi
+          done < /tmp/projects.txt || true
+
+      - name: "Step 7: 上傳共享包"
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -206,7 +230,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792282000
+# V: 1792283100
 # B: B34-6
-# W: ai-system-20261018-006#013
+# W: ai-system-20261018-006#029
 # ═══ EOF ═══
