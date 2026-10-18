@@ -8,10 +8,10 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+AI-General|docs/common/C-03-flow.md|1792296500|ai-system-20261018-007#065
 AI-General|docs/common/C-06-patterns.md|1792296000|ai-system-20261018-007#063
 AI-General|docs/common/C-05-engine.md|1792293000|ai-system-20261018-007#029
 AI-General|docs/common/C-04-output.md|1792293000|ai-system-20261018-007#029
-AI-General|docs/common/C-03-flow.md|1792293000|ai-system-20261018-007#029
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792289500|ai-system-20261018-006#051
 AI-General|docs/common/C-05-learning/system.md|1792289500|ai-system-20261018-006#051
 AI-General|docs/common/C-02-rules.md|1792289000|ai-system-20261018-006#050
