@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（v11.9）
+# setup-structure.yml — 四倉架構 + 動態共享包（v12.0）
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -134,7 +134,18 @@ jobs:
           echo "" >> "$OUTPUT"
           echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          for f in docs/records/PROGRESS.md docs/records/STATE-INDEX.md docs/records/SYSTEM-CONCLUSION.md docs/records/SYSTEM-HANDOFF.md; do
+          
+          # 加入前置攔截器
+          echo "---" >> "$OUTPUT"
+          echo "⚠️ **【給 AI 的強制前置檢查】**" >> "$OUTPUT"
+          echo "請立刻確認：你是否已經讀取 \`A00-star-code.md\`（大腦包）？" >> "$OUTPUT"
+          echo "1. 如果「否」或「不確定」，請立刻停止閱讀本檔，先去讀取 \`A00\`，載入狀態機與防呆規則。" >> "$OUTPUT"
+          echo "2. 如果「是」，請依據 \`A00 §一\` 輸出「交接確認摘要」。" >> "$OUTPUT"
+          echo "---" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+
+          # 將 SYSTEM-HANDOFF.md 排在第一個，確保交接詞置頂
+          for f in docs/records/SYSTEM-HANDOFF.md docs/records/PROGRESS.md docs/records/STATE-INDEX.md docs/records/SYSTEM-CONCLUSION.md; do
             if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi
           done
 
@@ -153,14 +164,30 @@ jobs:
             
             proj_docs_dir="$path/docs/projects/${name}"
             if [ -d "$proj_docs_dir" ]; then
-              for f in ${proj_docs_dir}/*.md; do if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi; done
+              # 使用 P-* 白名單前綴匹配，避免收錄無關檔案（含 P-98）
+              for prefix in P-01 P-02 P-05 P-06 P-07 P-08 P-09 P-12 P-13 P-98 P-99; do
+                for f in ${proj_docs_dir}/${prefix}-*.md; do
+                  if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi
+                done
+              done
             fi
 
             if [ -d "$path" ]; then
               (
                 cd "$path" || exit 0
                 find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -not -path "./.git/*" -not -path "./docs/*" -not -path "./.github/*" | sort > /tmp/code_files.txt || true
-                if [ -s /tmp/code_files.txt ]; then while read -r file; do bash "../../.github/workflows/append_file.sh" "$file" "../../$OUTPUT" || true; done < /tmp/code_files.txt; fi
+                
+                # 程式碼區改為只產目錄樹與檔數統計，不讀取內容
+                if [ -s /tmp/code_files.txt ]; then
+                  {
+                    echo ""
+                    echo "## 程式碼檔案樹（僅列路徑，不讀內容）"
+                    echo ""
+                    echo "總檔數：$(wc -l < /tmp/code_files.txt)"
+                    echo ""
+                    sed 's|^\./||' /tmp/code_files.txt
+                  } >> "../../$OUTPUT"
+                fi
               ) || true
             fi
           done < /tmp/projects.txt || true
@@ -245,7 +272,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792301000
+# V: 1792306000
 # B(歷史): B34-6
-# W: ai-system-20261018-007#106
+# W: ai-system-20261018-008#042
 # ═══ EOF ═══
