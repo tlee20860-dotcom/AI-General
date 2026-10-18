@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（v12.1）
+# setup-structure.yml — 四倉架構 + 動態共享包（v12.3）
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -160,17 +160,21 @@ jobs:
             SHORT="${pkg#PACKAGE-}"
             OUTPUT="build-repo/${pkgno}-${SHORT}"
 
-            echo "# 專案包：${name}" > "$OUTPUT"
-            echo "" >> "$OUTPUT"
-            
-            # 若為 AI-OS 專案，直接讀取根目錄的 E-*.md，並加入標題
+            # AI-OS 專案：加上 HKT 時間，並使用 append_file.sh 保持 AI 閱讀的結構標記
             if [ "$name" = "ai-os" ]; then
-              echo "# AI-OS 輕量版引導系統（V: $(date +%s)）" >> "$OUTPUT"
+              echo "# AI-OS 輕量版引導系統" > "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
               echo "" >> "$OUTPUT"
               for f in "$path"/E-*.md; do
-                if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi
+                if [ -f "$f" ]; then 
+                  bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true
+                fi
               done
             else
+              echo "# 專案包：${name}" > "$OUTPUT"
+              echo "" >> "$OUTPUT"
+              
               proj_docs_dir="$path/docs/projects/${name}"
               if [ -d "$proj_docs_dir" ]; then
                 # 使用 P-* 白名單前綴匹配，避免收錄無關檔案（含 P-98）
@@ -180,25 +184,25 @@ jobs:
                   done
                 done
               fi
-            fi
 
-            if [ -d "$path" ] && [ "$name" != "ai-os" ]; then
-              (
-                cd "$path" || exit 0
-                find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -not -path "./.git/*" -not -path "./docs/*" -not -path "./.github/*" | sort > /tmp/code_files.txt || true
-                
-                # 程式碼區改為只產目錄樹與檔數統計，不讀取內容
-                if [ -s /tmp/code_files.txt ]; then
-                  {
-                    echo ""
-                    echo "## 程式碼檔案樹（僅列路徑，不讀內容）"
-                    echo ""
-                    echo "總檔數：$(wc -l < /tmp/code_files.txt)"
-                    echo ""
-                    sed 's|^\./||' /tmp/code_files.txt
-                  } >> "../../$OUTPUT"
-                fi
-              ) || true
+              if [ -d "$path" ]; then
+                (
+                  cd "$path" || exit 0
+                  find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -not -path "./.git/*" -not -path "./docs/*" -not -path "./.github/*" | sort > /tmp/code_files.txt || true
+                  
+                  # 程式碼區改為只產目錄樹與檔數統計，不讀取內容
+                  if [ -s /tmp/code_files.txt ]; then
+                    {
+                      echo ""
+                      echo "## 程式碼檔案樹（僅列路徑，不讀內容）"
+                      echo ""
+                      echo "總檔數：$(wc -l < /tmp/code_files.txt)"
+                      echo ""
+                      sed 's|^\./||' /tmp/code_files.txt
+                    } >> "../../$OUTPUT"
+                  fi
+                ) || true
+              fi
             fi
           done < /tmp/projects.txt || true
 
@@ -282,7 +286,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792317000
+# V: 1792319000
 # B(歷史): B34-6
-# W: ai-system-20261018-008#097
+# W: ai-system-20261018-008#103
 # ═══ EOF ═══
