@@ -4,15 +4,13 @@ on:
     paths:
       - '.github/PATCH.md'
 
-permissions:
-  contents: write
-  workflows: write
-
 jobs:
   apply:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CROSS_REPO_PAT }}
       - name: Run Patch Script
         run: python3 .github/scripts/apply_patch.py
       - name: Commit changes
@@ -24,6 +22,6 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/apply-patch.yml
-# V: 1792294500
-# W: ai-system-20261018-007#057
+# V: 1792295000
+# W: ai-system-20261018-007#061
 # ═══ EOF ═══
