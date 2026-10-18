@@ -16,7 +16,6 @@ AI-General|docs/common/C-06-patterns.md|1792301000|ai-system-20261018-007#106
 AI-General|docs/common/C-05-engine.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-04-output.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-03-flow.md|1792300000|ai-system-20261018-007#102
-AI-General|.github/PATCH.md|1792299500|ai-system-20261018-007#098
 AI-General|docs/common/C-05-learning/system.md|1792289500|ai-system-20261018-006#051
 AI-General|docs/common/C-02-rules.md|1792289000|ai-system-20261018-006#050
 AI-General|docs/common/C-00-startup.md|1792285000|ai-system-20261018-006#040
