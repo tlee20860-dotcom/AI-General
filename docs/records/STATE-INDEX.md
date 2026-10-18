@@ -9,8 +9,8 @@
 | Repo | 檔案 | Version | Batch | Writer |
 |---|---|---|---|---|
 AI-General|docs/common/C-06-patterns.md|1792285000|B34-6|ai-system-20261018-006#040
+AI-General|docs/common/C-00-startup.md|1792285000|B34-6|ai-system-20261018-006#040
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792284000|B34-6|ai-system-20261018-006#030
-AI-General|docs/common/C-00-startup.md|1792284000|B34-6|ai-system-20261018-006#030
 AI-General|docs/common/C-05-learning/system.md|1792263500|B34-5|ai-system-20261017-005#085
 AI-General|docs/records/PROGRESS.md|1792263000|B34-5|ai-system-20261017-005#084
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792262500|B34-5|ai-system-20261017-005#083
