@@ -1,0 +1,59 @@
+name: Migrate EOF (B -> B(歷史))
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'report = 只列清單；apply = 實際寫入並推送'
+        required: true
+        default: 'report'
+        type: choice
+        options:
+          - report
+          - apply
+
+concurrency:
+  group: migrate-eof
+  cancel-in-progress: false
+
+env:
+  PROJECT_REPOS: |
+    web-app-family|external/web-app-family|tlee20860-dotcom/WEB-APP-Family|90|PACKAGE-web-app-family.md|W|家庭 webapp
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout AI-General
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout project repos
+        run: |
+          if [ -n "$PROJECT_REPOS" ]; then
+            echo "$PROJECT_REPOS" | sed 's/\r//g' | while IFS='|' read -r name path repo pkgno pkg domain display; do
+              if [ -z "$repo" ]; then continue; fi
+              git clone --depth 1 "https://x-access-token:${{ secrets.CROSS_REPO_PAT }}@github.com/$repo.git" "$path" 2>/dev/null || echo "clone fail: $repo"
+            done
+          fi
+
+      - name: Run migrate_eof.py
+        env:
+          MIGRATE_MODE: ${{ github.event.inputs.mode }}
+        run: python3 .github/scripts/migrate_eof.py
+
+      - name: Commit and push AI-General changes
+        if: ${{ github.event.inputs.mode == 'apply' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: migrate EOF B -> B(歷史)"
+            git push
+          fi
