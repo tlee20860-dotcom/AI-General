@@ -1,8 +1,8 @@
 # C-03 執行流程與 SOP（Flow & Operations）
 
 最後更新：ai-system-20261018-007
-Version: 1792293000
-Writer: ai-system-20261018-007#029
+Version: 1792296500
+Writer: ai-system-20261018-007#065
 用途：開場 SOP、狀態機轉換、三層讀取、情境路由、Q1~Q6、中途切換、啟動包流程。
 
 ---
@@ -67,7 +67,7 @@ Writer: ai-system-20261018-007#029
 
 | 步驟 | 動作 |
 |---|---|
-| 1 | AI 說「請上傳對應編號的共享包（如 01-CORE-SYSTEM.md 或 02-CORE-PROJECT.md + 90-{專案}.md）」 |
+| 1 | AI 說「請上傳對應的共享包（體系層：`A00` + `S00`；專案層：`A00` + `90-{專案}.md`）」 |
 | 2 | 使用者上傳共享包 |
 | 3 | AI 讀取 |
 | 4 | 依進度繼續 |
@@ -166,7 +166,7 @@ AI 說「請描述問題」。
 | L2 概覽 | P-01 ~ P-04 / STATE-INDEX | 啟動時 |
 | L3 細節 | P-05 ~ P-98、W-* | 按需（AI 判斷） |
 | 特殊 | P-99-errors-map | 交付前必讀 |
-| 按需索取 | 99-CONCLUSION-ARCHIVE.md、C-05-learning 其他分檔 | AI 主動提示 |
+| 按需索取 | 99-CONCLUSION-ARCHIVE.md、C-05-learning 其他分檔 | AI 主動提示（取得規則見 R-011） |
 
 ---
 
@@ -343,8 +343,8 @@ AI 說「請描述問題」。
 
 | 情境 | 上傳 | 內容 |
 |---|---|---|
-| 體系層 | 1 檔 | 01-CORE-SYSTEM.md |
-| 專案層 | 2 檔 | 02-CORE-PROJECT.md + 90-{專案}.md |
+| 體系層 | 2 檔 | `A00-star-code.md` + `S00-ai-system.md` |
+| 專案層 | 2 檔 | `A00-star-code.md` + `90-{專案}.md` |
 | 需要舊決策 | +1 檔 | 99-CONCLUSION-ARCHIVE.md |
 
 ### 13.2 共享包自動產生機制
@@ -399,7 +399,6 @@ AI 說「請描述問題」。
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-03-flow.md
-V: 1792293000
-B(歷史): B34-5
-W: ai-system-20261018-007#029
+V: 1792296500
+W: ai-system-20261018-007#065
 ═══ */
