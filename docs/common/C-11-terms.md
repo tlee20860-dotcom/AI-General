@@ -1,9 +1,8 @@
 # C-11 共同語言表（Terms）
 
-最後更新：ai-system-20261018-006
-Version: 1792288000
-Batch: B34-6
-Writer: ai-system-20261018-006#048
+最後更新：ai-system-20261018-007
+Version: 1792301000
+Writer: ai-system-20261018-007#106
 用途：定義體系與專案對話中的共同詞彙，確保 AI 與使用者認知一致（SSOT）。
 
 ---
@@ -12,7 +11,7 @@ Writer: ai-system-20261018-006#048
 
 | # | 詞彙 | 定義 |
 |---|---|---|
-| 1 | 啟動包 | 新對話時，使用者上傳給 AI 的第一個（或第一組）共享包。現制為：體系層上傳 `01-CORE-SYSTEM.md`；專案層上傳 `02-CORE-PROJECT.md` + `90-{專案}.md`。 |
+| 1 | 啟動包 | 新對話時，使用者上傳給 AI 的第一個（或第一組）共享包。現制為：體系層上傳 `A00-star-code.md` + `S00-ai-system.md`；專案層上傳 `A00-star-code.md` + `90-{專案}.md`。 |
 | 2 | 共享包 | 由 Actions 自動生成、放在 `AI-packages` 的檔案。 |
 | 3 | 專案包 | 每個專案專屬的共享包，如 `90-web-app-family.md`。 |
 | 4 | 核心包 | 分為「體系層核心包」（`01-CORE-SYSTEM.md`）與「專案層核心包」（`02-CORE-PROJECT.md`）。 |
@@ -66,7 +65,6 @@ Writer: ai-system-20261018-006#048
 
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-11-terms.md
-V: 1792288000
-B(歷史): B34-6
-W: ai-system-20261018-006#048
+V: 1792301000
+W: ai-system-20261018-007#106
 ═══ */
