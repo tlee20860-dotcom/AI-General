@@ -11,6 +11,7 @@
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792289500|B34-6|ai-system-20261018-006#051
 AI-General|docs/common/C-05-learning/system.md|1792289500|B34-6|ai-system-20261018-006#051
 AI-General|docs/common/C-02-rules.md|1792289000|B34-6|ai-system-20261018-006#050
+AI-General|docs/common/C-11-terms.md|1792288000|B34-6|ai-system-20261018-006#048
 AI-General|docs/records/PROGRESS.md|1792287000|B34-6|ai-system-20261018-006#047
 AI-General|docs/common/C-06-patterns.md|1792285000|B34-6|ai-system-20261018-006#040
 AI-General|docs/common/C-00-startup.md|1792285000|B34-6|ai-system-20261018-006#040
