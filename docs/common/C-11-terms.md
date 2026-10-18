@@ -67,6 +67,6 @@ Writer: ai-system-20261018-006#048
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-11-terms.md
 V: 1792288000
-B: B34-6
+B(歷史): B34-6
 W: ai-system-20261018-006#048
 ═══ */

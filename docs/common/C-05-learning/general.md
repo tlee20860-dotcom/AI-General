@@ -182,6 +182,6 @@ Writer：ai-system-20261017-004#032
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-05-learning/general.md
 V: 1792226400
-B: B34-5
+B(歷史): B34-5
 W: ai-system-20261017-004#032
 ═══ */

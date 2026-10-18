@@ -59,6 +59,6 @@ Writer: ai-system-20261018-006#040
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-06-patterns.md
 V: 1792285000
-B: B34-6
+B(歷史): B34-6
 W: ai-system-20261018-006#040
 ═══ */

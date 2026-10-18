@@ -401,6 +401,6 @@ Writer: ai-system-20261018-006#050
 /* ═══ EOF ═══
 F: AI-General/docs/common/C-02-rules.md
 V: 1792289000
-B: B34-6
+B(歷史): B34-6
 W: ai-system-20261018-006#050
 ═══ */
