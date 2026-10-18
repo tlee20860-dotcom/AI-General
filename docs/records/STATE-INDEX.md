@@ -17,8 +17,8 @@ AI-General|docs/common/C-05-engine.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-04-output.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-03-flow.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-02-rules.md|1792299500|ai-system-20261018-007#098
+AI-General|docs/common/C-00-startup.md|1792299500|ai-system-20261018-007#098
 AI-General|docs/common/C-05-learning/system.md|1792289500|ai-system-20261018-006#051
-AI-General|docs/common/C-00-startup.md|1792285000|ai-system-20261018-006#040
 AI-General|docs/common/C-05-learning/general.md|1792226400|ai-system-20261017-004#032
 AI-General|docs/skills/W/W-00-startup.md|1791903760|A20261013-004#169
 AI-General|docs/skills/W/W-05-schema.md|1791899740|A20261013-004#065
