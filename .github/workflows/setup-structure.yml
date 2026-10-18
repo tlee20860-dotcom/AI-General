@@ -158,7 +158,7 @@ jobs:
             echo "$PROJECT_REPOS" | sed 's/\r//g' >> /tmp/projects.txt
           fi
 
-          while IFS='|' read -r name path pkgno pkg domain display; do
+          while IFS='|' read -r name path repo pkgno pkg domain display; do
             if [ -z "$name" ] || [ -z "$pkg" ]; then continue; fi
             SHORT="${pkg#PACKAGE-}"
             OUTPUT="build-repo/${pkgno}-${SHORT}"
@@ -206,7 +206,7 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792245000
-# B: B34-5
-# W: ai-system-20261017-004#112
+# V: 1792282000
+# B: B34-6
+# W: ai-system-20261018-006#013
 # ═══ EOF ═══
