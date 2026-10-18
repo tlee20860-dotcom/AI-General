@@ -11,6 +11,7 @@
 AI-General|docs/common/C-05-engine.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-04-output.md|1792300000|ai-system-20261018-007#102
 AI-General|docs/common/C-03-flow.md|1792300000|ai-system-20261018-007#102
+AI-General|.github/PATCH.md|1792299500|ai-system-20261018-007#098
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792297200|ai-system-20261018-007#070
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792297000|ai-system-20261018-007#069
 AI-General|docs/records/PROGRESS.md|1792297000|ai-system-20261018-007#069
