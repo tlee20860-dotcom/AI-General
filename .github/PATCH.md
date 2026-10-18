@@ -1,21 +1,33 @@
-# PATCH 指令
-
 ## 修改目標
-`.github/workflows/setup-structure.yml`
+`.github/scripts/migrate_eof.py`
 
-## 替換內容
 <<<<<<< OLD
-          while IFS='|' read -r name path pkgno pkg domain display; do
+if __name__ == "__main__":
+    main()
 =======
-          while IFS='|' read -r name path repo pkgno pkg domain display; do
+if __name__ == "__main__":
+    main()
+
+# ═══ EOF ═══
+# F: AI-General/.github/scripts/migrate_eof.py
+# V: 1792293000
+# W: ai-system-20261018-007#030
+# ═══ EOF ═══
 >>>>>>> NEW
 
+## 修改目標
+`.github/workflows/migrate-eof.yml`
+
 <<<<<<< OLD
-# V: 1792245000
-# B: B34-5
-# W: ai-system-20261017-004#112
+            git push
+          fi
 =======
-# V: 1792282000
-# B: B34-6
-# W: ai-system-20261018-006#011
+            git push
+          fi
+
+# ═══ EOF ═══
+# F: AI-General/.github/workflows/migrate-eof.yml
+# V: 1792293000
+# W: ai-system-20261018-007#030
+# ═══ EOF ═══
 >>>>>>> NEW
