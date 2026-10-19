@@ -9,12 +9,12 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792415778|github-actions[bot]
+AI-General|docs/records/STATE-INDEX.md|1792416298|github-actions[bot]
+AI-General|docs/records/SYSTEM-HANDOFF.md|1792391000|ai-system-20261019-010#166
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792391000|ai-system-20261019-010#166
+AI-General|docs/records/PROGRESS.md|1792391000|ai-system-20261019-010#166
 ai-kernel|docs/r-rules/R-00-rules.md|1792387000|ai-system-20261019-010#155
 ai-kernel|docs/a-guide/A-00-guide.md|1792387000|ai-system-20261019-010#155
-AI-General|docs/records/SYSTEM-HANDOFF.md|1792368000|ai-system-20261019-010#129
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792368000|ai-system-20261019-010#129
-AI-General|docs/records/PROGRESS.md|1792368000|ai-system-20261019-010#129
 ai-kernel|docs/r-rules/R-02-patterns.md|1792355000|ai-system-20261019-010#082
 ai-kernel|docs/r-rules/R-04-learning.md|1792352000|ai-system-20261019-010#067
 ai-kernel|docs/r-rules/R-03-terms.md|1792352000|ai-system-20261019-010#067
@@ -29,6 +29,6 @@ ai-kernel|docs/skills/W/W-01-firebase.md|1791899500|A20261013-004#065
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792416298
+V: 1792416891
 W: github-actions[bot]
 ═══ */
