@@ -9,12 +9,12 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+ai-kernel|docs/a-guide/A-00-guide.md|1792362000|ai-system-20261019-010#107
 ai-kernel|docs/r-rules/R-02-patterns.md|1792355000|ai-system-20261019-010#082
 ai-kernel|docs/r-rules/R-00-rules.md|1792355000|ai-system-20261019-010#082
 ai-kernel|docs/r-rules/R-04-learning.md|1792352000|ai-system-20261019-010#067
 ai-kernel|docs/r-rules/R-03-terms.md|1792352000|ai-system-20261019-010#067
 ai-kernel|docs/r-rules/R-01-mapping.md|1792352000|ai-system-20261019-010#067
-ai-kernel|docs/a-guide/A-00-guide.md|1792349500|ai-system-20261019-010#061
 AI-General|AI-General/docs/records/SYSTEM-HANDOFF.md|1792345800|ai-system-20261019-010#045
 AI-General|AI-General/docs/records/SYSTEM-CONCLUSION.md|1792345800|ai-system-20261019-010#045
 AI-General|AI-General/docs/records/PROGRESS.md|1792345800|ai-system-20261019-010#045
