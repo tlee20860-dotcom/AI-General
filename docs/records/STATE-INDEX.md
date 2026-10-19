@@ -9,8 +9,9 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+AI-General|docs/records/STATE-INDEX.md|1792415778|github-actions[bot]
+ai-kernel|docs/r-rules/R-00-rules.md|1792387000|ai-system-20261019-010#155
 ai-kernel|docs/a-guide/A-00-guide.md|1792387000|ai-system-20261019-010#155
-ai-kernel|docs/r-rules/R-00-rules.md|1792372000|ai-system-20261019-010#136
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792368000|ai-system-20261019-010#129
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792368000|ai-system-20261019-010#129
 AI-General|docs/records/PROGRESS.md|1792368000|ai-system-20261019-010#129
@@ -28,6 +29,6 @@ ai-kernel|docs/skills/W/W-01-firebase.md|1791899500|A20261013-004#065
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792415778
+V: 1792416298
 W: github-actions[bot]
 ═══ */
