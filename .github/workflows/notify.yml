@@ -7,7 +7,8 @@ on:
   push:
     branches: [main, master]
     paths:
-      - 'docs/records/**.md'
+      - '**.md'
+      - '.github/workflows/notify.yml'
 
 jobs:
   notify:
@@ -24,6 +25,6 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/notify.yml
-# V: 1792357000
-# W: ai-system-20261019-010#085
+# V: 1792381000
+# W: ai-system-20261019-010#139
 # ═══ EOF ═══
