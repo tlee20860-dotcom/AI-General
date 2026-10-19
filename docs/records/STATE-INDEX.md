@@ -1,23 +1,23 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-19 23:21:36 (HKT)
+> 生成時間：2026-10-19 23:57:14 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
 |---|---|---|---|---|
-| AI-OS 系統 | ai-os | E | 91 | tlee20860-dotcom/AI-OS |
 | 家庭 webapp | webapp | W | 90 | tlee20860-dotcom/AI-WEB-APP-Family |
+| AI-OS 系統 | ai-os | E | 91 | tlee20860-dotcom/AI-OS |
 
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792422772|github-actions[bot]
+AI-General|docs/records/STATE-INDEX.md|1792423296|github-actions[bot]
+AI-kernel|docs/r-rules/R-02-patterns.md|1792412000|ai-system-20261019-010#207
+AI-kernel|docs/a-guide/A-00-guide.md|1792411000|ai-system-20261019-010#203
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792410000|ai-system-20261019-010#199
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792410000|ai-system-20261019-010#199
 AI-General|docs/records/PROGRESS.md|1792410000|ai-system-20261019-010#199
 AI-kernel|docs/r-rules/R-00-rules.md|1792395000|ai-system-20261019-010#172
-AI-kernel|docs/a-guide/A-00-guide.md|1792387000|ai-system-20261019-010#155
-AI-kernel|docs/r-rules/R-02-patterns.md|1792355000|ai-system-20261019-010#082
 AI-kernel|docs/r-rules/R-04-learning.md|1792352000|ai-system-20261019-010#067
 AI-kernel|docs/r-rules/R-03-terms.md|1792352000|ai-system-20261019-010#067
 AI-kernel|docs/r-rules/R-01-mapping.md|1792352000|ai-system-20261019-010#067
@@ -31,6 +31,6 @@ AI-kernel|docs/skills/W/W-01-firebase.md|1791899500|A20261013-004#065
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792423296
+V: 1792425434
 W: github-actions[bot]
 ═══ */
