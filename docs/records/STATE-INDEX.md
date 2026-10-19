@@ -9,8 +9,8 @@
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792345800|ai-system-20261019-010#045
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792345800|ai-system-20261019-010#045
 AI-General|docs/records/PROGRESS.md|1792345800|ai-system-20261019-010#045
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792339800|ai-system-20261019-009#061
 AI-General|docs/common/C-02-rules.md|1792338300|ai-system-20261019-009#051
 AI-General|docs/common/C-04-output.md|1792337400|ai-system-20261019-009#050
 AI-General|docs/common/C-03-flow.md|1792332900|ai-system-20261019-009#038
