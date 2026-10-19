@@ -9,8 +9,8 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+ai-kernel|docs/a-guide/A-00-guide.md|1792387000|ai-system-20261019-010#155
 ai-kernel|docs/r-rules/R-00-rules.md|1792372000|ai-system-20261019-010#136
-ai-kernel|docs/a-guide/A-00-guide.md|1792372000|ai-system-20261019-010#136
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792368000|ai-system-20261019-010#129
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792368000|ai-system-20261019-010#129
 AI-General|docs/records/PROGRESS.md|1792368000|ai-system-20261019-010#129
