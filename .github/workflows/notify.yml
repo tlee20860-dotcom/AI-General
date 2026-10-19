@@ -1,6 +1,3 @@
-# ============================================
-# notify.yml — AI-General 更新時通知 AI-infra
-# ============================================
 name: Notify AI-infra
 
 on:
@@ -9,7 +6,6 @@ on:
     paths:
       - '**.md'
       - '.github/workflows/notify.yml'
-    # 排除自動生成的 STATE-INDEX.md，避免無限迴圈
     paths-ignore:
       - 'docs/records/STATE-INDEX.md'
 
@@ -28,6 +24,6 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/notify.yml
-# V: 1792388000
-# W: ai-system-20261019-010#157
+# V: 1792396000
+# W: ai-system-20261019-010#174
 # ═══ EOF ═══
