@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（v12.5）
+# setup-structure.yml — 四倉架構 + 動態共享包（v12.6）
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -143,10 +143,10 @@ jobs:
             echo "| R-01-writers.md | 2026-10-17 | 內容分散至 C-02、P-01 YAML、STATE-INDEX |"
           } > "$OUTPUT"
 
-      - name: "Step 3: 生成 A 包 (A-00-guide.md)"
+      - name: "Step 3: 生成 A 包 (A00.md)"
         run: |
-          OUTPUT="build-repo/A-00-guide.md"
-          echo "# A-00 啟動引導與角色定義" > "$OUTPUT"
+          OUTPUT="build-repo/A00.md"
+          echo "# A 包：啟動引導與角色定義" > "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
@@ -154,9 +154,9 @@ jobs:
             bash .github/workflows/append_file.sh "ai-kernel/docs/a-guide/A-00-guide.md" "$OUTPUT" || true
           fi
 
-      - name: "Step 3.1: 生成 R 包 (R-00-rules.md)"
+      - name: "Step 3.1: 生成 R 包 (R00.md)"
         run: |
-          OUTPUT="build-repo/R-00-rules.md"
+          OUTPUT="build-repo/R00.md"
           echo "# R 包：規則總覽" > "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
@@ -170,9 +170,9 @@ jobs:
             fi
           done
 
-      - name: "Step 3.2: 生成 U 包 (U-00-profile.md)"
+      - name: "Step 3.2: 生成 U 包 (U00.md)"
         run: |
-          OUTPUT="build-repo/U-00-profile.md"
+          OUTPUT="build-repo/U00.md"
           echo "# U 包：使用者通用描述" > "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
@@ -191,9 +191,9 @@ jobs:
           
           echo "---" >> "$OUTPUT"
           echo "⚠️ **【給 AI 的強制前置檢查】**" >> "$OUTPUT"
-          echo "請立刻確認：你是否已經讀取 \`A-00-guide.md\`（啟動包）？" >> "$OUTPUT"
-          echo "1. 如果「否」或「不確定」，請立刻停止閱讀本檔，先去讀取 \`A-00-guide.md\`，載入引導協議與防呆規則。" >> "$OUTPUT"
-          echo "2. 如果「是」，請依據 \`A-00-guide.md\` 輸出載入確認。" >> "$OUTPUT"
+          echo "請立刻確認：你是否已經讀取 \`A00.md\`（啟動包）？" >> "$OUTPUT"
+          echo "1. 如果「否」或「不確定」，請立刻停止閱讀本檔，先去讀取 \`A00.md\`，載入引導協議與防呆規則。" >> "$OUTPUT"
+          echo "2. 如果「是」，請依據 \`A00.md\` 輸出載入確認。" >> "$OUTPUT"
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
@@ -325,6 +325,6 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792348000
-# W: ai-system-20261019-010#053
+# V: 1792348500
+# W: ai-system-20261019-010#055
 # ═══ EOF ═══
