@@ -8,16 +8,16 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+ai-kernel|docs/r-rules/R-02-patterns.md|1792355000|ai-system-20261019-010#082
+ai-kernel|docs/r-rules/R-00-rules.md|1792355000|ai-system-20261019-010#082
 ai-kernel|docs/r-rules/R-04-learning.md|1792352000|ai-system-20261019-010#067
 ai-kernel|docs/r-rules/R-03-terms.md|1792352000|ai-system-20261019-010#067
-ai-kernel|docs/r-rules/R-02-patterns.md|1792352000|ai-system-20261019-010#067
 ai-kernel|docs/r-rules/R-01-mapping.md|1792352000|ai-system-20261019-010#067
 ai-kernel|docs/a-guide/A-00-guide.md|1792349500|ai-system-20261019-010#061
 AI-General|./docs/records/SYSTEM-HANDOFF.md|1792345800|ai-system-20261019-010#045
 AI-General|./docs/records/SYSTEM-CONCLUSION.md|1792345800|ai-system-20261019-010#045
 AI-General|./docs/records/PROGRESS.md|1792345800|ai-system-20261019-010#045
 ai-kernel|docs/u-profile/U-00-profile.md|1792341600|ai-system-20261019-010#022
-ai-kernel|docs/r-rules/R-00-rules.md|1792341600|ai-system-20261019-010#022
 AI-General|./docs/common/C-02-rules.md|1792338300|ai-system-20261019-009#051
 AI-General|./docs/common/C-04-output.md|1792337400|ai-system-20261019-009#050
 AI-General|./docs/common/C-03-flow.md|1792332900|ai-system-20261019-009#038
