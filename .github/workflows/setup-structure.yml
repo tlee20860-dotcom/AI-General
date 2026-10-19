@@ -1,5 +1,5 @@
 # ============================================
-# setup-structure.yml — 四倉架構 + 動態共享包（v12.4）
+# setup-structure.yml — 四倉架構 + 動態共享包（v12.5）
 # ============================================
 
 name: Build Shared Packages and Deploy
@@ -16,7 +16,7 @@ on:
       - '**/*.svg'
       - '**/*.ico'
   repository_dispatch:
-    types: [web-app-family-updated, ai-os-updated]
+    types: [web-app-family-updated, ai-os-updated, ai-kernel-updated]
   workflow_dispatch:
 
 concurrency:
@@ -40,6 +40,13 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 2
+
+      - name: Checkout ai-kernel
+        uses: actions/checkout@v4
+        with:
+          repository: tlee20860-dotcom/ai-kernel
+          token: ${{ secrets.CROSS_REPO_PAT }}
+          path: ai-kernel
 
       - name: Checkout AI-packages
         uses: actions/checkout@v4
@@ -99,11 +106,18 @@ jobs:
           TMP_TABLE="/tmp/state-index-files.txt"
           > "$TMP_TABLE"
           
-          find docs .github -type f -name "*.md" -not -path "*/.git/*" -not -path "*/build-repo/*" | while read -r f; do
-            V=$(tail -n 15 "$f" | grep -oE '^V: *[0-9]+' | head -1 | sed 's/^V: *//' || true)
-            if [ -z "$V" ]; then continue; fi
-            W=$(tail -n 15 "$f" | grep -oE '^W: *[^ ]+' | head -1 | sed 's/^W: *//' || true)
-            echo "AI-General|$f|$V|$W" >> "$TMP_TABLE"
+          for REPO_DIR in "." "ai-kernel"; do
+            if [ -d "$REPO_DIR/docs" ]; then
+              find "$REPO_DIR/docs" -type f -name "*.md" -not -path "*/.git/*" -not -path "*/build-repo/*" | while read -r f; do
+                V=$(tail -n 15 "$f" | grep -oE '^V: *[0-9]+' | head -1 | sed 's/^V: *//' || true)
+                if [ -z "$V" ]; then continue; fi
+                W=$(tail -n 15 "$f" | grep -oE '^W: *[^ ]+' | head -1 | sed 's/^W: *//' || true)
+                REPO_NAME="AI-General"
+                if [[ "$f" == ai-kernel/* ]]; then REPO_NAME="ai-kernel"; fi
+                CLEAN_F=${f#ai-kernel/}
+                echo "$REPO_NAME|$CLEAN_F|$V|$W" >> "$TMP_TABLE"
+              done
+            fi
           done || true
 
           {
@@ -129,18 +143,45 @@ jobs:
             echo "| R-01-writers.md | 2026-10-17 | 內容分散至 C-02、P-01 YAML、STATE-INDEX |"
           } > "$OUTPUT"
 
-      - name: "Step 3: 生成 A00-star-code.md"
+      - name: "Step 3: 生成 A 包 (A-00-guide.md)"
         run: |
-          OUTPUT="build-repo/A00-star-code.md"
-          echo "# AI 協作 - 核心大腦包" > "$OUTPUT"
+          OUTPUT="build-repo/A-00-guide.md"
+          echo "# A-00 啟動引導與角色定義" > "$OUTPUT"
           echo "" >> "$OUTPUT"
           echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
-          for f in docs/common/C-00-startup.md docs/common/C-02-rules.md docs/common/C-03-flow.md docs/common/C-04-output.md docs/common/C-05-engine.md docs/common/C-06-patterns.md docs/common/C-11-terms.md; do
-            if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi
+          if [ -f "ai-kernel/docs/a-guide/A-00-guide.md" ]; then 
+            bash .github/workflows/append_file.sh "ai-kernel/docs/a-guide/A-00-guide.md" "$OUTPUT" || true
+          fi
+
+      - name: "Step 3.1: 生成 R 包 (R-00-rules.md)"
+        run: |
+          OUTPUT="build-repo/R-00-rules.md"
+          echo "# R 包：規則總覽" > "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          
+          # 依照訂立的合併順序：R00 -> R03 -> R02 -> R04 -> R01
+          for f in R-00-rules R-03-terms R-02-patterns R-04-learning R-01-mapping; do
+            FILE_PATH="ai-kernel/docs/r-rules/${f}.md"
+            if [ -f "$FILE_PATH" ]; then 
+              bash .github/workflows/append_file.sh "$FILE_PATH" "$OUTPUT" || true
+            fi
           done
 
-      - name: "Step 4: 生成 S00-ai-system.md"
+      - name: "Step 3.2: 生成 U 包 (U-00-profile.md)"
+        run: |
+          OUTPUT="build-repo/U-00-profile.md"
+          echo "# U 包：使用者通用描述" > "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
+          echo "" >> "$OUTPUT"
+          if [ -f "ai-kernel/docs/u-profile/U-00-profile.md" ]; then 
+            bash .github/workflows/append_file.sh "ai-kernel/docs/u-profile/U-00-profile.md" "$OUTPUT" || true
+          fi
+
+      - name: "Step 4: 生成 S00 包 (S00-ai-system.md)"
         run: |
           OUTPUT="build-repo/S00-ai-system.md"
           echo "# AI 對話系統 - 體系狀態包" > "$OUTPUT"
@@ -148,16 +189,14 @@ jobs:
           echo "> 生成時間：$(TZ=Asia/Hong_Kong date '+%Y-%m-%d %H:%M:%S') (HKT)" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
           
-          # 加入前置攔截器
           echo "---" >> "$OUTPUT"
           echo "⚠️ **【給 AI 的強制前置檢查】**" >> "$OUTPUT"
-          echo "請立刻確認：你是否已經讀取 \`A00-star-code.md\`（大腦包）？" >> "$OUTPUT"
-          echo "1. 如果「否」或「不確定」，請立刻停止閱讀本檔，先去讀取 \`A00\`，載入狀態機與防呆規則。" >> "$OUTPUT"
-          echo "2. 如果「是」，請依據 \`A00 §一\` 輸出「交接確認摘要」。" >> "$OUTPUT"
+          echo "請立刻確認：你是否已經讀取 \`A-00-guide.md\`（啟動包）？" >> "$OUTPUT"
+          echo "1. 如果「否」或「不確定」，請立刻停止閱讀本檔，先去讀取 \`A-00-guide.md\`，載入引導協議與防呆規則。" >> "$OUTPUT"
+          echo "2. 如果「是」，請依據 \`A-00-guide.md\` 輸出載入確認。" >> "$OUTPUT"
           echo "---" >> "$OUTPUT"
           echo "" >> "$OUTPUT"
 
-          # 將 SYSTEM-HANDOFF.md 排在第一個，確保交接詞置頂
           for f in docs/records/SYSTEM-HANDOFF.md docs/records/PROGRESS.md docs/records/STATE-INDEX.md docs/records/SYSTEM-CONCLUSION.md; do
             if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi
           done
@@ -172,7 +211,6 @@ jobs:
             SHORT="${pkg#PACKAGE-}"
             OUTPUT="build-repo/${pkgno}-${SHORT}"
 
-            # AI-OS 專案：加上 HKT 時間，並使用 append_file.sh 保持 AI 閱讀的結構標記
             if [ "$name" = "ai-os" ]; then
               echo "# AI-OS 輕量版引導系統" > "$OUTPUT"
               echo "" >> "$OUTPUT"
@@ -189,7 +227,6 @@ jobs:
               
               proj_docs_dir="$path/docs/projects/${name}"
               if [ -d "$proj_docs_dir" ]; then
-                # 使用 P-* 白名單前綴匹配，避免收錄無關檔案（含 P-98）
                 for prefix in P-01 P-02 P-05 P-06 P-07 P-08 P-09 P-12 P-13 P-98 P-99; do
                   for f in ${proj_docs_dir}/${prefix}-*.md; do
                     if [ -f "$f" ]; then bash .github/workflows/append_file.sh "$f" "$OUTPUT" || true; fi
@@ -202,7 +239,6 @@ jobs:
                   cd "$path" || exit 0
                   find . -type f \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -not -path "./.git/*" -not -path "./docs/*" -not -path "./.github/*" | sort > /tmp/code_files.txt || true
                   
-                  # 程式碼區改為只產目錄樹與檔數統計，不讀取內容
                   if [ -s /tmp/code_files.txt ]; then
                     {
                       echo ""
@@ -263,15 +299,6 @@ jobs:
             fi
           done < /tmp/projects.txt || true
 
-      - name: "Step 6.1: 生成模式庫包 (06-PATTERNS.md)"
-        run: |
-          OUTPUT="build-repo/06-PATTERNS.md"
-          echo "# AI 設計模式庫 (PATTERNS)" > "$OUTPUT"
-          echo "" >> "$OUTPUT"
-          if [ -f "docs/common/C-06-patterns.md" ]; then 
-            bash .github/workflows/append_file.sh "docs/common/C-06-patterns.md" "$OUTPUT" || true
-          fi
-
       - name: "Step 7: 上傳共享包"
         run: |
           git config user.name "github-actions[bot]"
@@ -298,7 +325,6 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/setup-structure.yml
-# V: 1792336500
-# B(歷史): B34-6
-# W: ai-system-20261019-009#045
+# V: 1792348000
+# W: ai-system-20261019-010#053
 # ═══ EOF ═══
