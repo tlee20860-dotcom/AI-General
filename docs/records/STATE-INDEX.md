@@ -1,5 +1,7 @@
 # STATE-INDEX
 
+> 生成時間：2026-10-19 21:50:02 (HKT)
+
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
 |---|---|---|---|---|
@@ -9,8 +11,8 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792416891|github-actions[bot]
-ai-kernel|docs/r-rules/R-00-rules.md|1792392000|ai-system-20261019-010#167
+AI-General|docs/records/STATE-INDEX.md|1792417131|github-actions[bot]
+ai-kernel|docs/r-rules/R-00-rules.md|1792393000|ai-system-20261019-010#169
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792391000|ai-system-20261019-010#166
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792391000|ai-system-20261019-010#166
 AI-General|docs/records/PROGRESS.md|1792391000|ai-system-20261019-010#166
@@ -29,6 +31,6 @@ ai-kernel|docs/skills/W/W-01-firebase.md|1791899500|A20261013-004#065
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792417131
+V: 1792417802
 W: github-actions[bot]
 ═══ */
