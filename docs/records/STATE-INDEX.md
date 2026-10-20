@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-20 17:09:30 (HKT)
+> 生成時間：2026-10-20 17:23:10 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,14 +11,14 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792484112|github-actions[bot]
+AI-General|docs/records/STATE-INDEX.md|1792487370|github-actions[bot]
 AI-kernel|docs/u-profile/U-00-profile.md|1792468000|ai-system-20261020-012#4
 AI-kernel|docs/r-rules/R-03-terms.md|1792468000|ai-system-20261020-012#2
 AI-kernel|docs/r-rules/R-00-rules.md|1792468000|ai-system-20261020-012#1
 AI-kernel|docs/a-guide/A-00-guide.md|1792468000|ai-system-20261020-012#3
-AI-General|docs/records/SYSTEM-HANDOFF.md|1792466000|ai-system-20261020-011#114
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792466000|ai-system-20261020-011#114
-AI-General|docs/records/PROGRESS.md|1792466000|ai-system-20261020-011#114
+AI-General|docs/records/SYSTEM-HANDOFF.md|1792468000|ai-system-20261020-012#1
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792468000|ai-system-20261020-012#1
+AI-General|docs/records/PROGRESS.md|1792468000|ai-system-20261020-012#1
 AI-kernel|docs/r-rules/R-02-patterns.md|1792412000|ai-system-20261019-010#207
 AI-kernel|docs/r-rules/R-04-learning.md|1792352000|ai-system-20261019-010#067
 AI-kernel|docs/r-rules/R-01-mapping.md|1792352000|ai-system-20261019-010#067
@@ -31,6 +31,6 @@ AI-kernel|docs/skills/W/W-01-firebase.md|1791899500|A20261013-004#065
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792487370
+V: 1792488190
 W: github-actions[bot]
 ═══ */
