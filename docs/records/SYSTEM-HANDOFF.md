@@ -11,9 +11,9 @@ records_pending: []
 | 欄位 | 值 |
 |---|---|
 | 對話編號 | ai-system-20261021-006 |
-| 本次範圍 | 體系微核心化 v1.5 落地：I-00／A-00／R-00／R-03／U-00 交付、R-05-dsl-map 新增 |
-| 累計回覆 | 約 27 條 |
-| 狀態 | 5 檔已交付並確認；SP 四檔加 pending 欄進行中 |
+| 本次範圍 | 體系微核心化 v1.5 落地（四檔重構、R-05 新增、SP 擴六檔）、Phase 2 腳本升級（修補漏檔與 F-004 誤報） |
+| 累計回覆 | 約 48 條 |
+| 狀態 | 全數結案；已產出 STATE_SEAL 並重置 |
 
 ---
 
@@ -22,11 +22,11 @@ records_pending: []
 **指向**：SYSTEM-CONCLUSION.md §一
 
 **本對話重點結論**：
-1. **微核心化定案**：v1.5 合併八裁決與四缺失補齊，經兩份外部審查後由 Ken 拍板落地。
+1. **微核心化定案**：v1.5 合併八裁決與四缺失，經兩份外部審查後落地。
 2. **FSM 結構化**：T99 移出 transitions 改 `fallback_handler`；加 `boot_check`、`pre_condition_guard`；`evaluation_order: strict_top_down`。
 3. **FastDev 自檢**：主走 GitHub Actions 正則，無 CI 時走提取式＋Ken 抽查。
-4. **R-011 補強**：物理關鍵字否定清單＋`domain_classification` 宣告。
-5. **F-004 例外**：md 檔內含 YAML 時，外層 MUST 用四反引號。
+4. **F-004 修正**：原「禁內層反引號」導致誤報，改為「檔案邊界防呆（首尾禁反引號）」。
+5. **SP 擴為六檔**：新增 `SYSTEM-REJECTED.md`、`SYSTEM-DEBT.md`，採 APPEND_ONLY。
 
 ---
 
@@ -42,10 +42,9 @@ records_pending: []
 
 | # | 優先確認 |
 |---|---|
-| 1 | 是否使用最新四檔與 SP |
+| 1 | 是否使用最新四檔與 SP 六檔 |
 | 2 | `records_pending` 是否為空；非空須先補寫 |
-| 3 | STATE_SEAL 的 ssot 欄是否已改指向現有 SP 四檔（HANDOFF／PROGRESS／CONCLUSION／STATE-INDEX） |
-| 4 | R-05-dsl-map 是否已納入 RP 合成物（需更新 `setup-structure.yml`） |
+| 3 | `setup-structure.yml` 是否已將 R-05 與兩新檔正確打包 |
 
 ---
 
@@ -53,10 +52,9 @@ records_pending: []
 
 | 項目 | 狀態 |
 |---|---|
-| STATE_SEAL ssot 欄改指向現有 SP 四檔 | 待處理 |
-| `setup-structure.yml` 支援 STATE_SEAL／APPEND_ONLY／pending | Phase 2 |
-| 36 條映射完成後，R-00 契約表加 DSL 欄 | 待處理 |
-| PROGRESS／CONCLUSION 是否需加 pending 欄 | 暫不加（單一真相在 HANDOFF） |
+| K-01：F-005 與 I／A／U／W／SP 內文 Version 矛盾 | 暫不處理（見 SYSTEM-DEBT.md） |
+| K-03：R-00 契約表加 DSL 欄 | 待處理（見 SYSTEM-DEBT.md） |
+| 跨模型對抗驗收（Phase 3） | 未啟動 |
 
 ---
 
@@ -64,12 +62,12 @@ records_pending: []
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 交付 SP 其餘三檔（PROGRESS／CONCLUSION／STATE-INDEX）之確認或維持 |
-| 2 | 更新 STATE_SEAL ssot 欄指向 |
-| 3 | 進入 Phase 2：`setup-structure.yml` 升級 |
+| 1 | 跑一次 Actions，確認 Step 9.8 驗證報告為 0 錯誤 |
+| 2 | 若需處理體系技術債，可開新對話處理 K-01／K-03 |
+| 3 | 進入 WebApp 專案對話，處理 `entity-registry.js` 與 B34-5 業務開發 |
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-HANDOFF.md
-V: 1792600028
-W: ai-system-20261021-006#7
+V: 1792600038
+W: ai-system-20261021-006#15
 ═══ */
