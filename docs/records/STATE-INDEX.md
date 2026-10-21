@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-21 11:54:49 (HKT)
+> 生成時間：2026-10-21 19:21:56 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,6 +11,14 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+AI-kernel|docs/skills/W/W-07-errors.md|1792581008|ai-system-20261021-004#8
+AI-kernel|docs/skills/W/W-06-sop.md|1792581007|ai-system-20261021-004#7
+AI-kernel|docs/skills/W/W-05-schema.md|1792581006|ai-system-20261021-004#6
+AI-kernel|docs/skills/W/W-04-pwa.md|1792581005|ai-system-20261021-004#5
+AI-kernel|docs/skills/W/W-03-esmodule.md|1792581004|ai-system-20261021-004#4
+AI-kernel|docs/skills/W/W-02-functions.md|1792581003|ai-system-20261021-004#3
+AI-kernel|docs/skills/W/W-01-firebase.md|1792581002|ai-system-20261021-004#2
+AI-kernel|docs/skills/W/W-00-startup.md|1792581001|ai-system-20261021-004#1
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792580000|ai-system-20261021-003#67
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792580000|ai-system-20261021-003#67
 AI-General|docs/records/PROGRESS.md|1792580000|ai-system-20261021-003#67
@@ -21,16 +29,10 @@ AI-kernel|docs/r-rules/R-00-rules.md|1792575600|ai-system-20261021-003#61
 AI-kernel|docs/a-guide/I-00-identity.md|1792569000|ai-system-20261021-003#51
 AI-kernel|docs/a-guide/A-00-guide.md|1792569000|ai-system-20261021-003#51
 AI-kernel|docs/u-profile/U-00-profile.md|1792566000|ai-system-20261021-003#50
-AI-General|docs/records/STATE-INDEX.md|1792554268|github-actions[bot]
-AI-kernel|docs/skills/W/W-00-startup.md|1791903760|A20261013-004#169
-AI-kernel|docs/skills/W/W-05-schema.md|1791899740|A20261013-004#065
-AI-kernel|docs/skills/W/W-04-pwa.md|1791899680|A20261013-004#065
-AI-kernel|docs/skills/W/W-03-esmodule.md|1791899620|A20261013-004#065
-AI-kernel|docs/skills/W/W-02-functions.md|1791899560|A20261013-004#065
-AI-kernel|docs/skills/W/W-01-firebase.md|1791899500|A20261013-004#065
+AI-General|docs/records/STATE-INDEX.md|1792554889|github-actions[bot]
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792554889
+V: 1792581716
 W: github-actions[bot]
 ═══ */
