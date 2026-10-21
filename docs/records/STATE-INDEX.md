@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-21 21:20:06 (HKT)
+> 生成時間：2026-10-21 22:33:58 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,7 +11,9 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792588454|github-actions[bot]
+AI-kernel|docs/a-guide/I-00-identity.md|1792589005|ai-system-20261021-005#5
+AI-kernel|docs/a-guide/A-00-guide.md|1792589004|ai-system-20261021-005#4
+AI-General|docs/records/STATE-INDEX.md|1792588806|github-actions[bot]
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792583003|ai-system-20261021-005#3
 AI-General|docs/records/PROGRESS.md|1792583002|ai-system-20261021-005#2
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792583001|ai-system-20261021-005#1
@@ -27,12 +29,10 @@ AI-kernel|docs/skills/W/W-00-startup.md|1792581001|ai-system-20261021-004#1
 AI-kernel|docs/r-rules/R-04-learning.md|1792575600|ai-system-20261021-003#61
 AI-kernel|docs/r-rules/R-03-terms.md|1792575600|ai-system-20261021-003#61
 AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
-AI-kernel|docs/a-guide/I-00-identity.md|1792569000|ai-system-20261021-003#51
-AI-kernel|docs/a-guide/A-00-guide.md|1792569000|ai-system-20261021-003#51
 AI-kernel|docs/u-profile/U-00-profile.md|1792566000|ai-system-20261021-003#50
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792588806
+V: 1792593238
 W: github-actions[bot]
 ═══ */
