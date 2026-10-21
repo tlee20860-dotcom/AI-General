@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-21 23:25:41 (HKT)
+> 生成時間：2026-10-22 01:03:12 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,15 +11,18 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792593698|github-actions[bot]
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792589105|ai-system-20261021-005#9
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792600033|ai-system-20261021-006#11
+AI-kernel|docs/a-guide/A-00-guide.md|1792600032|ai-system-20261021-006#10
+AI-General|docs/records/SYSTEM-DEBT.md|1792600031|ai-system-20261021-006#9
+AI-General|docs/records/SYSTEM-REJECTED.md|1792600030|ai-system-20261021-006#9
+AI-General|docs/records/SYSTEM-HANDOFF.md|1792600028|ai-system-20261021-006#7
+AI-kernel|docs/r-rules/R-05-dsl-map.md|1792600027|ai-system-20261021-006#6
+AI-kernel|docs/u-profile/U-00-profile.md|1792600026|ai-system-20261021-006#5
+AI-kernel|docs/r-rules/R-03-terms.md|1792600025|ai-system-20261021-006#4
+AI-kernel|docs/a-guide/I-00-identity.md|1792600023|ai-system-20261021-006#3
+AI-kernel|docs/r-rules/R-00-rules.md|1792600022|ai-system-20261021-006#3
+AI-General|docs/records/STATE-INDEX.md|1792596341|github-actions[bot]
 AI-General|docs/records/PROGRESS.md|1792589104|ai-system-20261021-005#8
-AI-General|docs/records/SYSTEM-HANDOFF.md|1792589103|ai-system-20261021-005#7
-AI-kernel|docs/u-profile/U-00-profile.md|1792589102|ai-system-20261021-005#6
-AI-kernel|docs/r-rules/R-03-terms.md|1792589101|ai-system-20261021-005#6
-AI-kernel|docs/r-rules/R-00-rules.md|1792589100|ai-system-20261021-005#6
-AI-kernel|docs/a-guide/I-00-identity.md|1792589005|ai-system-20261021-005#5
-AI-kernel|docs/a-guide/A-00-guide.md|1792589004|ai-system-20261021-005#4
 AI-kernel|docs/skills/W/W-07-errors.md|1792581008|ai-system-20261021-004#8
 AI-kernel|docs/skills/W/W-06-sop.md|1792581007|ai-system-20261021-004#7
 AI-kernel|docs/skills/W/W-05-schema.md|1792581006|ai-system-20261021-004#6
@@ -33,6 +36,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792596341
+V: 1792602192
 W: github-actions[bot]
 ═══ */
