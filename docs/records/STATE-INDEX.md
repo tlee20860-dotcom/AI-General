@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-22 12:34:36 (HKT)
+> 生成時間：2026-10-22 13:36:11 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,18 +11,22 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792603396|github-actions[bot]
+AI-General|docs/records/STATE-INDEX.md|1792643676|github-actions[bot]
+AI-kernel|docs/r-rules/R-03-terms.md|1792606003|ai-system-20261022-007#72#3
+AI-kernel|docs/r-rules/R-00-rules.md|1792606002|ai-system-20261022-007#72#2
+AI-kernel|docs/a-guide/I-00-identity.md|1792606001|ai-system-20261022-007#72#1
+AI-kernel|docs/review/ROLE-BOUNDARY.md|1792605003|ai-system-20261022-007#70#2
+AI-kernel|docs/review/REVIEW-FORMAT.md|1792605003|ai-system-20261022-007#70#1
+AI-kernel|docs/review/CHK-INDEX.md|1792605003|ai-system-20261022-007#70#3
+AI-kernel|docs/review/CHK-E.md|1792605003|ai-system-20261022-007#70#4
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792600038|ai-system-20261021-006#15
 AI-General|docs/records/PROGRESS.md|1792600037|ai-system-20261021-006#15
-AI-kernel|docs/r-rules/R-00-rules.md|1792600036|ai-system-20261021-006#14
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792600033|ai-system-20261021-006#11
 AI-kernel|docs/a-guide/A-00-guide.md|1792600032|ai-system-20261021-006#10
 AI-General|docs/records/SYSTEM-DEBT.md|1792600031|ai-system-20261021-006#9
 AI-General|docs/records/SYSTEM-REJECTED.md|1792600030|ai-system-20261021-006#9
 AI-kernel|docs/r-rules/R-05-dsl-map.md|1792600027|ai-system-20261021-006#6
 AI-kernel|docs/u-profile/U-00-profile.md|1792600026|ai-system-20261021-006#5
-AI-kernel|docs/r-rules/R-03-terms.md|1792600025|ai-system-20261021-006#4
-AI-kernel|docs/a-guide/I-00-identity.md|1792600023|ai-system-20261021-006#3
 AI-kernel|docs/skills/W/W-07-errors.md|1792581008|ai-system-20261021-004#8
 AI-kernel|docs/skills/W/W-06-sop.md|1792581007|ai-system-20261021-004#7
 AI-kernel|docs/skills/W/W-05-schema.md|1792581006|ai-system-20261021-004#6
@@ -36,6 +40,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792643676
+V: 1792647371
 W: github-actions[bot]
 ═══ */
