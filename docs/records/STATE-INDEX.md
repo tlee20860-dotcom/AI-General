@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-22 13:53:40 (HKT)
+> 生成時間：2026-10-22 14:03:52 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,8 +11,9 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792647888|github-actions[bot]
-AI-kernel|docs/review/CHK-E.md|1792610002|ai-system-20261022-007#81#2
+AI-General|docs/records/STATE-INDEX.md|1792648420|github-actions[bot]
+AI-kernel|docs/review/REVIEW-FORMAT.md|1792611002|ai-system-20261022-007#86#2
+AI-kernel|docs/review/CHK-E.md|1792611001|ai-system-20261022-007#86#1
 AI-kernel|docs/r-rules/R-03-terms.md|1792610001|ai-system-20261022-007#81#1
 AI-kernel|docs/u-profile/U-00-profile.md|1792609002|ai-system-20261022-007#78#2
 AI-kernel|docs/r-rules/R-05-dsl-map.md|1792609001|ai-system-20261022-007#78#1
@@ -20,7 +21,6 @@ AI-kernel|docs/a-guide/A-00-guide.md|1792608001|ai-system-20261022-007#76#1
 AI-kernel|docs/r-rules/R-00-rules.md|1792606002|ai-system-20261022-007#72#2
 AI-kernel|docs/a-guide/I-00-identity.md|1792606001|ai-system-20261022-007#72#1
 AI-kernel|docs/review/ROLE-BOUNDARY.md|1792605003|ai-system-20261022-007#70#2
-AI-kernel|docs/review/REVIEW-FORMAT.md|1792605003|ai-system-20261022-007#70#1
 AI-kernel|docs/review/CHK-INDEX.md|1792605003|ai-system-20261022-007#70#3
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792600038|ai-system-20261021-006#15
 AI-General|docs/records/PROGRESS.md|1792600037|ai-system-20261021-006#15
@@ -40,6 +40,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792648420
+V: 1792649032
 W: github-actions[bot]
 ═══ */
