@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-22 14:03:52 (HKT)
+> 生成時間：2026-10-22 14:23:45 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,9 +11,9 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792648420|github-actions[bot]
-AI-kernel|docs/review/REVIEW-FORMAT.md|1792611002|ai-system-20261022-007#86#2
-AI-kernel|docs/review/CHK-E.md|1792611001|ai-system-20261022-007#86#1
+AI-General|docs/records/STATE-INDEX.md|1792649032|github-actions[bot]
+AI-kernel|docs/review/CHK-E.md|1792612002|ai-system-20261022-007#90#2
+AI-kernel|docs/review/REVIEW-FORMAT.md|1792612001|ai-system-20261022-007#90#1
 AI-kernel|docs/r-rules/R-03-terms.md|1792610001|ai-system-20261022-007#81#1
 AI-kernel|docs/u-profile/U-00-profile.md|1792609002|ai-system-20261022-007#78#2
 AI-kernel|docs/r-rules/R-05-dsl-map.md|1792609001|ai-system-20261022-007#78#1
@@ -40,6 +40,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792649032
+V: 1792650225
 W: github-actions[bot]
 ═══ */
