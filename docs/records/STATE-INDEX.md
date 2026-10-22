@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-22 18:49:46 (HKT)
+> 生成時間：2026-10-22 22:03:44 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,13 +11,14 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+AI-General|docs/records/SYSTEM-EVOLUTION.md|1792669000|webapp-20261022-047#1
+AI-kernel|docs/skills/W/W-06-sop.md|1792668000|webapp-20261022-014#1
+AI-General|docs/records/STATE-INDEX.md|1792666186|github-actions[bot]
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792666000|ai-system-20261022-008#78
 AI-General|docs/records/PROGRESS.md|1792665000|ai-system-20261022-008#77
 AI-General|docs/records/SYSTEM-CONCLUSION.md|1792664000|ai-system-20261022-008#76
 AI-kernel|docs/r-rules/R-05-dsl-map.md|1792663001|ai-system-20261022-008#73
 AI-kernel|docs/r-rules/R-00-rules.md|1792663000|ai-system-20261022-008#73
-AI-General|docs/records/SYSTEM-EVOLUTION.md|1792662000|ai-system-20261022-008#66
-AI-General|docs/records/STATE-INDEX.md|1792650879|github-actions[bot]
 AI-General|docs/records/SYSTEM-REJECTED.md|1792613004|ai-system-20261022-007#93#4
 AI-kernel|docs/review/CHK-E.md|1792612002|ai-system-20261022-007#90#2
 AI-kernel|docs/review/REVIEW-FORMAT.md|1792612001|ai-system-20261022-007#90#1
@@ -29,7 +30,6 @@ AI-kernel|docs/review/ROLE-BOUNDARY.md|1792605003|ai-system-20261022-007#70#2
 AI-kernel|docs/review/CHK-INDEX.md|1792605003|ai-system-20261022-007#70#3
 AI-General|docs/records/SYSTEM-DEBT.md|1792600031|ai-system-20261021-006#9
 AI-kernel|docs/skills/W/W-07-errors.md|1792581008|ai-system-20261021-004#8
-AI-kernel|docs/skills/W/W-06-sop.md|1792581007|ai-system-20261021-004#7
 AI-kernel|docs/skills/W/W-05-schema.md|1792581006|ai-system-20261021-004#6
 AI-kernel|docs/skills/W/W-04-pwa.md|1792581005|ai-system-20261021-004#5
 AI-kernel|docs/skills/W/W-03-esmodule.md|1792581004|ai-system-20261021-004#4
@@ -41,6 +41,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792666186
+V: 1792677824
 W: github-actions[bot]
 ═══ */
