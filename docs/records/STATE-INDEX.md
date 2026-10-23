@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-23 02:06:56 (HKT)
+> 生成時間：2026-10-23 08:01:19 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -17,7 +17,7 @@ AI-kernel|docs/r-rules/R-03-terms.md|1792700004|ai-system-20261022-009#4
 AI-kernel|docs/r-rules/R-00-rules.md|1792700003|ai-system-20261022-009#3
 AI-kernel|docs/a-guide/I-00-identity.md|1792700002|ai-system-20261022-009#2
 AI-kernel|docs/a-guide/A-00-guide.md|1792700001|ai-system-20261022-009#1
-AI-General|docs/records/STATE-INDEX.md|1792678382|github-actions[bot]
+AI-General|docs/records/STATE-INDEX.md|1792692416|github-actions[bot]
 AI-General|docs/records/SYSTEM-EVOLUTION.md|1792669000|webapp-20261022-047#1
 AI-kernel|docs/skills/W/W-06-sop.md|1792668000|webapp-20261022-014#1
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792666000|ai-system-20261022-008#78
@@ -42,6 +42,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792692416
+V: 1792713679
 W: github-actions[bot]
 ═══ */
