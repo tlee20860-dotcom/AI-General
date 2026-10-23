@@ -1,5 +1,3 @@
-## 📄 AI-General/docs/records/SYSTEM-HANDOFF.md
-
 # SYSTEM-HANDOFF（體系層交接快照）
 
 上限：80 行
@@ -12,9 +10,9 @@ records_pending: []
 
 | 欄位 | 值 |
 |---|---|
-| 對話編號 | ai-system-20261022-008 |
-| 本次範圍 | 體系進化史建立（10-12~10-22 史料整合）、R-019 新增、4 檔記錄 |
-| 累計回覆 | 約 78 條 |
+| 對話編號 | ai-system-20261022-009 |
+| 本次範圍 | 區模型與權限落地、歷史歸檔機制、Webapp 專案分離 |
+| 累計回覆 | 約 85 條 |
 | 狀態 | 全數結案；已產出 STATE_SEAL 並重置 |
 
 ---
@@ -24,10 +22,10 @@ records_pending: []
 **指向**：SYSTEM-CONCLUSION.md §一
 
 **本對話重點結論**：
-1. **進化史獨立**：新增 `SYSTEM-EVOLUTION.md`（第七檔），八段結構，§零點五 時間軸總覽，§八 33 項衝突。
-2. **史料整合**：10-15 `my-ai-framework`、10-16~10-17 B34、10-18~10-20 五倉與規則重構、10-21 v1.5、10-22 v1.6，全部納入時間軸。
-3. **R-019 新增**：重大結構變更（拆檔／增檔／刪檔／新模式角色／FSM 分層大變）須列清單並提示記入歷史，AI 不得自行寫入。
-4. **4 檔記錄**：CONCLUSION（議題 74、D-166）、PROGRESS（任務二十一 100%）、HANDOFF、STATE-INDEX 同步。
+1. **區模型與權限**：單區獨佔、核心區角色切換需 `[授權切換]`。權限正名：初創者＞體系開發者＞領域開發者。
+2. **F-005 修正**：內文不得重複 Version／Writer（代碼內容除外）；檔頭三行採漸進式刪除。
+3. **歷史歸檔與打包**：新增 `SYSTEM-ARCHIVE.md` 與 `HISTORY.md` 打包；合成包時間戳移至首行。
+4. **專案分離**：成功將 Webapp 90 倉（SPA 新架構）與 `old-AI-WA-FAMILY`（舊架構 129 檔）分離。
 
 ---
 
@@ -35,7 +33,7 @@ records_pending: []
 
 **指向**：SYSTEM-CONCLUSION.md §三
 
-**本次新增決策**：D-166（新增第七檔 SYSTEM-EVOLUTION 與 R-019）。
+**本次新增決策**：D-167 至 D-173。
 
 ---
 
@@ -43,9 +41,10 @@ records_pending: []
 
 | # | 優先確認 |
 |---|---|
-| 1 | `SYSTEM-EVOLUTION.md` 是否存在且 `V:1792662000` |
-| 2 | `R-00` 是否含 R-019；`R-05` 是否含 R-019 映射 |
-| 3 | `records_pending` 是否為空；非空須先補寫 |
+| 1 | 是否已載入最新版四檔與 SP.md？ |
+| 2 | `R-00` 是否已包含 F-005 最新修訂（代碼內容除外）？ |
+| 3 | `SYSTEM-ARCHIVE.md` 是否已就位？ |
+| 4 | `records_pending` 是否為空？ |
 
 ---
 
@@ -53,12 +52,9 @@ records_pending: []
 
 | 項目 | 狀態 |
 |---|---|
-| OI-01：10-14 無直接證據，推測為 webapp B34-4 延續 | 待日後補 commit |
-| OI-02：B34-4 commit 日期 10-13 與 10-16 建倉記錄存在偏移 | 原因未解 |
-| OI-03：`SYSTEM-EVOLUTION.md` 為第七檔，未納入 A-00 §5.2 affected 判定 | 待裁決 |
-| OI-04：`C-11` 30 條詞彙與 AI-OS 6 檔骨架已記錄未展開 | 屬細節 |
-| K-01：F-005 與 I／A／U／W／SP 內文 Version 矛盾 | 暫不處理（見 SYSTEM-DEBT.md） |
-| K-03：R-00 契約表加 DSL 欄 | 待處理（見 SYSTEM-DEBT.md） |
+| 專案 90 程式碼對照與重寫 | 待 Web 開發者執行（依 `P-*` 規格補齊新架構 JS） |
+| F-005 漸進式收斂 | 日常改檔時順手刪除檔頭三行 |
+| 歷史檔 `SYSTEM-EVOLUTION.md` 追加 | 本次屬重大變更（R-019），待 Ken 決定是否記入 |
 
 ---
 
@@ -66,12 +62,12 @@ records_pending: []
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 開新對話，確認 `SYSTEM-EVOLUTION.md` 與 R-019 是否生效 |
-| 2 | 裁決 OI-03：第七檔是否納入 A-00 §5.2 affected 判定 |
-| 3 | 若需處理技術債，可開新對話處理 K-01／K-03 |
+| 1 | 開新對話，確認四檔與區模型運作正常 |
+| 2 | 轉交 Webapp 開發者，進行新舊架構的程式碼對照與重寫 |
+| 3 | 裁決是否將本次區模型變更記入 `SYSTEM-EVOLUTION.md` |
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-HANDOFF.md
-V: 1792666000
-W: ai-system-20261022-008#78
+V: 1792712002
+W: ai-system-20261022-009#3
 ═══ */
