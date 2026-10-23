@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-23 08:01:19 (HKT)
+> 生成時間：2026-10-23 08:36:52 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -11,13 +11,14 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
+AI-General|docs/records/STATE-INDEX.md|1792713679|github-actions[bot]
+AI-General|docs/records/SYSTEM-DEBT.md|1792705003|ai-system-20261022-009#1
+AI-kernel|docs/r-rules/R-00-rules.md|1792705002|ai-system-20261022-009#1
 AI-General|docs/records/SYSTEM-ARCHIVE.md|1792700007|ai-system-20261022-009#7
 AI-kernel|docs/r-rules/R-05-dsl-map.md|1792700005|ai-system-20261022-009#5
 AI-kernel|docs/r-rules/R-03-terms.md|1792700004|ai-system-20261022-009#4
-AI-kernel|docs/r-rules/R-00-rules.md|1792700003|ai-system-20261022-009#3
 AI-kernel|docs/a-guide/I-00-identity.md|1792700002|ai-system-20261022-009#2
 AI-kernel|docs/a-guide/A-00-guide.md|1792700001|ai-system-20261022-009#1
-AI-General|docs/records/STATE-INDEX.md|1792692416|github-actions[bot]
 AI-General|docs/records/SYSTEM-EVOLUTION.md|1792669000|webapp-20261022-047#1
 AI-kernel|docs/skills/W/W-06-sop.md|1792668000|webapp-20261022-014#1
 AI-General|docs/records/SYSTEM-HANDOFF.md|1792666000|ai-system-20261022-008#78
@@ -29,7 +30,6 @@ AI-kernel|docs/review/REVIEW-FORMAT.md|1792612001|ai-system-20261022-007#90#1
 AI-kernel|docs/u-profile/U-00-profile.md|1792609002|ai-system-20261022-007#78#2
 AI-kernel|docs/review/ROLE-BOUNDARY.md|1792605003|ai-system-20261022-007#70#2
 AI-kernel|docs/review/CHK-INDEX.md|1792605003|ai-system-20261022-007#70#3
-AI-General|docs/records/SYSTEM-DEBT.md|1792600031|ai-system-20261021-006#9
 AI-kernel|docs/skills/W/W-07-errors.md|1792581008|ai-system-20261021-004#8
 AI-kernel|docs/skills/W/W-05-schema.md|1792581006|ai-system-20261021-004#6
 AI-kernel|docs/skills/W/W-04-pwa.md|1792581005|ai-system-20261021-004#5
@@ -42,6 +42,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792713679
+V: 1792715812
 W: github-actions[bot]
 ═══ */
