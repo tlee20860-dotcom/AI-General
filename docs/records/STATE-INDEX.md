@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-23 18:36:33 (HKT)
+> 生成時間：2026-10-23 22:21:18 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -12,15 +12,15 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792720396|github-actions[bot]
-AI-General|docs/records/SYSTEM-HANDOFF.md|1792719003|ai-system-20261022-009#4
-AI-General|docs/records/PROGRESS.md|1792719002|ai-system-20261022-009#3
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792719001|ai-system-20261022-009#2
-AI-General|docs/records/SYSTEM-EVOLUTION.md|1792719000|ai-system-20261022-009#1
+AI-General|docs/records/STATE-INDEX.md|1792751793|github-actions[bot]
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792720503|ai-system-20261022-009#4
+AI-General|docs/records/SYSTEM-EVOLUTION.md|1792720502|ai-system-20261022-009#3
+AI-General|docs/records/SYSTEM-HANDOFF.md|1792720501|ai-system-20261022-009#2
+AI-General|docs/records/PROGRESS.md|1792720500|ai-system-20261022-009#1
+AI-kernel|docs/r-rules/R-00-rules.md|1792719601|ai-system-20261022-009#2
+AI-kernel|docs/a-guide/A-00-guide.md|1792719600|ai-system-20261022-009#1
 AI-kernel|docs/r-rules/R-05-dsl-map.md|1792718000|ai-system-20261022-009#1
 AI-kernel|docs/r-rules/R-03-terms.md|1792716002|ai-system-20261022-009#3
-AI-kernel|docs/r-rules/R-00-rules.md|1792716001|ai-system-20261022-009#2
-AI-kernel|docs/a-guide/A-00-guide.md|1792716000|ai-system-20261022-009#1
 AI-General|docs/records/SYSTEM-DEBT.md|1792705003|ai-system-20261022-009#1
 AI-General|docs/records/SYSTEM-ARCHIVE.md|1792700007|ai-system-20261022-009#7
 AI-kernel|docs/a-guide/I-00-identity.md|1792700002|ai-system-20261022-009#2
@@ -43,6 +43,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792751793
+V: 1792765278
 W: github-actions[bot]
 ═══ */
