@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-23 09:53:16 (HKT)
+> 生成時間：2026-10-23 18:36:33 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -12,19 +12,19 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792720028|github-actions[bot]
+AI-General|docs/records/STATE-INDEX.md|1792720396|github-actions[bot]
+AI-General|docs/records/SYSTEM-HANDOFF.md|1792719003|ai-system-20261022-009#4
+AI-General|docs/records/PROGRESS.md|1792719002|ai-system-20261022-009#3
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792719001|ai-system-20261022-009#2
+AI-General|docs/records/SYSTEM-EVOLUTION.md|1792719000|ai-system-20261022-009#1
+AI-kernel|docs/r-rules/R-05-dsl-map.md|1792718000|ai-system-20261022-009#1
+AI-kernel|docs/r-rules/R-03-terms.md|1792716002|ai-system-20261022-009#3
+AI-kernel|docs/r-rules/R-00-rules.md|1792716001|ai-system-20261022-009#2
+AI-kernel|docs/a-guide/A-00-guide.md|1792716000|ai-system-20261022-009#1
 AI-General|docs/records/SYSTEM-DEBT.md|1792705003|ai-system-20261022-009#1
-AI-kernel|docs/r-rules/R-00-rules.md|1792705002|ai-system-20261022-009#1
 AI-General|docs/records/SYSTEM-ARCHIVE.md|1792700007|ai-system-20261022-009#7
-AI-kernel|docs/r-rules/R-05-dsl-map.md|1792700005|ai-system-20261022-009#5
-AI-kernel|docs/r-rules/R-03-terms.md|1792700004|ai-system-20261022-009#4
 AI-kernel|docs/a-guide/I-00-identity.md|1792700002|ai-system-20261022-009#2
-AI-kernel|docs/a-guide/A-00-guide.md|1792700001|ai-system-20261022-009#1
-AI-General|docs/records/SYSTEM-EVOLUTION.md|1792669000|webapp-20261022-047#1
 AI-kernel|docs/skills/W/W-06-sop.md|1792668000|webapp-20261022-014#1
-AI-General|docs/records/SYSTEM-HANDOFF.md|1792666000|ai-system-20261022-008#78
-AI-General|docs/records/PROGRESS.md|1792665000|ai-system-20261022-008#77
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792664000|ai-system-20261022-008#76
 AI-General|docs/records/SYSTEM-REJECTED.md|1792613004|ai-system-20261022-007#93#4
 AI-kernel|docs/review/CHK-E.md|1792612002|ai-system-20261022-007#90#2
 AI-kernel|docs/review/REVIEW-FORMAT.md|1792612001|ai-system-20261022-007#90#1
@@ -43,6 +43,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792720396
+V: 1792751793
 W: github-actions[bot]
 ═══ */
