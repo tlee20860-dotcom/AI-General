@@ -1,17 +1,18 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-23 08:59:07 (HKT)
+> 生成時間：2026-10-23 09:38:54 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
 |---|---|---|---|---|
 | 家庭 webapp | webapp | W | 90 | tlee20860-dotcom/AI-WEB-APP-Family |
+| 家庭 webapp 舊版 | old-webapp | W | 90-old | tlee20860-dotcom/old-AI-WEB-APP-FAMILY |
 | AI-OS 系統 | ai-os | E | 91 | tlee20860-dotcom/AI-OS |
 
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/STATE-INDEX.md|1792715812|github-actions[bot]
+AI-General|docs/records/STATE-INDEX.md|1792717147|github-actions[bot]
 AI-General|docs/records/SYSTEM-DEBT.md|1792705003|ai-system-20261022-009#1
 AI-kernel|docs/r-rules/R-00-rules.md|1792705002|ai-system-20261022-009#1
 AI-General|docs/records/SYSTEM-ARCHIVE.md|1792700007|ai-system-20261022-009#7
@@ -42,6 +43,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792717147
+V: 1792719534
 W: github-actions[bot]
 ═══ */
