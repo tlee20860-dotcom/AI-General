@@ -1,6 +1,6 @@
 # STATE-INDEX
 
-> 生成時間：2026-10-24 13:40:47 (HKT)
+> 生成時間：2026-10-24 14:24:44 (HKT)
 
 ## 一、專案總覽
 | 專案顯示名稱 | code | domain | package_no | repo |
@@ -12,20 +12,20 @@
 ## 二、檔案清單
 | Repo | 檔案 | Version | Writer |
 |---|---|---|---|
-AI-General|docs/records/SYSTEM-HANDOFF.md|1792900010|ai-system-20261024-011#19
-AI-General|docs/records/SYSTEM-DEBT.md|1792900009|ai-system-20261024-011#11
-AI-General|docs/records/PROGRESS.md|1792900008|ai-system-20261024-011#8
-AI-kernel|docs/r-rules/R-03-terms.md|1792900006|ai-system-20261024-011#3
+AI-General|docs/records/SYSTEM-EVOLUTION.md|1792900023|ai-system-20261024-011#37
+AI-General|docs/records/SYSTEM-REJECTED.md|1792900022|ai-system-20261024-011#36
+AI-General|docs/records/SYSTEM-DEBT.md|1792900021|ai-system-20261024-011#35
+AI-General|docs/records/SYSTEM-HANDOFF.md|1792900020|ai-system-20261024-011#34
+AI-General|docs/records/SYSTEM-CONCLUSION.md|1792900019|ai-system-20261024-011#33
+AI-General|docs/records/PROGRESS.md|1792900018|ai-system-20261024-011#32
+AI-kernel|docs/r-rules/R-03-terms.md|1792900017|ai-system-20261024-011#29
+AI-kernel|docs/a-guide/A-00-guide.md|1792900016|ai-system-20261024-011#28
+AI-kernel|docs/a-guide/I-00-identity.md|1792900012|ai-system-20261024-011#24
 AI-kernel|docs/r-rules/R-00-rules.md|1792900005|ai-system-20261024-011#2
-AI-General|docs/records/SYSTEM-CONCLUSION.md|1792900002|ai-system-20261023-010#1
-AI-General|docs/records/STATE-INDEX.md|1792817402|github-actions[bot]
-AI-General|docs/records/SYSTEM-EVOLUTION.md|1792720502|ai-system-20261022-009#3
-AI-kernel|docs/a-guide/A-00-guide.md|1792719600|ai-system-20261022-009#1
+AI-General|docs/records/STATE-INDEX.md|1792820447|github-actions[bot]
 AI-kernel|docs/r-rules/R-05-dsl-map.md|1792718000|ai-system-20261022-009#1
 AI-General|docs/records/SYSTEM-ARCHIVE.md|1792700007|ai-system-20261022-009#7
-AI-kernel|docs/a-guide/I-00-identity.md|1792700002|ai-system-20261022-009#2
 AI-kernel|docs/skills/W/W-06-sop.md|1792668000|webapp-20261022-014#1
-AI-General|docs/records/SYSTEM-REJECTED.md|1792613004|ai-system-20261022-007#93#4
 AI-kernel|docs/review/CHK-E.md|1792612002|ai-system-20261022-007#90#2
 AI-kernel|docs/review/REVIEW-FORMAT.md|1792612001|ai-system-20261022-007#90#1
 AI-kernel|docs/u-profile/U-00-profile.md|1792609002|ai-system-20261022-007#78#2
@@ -43,6 +43,6 @@ AI-kernel|docs/r-rules/R-02-patterns.md|1792575600|ai-system-20261021-003#61
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/STATE-INDEX.md
-V: 1792820447
+V: 1792823084
 W: github-actions[bot]
 ═══ */
