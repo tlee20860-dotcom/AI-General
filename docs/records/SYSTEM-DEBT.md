@@ -14,7 +14,9 @@
 | C-01 | 專案 | 專案程式碼 END OF FILE 補齊（約 44 檔） | 低 | 待處理 | ai-system-20261021-004 |
 | K-03 | 體系 | 36 條映射完成後，R-00 契約表加 DSL 欄 | 中 | 待處理 | ai-system-20261021-006 |
 | K-04 | 體系 | 簡化 `setup-structure.yml` 打包腳本，移除分身與領域識別邏輯 | 中 | 已解決（A-00 已移除分身，腳本邏輯確認無殘留） | ai-system-20261024-011 |
-| K-05 | 體系 | 建立自動化遷移腳本，將專案 90 的 `WF-*` 紀錄檔從專案倉庫移至 `AI-General/docs/projects/90-webapp/records/` | 中 | 待處理 | ai-system-20261024-012 |
+| K-05 | 體系 | 建立自動化遷移腳本，將專案紀錄從專案倉庫移至 `AI-General/docs/p*/` | 中 | 待處理 | ai-system-20261024-012 |
+| K-06 | 體系 | 重寫 `setup-structure.yml`，支援統一大腦架構（產出 `SP-Sys`, `SP-90`, `90-P`, `90-Code` 等平攤生成物） | 高 | 待處理（將於本對話後續交付） | ai-system-20261024-012 |
+| K-07 | 體系 | 新增 `backup.yml`，定時為源檔倉庫建立 Git Tag 快照，防手殘覆蓋 | 高 | 待處理（將於本對話後續交付） | ai-system-20261024-012 |
 
 ---
 
@@ -45,6 +47,6 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-DEBT.md
-V: 1792900036
-W: ai-system-20261024-012#19
+V: 1792900047
+W: ai-system-20261024-012#66
 ═══ */
