@@ -19,6 +19,7 @@
 | K-07 | 體系 | 新增 `backup.yml`，定時為源檔倉庫建立 Git Tag 快照，防手殘覆蓋 | 高 | 已解決 | ai-system-20261024-012 |
 | K-08 | 體系 | 新增 `copy-backup.yml` 與控制台 GUI，實作一鍵完整結構備份 | 高 | 已解決 | ai-system-20261024-012 |
 | K-09 | 體系 | `A-00` §4.2 專案三寶殘留 `apply-patch.yml` 與幽靈事件 `E_START_DELIVERY` | 中 | 已解決（已於本次交付拔除並修正） | ai-system-20261024-013 |
+| K-10 | 體系 | LLM 原生架構無法在物理層拒絕 Token 輸入，僅能依賴 R-026 在規則層進行認知隔離與忽略 | 中 | 無法解決（平台限制，已用規則防堵） | ai-system-20261024-013 |
 
 ---
 
@@ -49,6 +50,6 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-DEBT.md
-V: 1792900114
-W: ai-system-20261024-013#18
+V: 1792900145
+W: ai-system-20261024-013#7
 ═══ */
