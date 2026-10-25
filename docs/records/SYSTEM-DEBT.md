@@ -18,6 +18,7 @@
 | K-06 | 體系 | 重寫 `setup-structure.yml`，支援統一大腦架構（產出 `SP-Sys`, `SP-90`, `90-P`, `90-Code` 等平攤生成物） | 高 | 已解決 | ai-system-20261024-012 |
 | K-07 | 體系 | 新增 `backup.yml`，定時為源檔倉庫建立 Git Tag 快照，防手殘覆蓋 | 高 | 已解決 | ai-system-20261024-012 |
 | K-08 | 體系 | 新增 `copy-backup.yml` 與控制台 GUI，實作一鍵完整結構備份 | 高 | 已解決 | ai-system-20261024-012 |
+| K-09 | 體系 | `A-00` §4.2 專案三寶殘留 `apply-patch.yml` 與幽靈事件 `E_START_DELIVERY` | 中 | 已解決（已於本次交付拔除並修正） | ai-system-20261024-013 |
 
 ---
 
@@ -48,6 +49,6 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-DEBT.md
-V: 1792900071
-W: ai-system-20261024-012#108
+V: 1792900114
+W: ai-system-20261024-013#18
 ═══ */
