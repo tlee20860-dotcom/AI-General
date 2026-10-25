@@ -1,11 +1,29 @@
+## 📄 AI-General/docs/p90/90-P-Map.md
+
 # 90-P-Map（專案地圖與架構）
 
-用途：記錄舊版 129 檔架構的目錄結構、HTML 頁面與 Block 對應表。
+用途：記錄本專案的目錄結構、V2 依賴契約與舊版架構對照。
 說明：通用 ESM 目錄規範與 Page Schema 已抽離至 `W-03` 與 `W-05`，此處僅保留本專案特有實作。
 
 ---
 
-## 一、專案目錄結構
+## 零、體系規則（W 包）對照表
+
+為確保 AI 處理本專案時能同時遵守體系規範，此表建立 W 包與 P 包的映射關係：
+
+| 體系規則（W 包） | 本專案對應（P 包 / 實作） | 說明 |
+|---|---|---|
+| `W-01` 資料庫原則 | `90-P-Data.md` | 本專案的 Firebase RTDB 節點結構與 API 契約。 |
+| `W-02` 後端規則 | `functions/api/` | CF Pages Functions 的具體實作。 |
+| `W-03` 架構與依賴 | `90-P-Map.md`（本檔 §五） | 本專案的目錄結構與具體 import 限制。 |
+| `W-05` UI 規範 | `ui/` 與 `pages/` | 本專案頁面的 Schema 與佈局。 |
+| `W-07` 錯誤防呆 | `90-P-Errors.md` | 本專案曾踩過的專屬坑（如 Firebase 白屏）。 |
+
+---
+
+## 一、專案目錄結構（V2 現行架構）
+
+> 註：§一 與 §二 保留 V1 舊版結構作為歷史參考。V2 的現行結構請見 §五。
 
 | 目錄 | 檔數 | 內容（專案特有補充） |
 |---|---|---|
@@ -28,7 +46,7 @@
 
 ---
 
-## 二、HTML 頁面與 Block 對應表
+## 二、HTML 頁面與 Block 對應表（V1 歷史資料）
 
 | 頁面 | HTML | Schema | 主要 Blocks |
 |---|---|---|---|
@@ -48,7 +66,7 @@
 
 ---
 
-## 三、共用模組清單（所有主頁）
+## 三、共用模組清單（V1 歷史資料）
 
 | 檔案 | 職責 |
 |---|---|
@@ -79,8 +97,44 @@
 | 歷史踩坑 | `90-P-Errors.md` |
 | 專案進度 | `WF-PROGRESS.md` |
 
+---
+
+## 五、V2 架構與依賴契約（現行）
+
+本節為本專案在 V2 重構後的實際目錄與依賴對照，AI 必須嚴格遵守 `W-03` 的架構鐵律。
+
+### 5.1 本專案目錄結構（V2）
+
+| 目錄 | 職責 |
+|---|---|
+| `config/` | `constants.js`、`state.js`、`firebase.js`、`entity-registry.js`、`columns.js`、`status.js`、`app-config.js` |
+| `db/` | `read.js`、`write.js`、`index.js` |
+| `domain/` | `insurance.js`、`settlement.js`、`fund.js`、`bank.js`、`api-client.js`、`auth.js` |
+| `engine/` | `main.js`、`router.js` |
+| `pages/` | `dashboard.js`、`input-center.js`、`insurance.js`、`portfolio.js`、`bank.js`、`settlements.js`、`annual-report.js`、`member-report.js`、`settings.js` |
+| `ui/` | `layout.js`、`table.js`、`form.js`、`modal.js`、`toast.js`、`controls.js`、`format.js`、`dropdown-plus.js` |
+| `lib/` | `expense-modal.js`、`income-modal.js`（業務型 UI 封裝） |
+
+### 5.2 本專案依賴對照
+
+基於 `W-03` 契約，本專案各檔案的允許依賴如下：
+
+| 檔案 | 允許 import | 禁止 import | 說明 |
+|---|---|---|---|
+| `ui/table.js` | `ui/format.js`、`config/columns.js` | `db/`、`domain/`、`lib/`、`pages/` | 通用表格引擎不可沾染業務邏輯。 |
+| `ui/form.js` | `ui/format.js`、`ui/dropdown-plus.js` | `db/`、`domain/`、`pages/` | 表單引擎僅負責渲染與事件綁定。 |
+| `domain/insurance.js` | `config/status.js` | `ui/`、`pages/` | 純函式計算，不碰 DOM。 |
+| `pages/input-center.js` | `config/`、`db/`、`ui/`、`lib/` | 其他 `pages/` | 頁面只能依賴底層，不可互相依賴。 |
+| `lib/expense-modal.js` | `ui/`、`db/`、`config/` | 其他 `pages/` | 業務級 UI 封裝，允許組裝 `ui/` 與 `db/`。 |
+
+### 5.3 AI 自檢要求
+
+依 `W-03 §0.3`，AI 在交付本專案的任何程式碼前，**MUST** 對照 `5.2` 的表格檢查 `import` 區塊。若發現 `ui/` 引入 `db/` 或 `domain/`，必須立即重構。
+
+---
+
 /* ═══ EOF ═══
 F: AI-General/docs/p90/90-P-Map.md
-V: 1792900060
-W: ai-system-20261024-012#85
+V: 1792901610
+W: webapp-20261025-001#17
 ═══ */
