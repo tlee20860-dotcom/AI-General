@@ -9,17 +9,18 @@
 
 | 欄位 | 值 |
 |---|---|
-| 對話編號 | webapp-20261023-001 |
-| 本次範圍 | 廢棄巨型 SPA，重構為模組化架構、智能機械風格、補齊遺漏功能 |
-| 狀態 | 程式碼已交付，等待上線驗證與入口修正 |
+| 對話編號 | ai-system-20261024-012 |
+| 本次範圍 | 徹底重構新版（P0~P7），包含前端 SPA、模組化後端、UI 統一排版 |
+| 狀態 | 核心重構已完成，等待最後排版套用與功能驗收 |
 
 ---
 
 ## 二、議題進度與重大變更
 
-1. **架構重構**：廢棄 14 檔「字串拼接」SPA，改為 **30+ 檔「純函數渲染 + 事件委託」** 模組化架構。
-2. **風格變更**：全站 CSS 重寫為「智能機械風格（深空黑/賽博青）」。
-3. **功能補齊**：補齊了 FIX-B/C/E 中遺漏的深層功能（包含基金分配 UI、設定頁四卡、Admin 帳號管理）。
+1. **架構重寫**：廢棄舊版 119 檔架構，採用 SPA（單頁應用）+ Hash 路由，將前端重組為 `engine`、`domain`、`ui`、`pages` 等模組（約 45 檔）。
+2. **後端重構**：將舊版 11 個 API 檔整合為 5 檔（`config`, `helpers`, `handlers-core`, `handlers-report`, `handlers-admin`），並修正 Cloudflare Pages Functions 的目錄路徑至 `functions/api/`。
+3. **資料層分離**：將舊版 1000 行的 `db.js` 拆分為 `read.js` 與 `write.js`，並實作 `?readonly=1` 防呆。
+4. **UI 統一化**：建立 `renderPageLayout` 統一全站頁面骨架（標題 → 統計卡 → 控制列 → 列表），並支援表格/卡片切換。
 
 ---
 
@@ -27,20 +28,19 @@
 
 | # | 優先確認 |
 |---|---|
-| 1 | `js/app-pages-loader.js` 是否已建立並上傳？（上一輪剛補交） |
-| 2 | `app.html` 是否已改名為 `index.html`（或 Cloudflare 已設定重定向）？ |
-| 3 | Cloudflare 部署的網址是否為 `family-financial-management-system-v2.pages.dev`？ |
+| 1 | 確認 `engine/main.js` 與 `engine/router.js` 的登入跳轉與事件綁定邏輯是否正確。 |
+| 2 | 確認 `ui/layout.js` 的 `renderPageLayout` 是否已正確匯出。 |
+| 3 | 確認 `pages/insurance.js` 已補齊完整的 Modal 與刪除邏輯。 |
 
 ---
 
-## 四、未完成事項（待 Ken 執行）
+## 四、未完成事項（待 Ken 執行或下一階段處理）
 
 | 項目 | 狀態 |
 |---|---|
-| 線上登入測試 | 待執行（需確認是否能正常登入並跳轉） |
-| 舊版 `index.html` 清除 | 待 Ken 手動從倉庫刪除 |
-| `sw.js` 舊快取清除 | 需 Ken 在瀏覽器清除網站資料 |
-| 30 項人工驗收 (AC) | 待重新執行（因架構大改） |
+| 套用統一排版至剩餘頁面 | `bank`, `settlements`, `code-list`, `member-report`, `portfolio` 需改寫為使用 `renderPageLayout`。 |
+| 補齊 `input-center.js` 非支出 Tab 的列表 | 目前切換到保險/基金/銀行時，僅顯示提示字，未渲染實際清單。 |
+| 全面功能測試 | 測試新增/編輯/刪除是否能正確寫入 Firebase。 |
 
 ---
 
@@ -48,16 +48,12 @@
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 將 `app.html` 改名為 `index.html`。 |
-| 2 | 確保 `js/app-pages-loader.js` 已存在。 |
-| 3 | 用無痕模式訪問根網域，確認是否顯示深色機械登入畫面。 |
-| 4 | 登入測試，確認路由與頁面渲染正常。 |
-| 5 | 若報錯，開啟 F12 或 vConsole 截圖，並於下一輪對話回報。 |
-
----
+| 1 | 將剩餘頁面的 `content.innerHTML` 手寫排版，替換為 `renderPageLayout` 呼叫。 |
+| 2 | 實作 `input-center` 中其他 Tab（保險、基金、銀行）的清單渲染。 |
+| 3 | 測試新增保單、新增支出、結算確認扣款等核心流程。 |
 
 /* ═══ EOF ═══
 F: AI-General/docs/p90/WF-HANDOFF.md
-V: 1792900055
-W: ai-system-20261024-012#74
+V: 1792900940
+W: ai-system-20261024-012#86
 ═══ */
