@@ -43,7 +43,7 @@
 
 | 任務編號 | 任務名稱 | 完成日期 | 歸檔日期 | 來源檔 |
 |---|---|---|---|---|
-| （待歸檔） | — | — | — | `PROGRESS.md` |
+| 012 | 舊對話交接留痕（Webapp V2 重寫） | 2026-10-25 | 2026-10-25 | `SYSTEM-HANDOFF`（ai-system-20261024-012） |
 
 ### §五 CONCLUSION 歸檔
 
@@ -74,8 +74,6 @@
 | 來源檔 | 原檔路徑 |
 | 補充 | DEBT 加「解決對話」；PROGRESS 加「完成日期」；CONCLUSION 加「結案日期」 |
 
-/* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-ARCHIVE.md
-V: 1792700007
-W: ai-system-20261022-009#7
-═══ */
+V: 1792900170
+W: ai-system-20261025-001#1
