@@ -11,7 +11,7 @@
 |---|---|
 | 任務名稱 | 舊版 119 檔架構廢棄，重寫為 SPA + 模組化架構，並統一 UI 排版 |
 | 開始時間 | 2026-10-24 |
-| 當前階段 | 核心架構與功能已完成，部分頁面排版待統一 |
+| 當前階段 | 核心架構與功能已完成，全站排版已統一，等待全面功能驗收 |
 | 完成度 | 9/10 |
 
 ---
@@ -29,8 +29,8 @@
 | 7 | 建立 P5 UI 層（table, controls, form） | 已完成 | 支援表格/卡片切換 |
 | 8 | 建立 P6 頁面層（dashboard, insurance, input-center 等） | 已完成 | 核心頁面邏輯與 Modal 已補齊 |
 | 9 | 建立統一排版引擎 `renderPageLayout` | 已完成 | 封裝於 `ui/layout.js` |
-| 10 | 套用統一排版至剩餘頁面 | 待處理 | `bank`, `settlements`, `code-list` 等 5 頁需改寫 |
-| 11 | 全面功能驗收與線上測試 | 待處理 | 需測試 Firebase 寫入與扣款連動 |
+| 10 | 套用統一排版至全站頁面 | 已完成 | 包含 dashboard, portfolio, bank, settlements, code-list, member-report, input-center, annual-report 等 |
+| 11 | 全面功能驗收與線上測試 | 待處理 | 需測試 Firebase 寫入與扣款連動，留待下一輪對話執行 |
 
 ---
 
@@ -45,8 +45,10 @@
 | 需重新交付 | 內容有誤需重做 |
 | 已廢棄 | 不再執行 |
 
+---
+
 /* ═══ EOF ═══
 F: AI-General/docs/p90/WF-PROGRESS.md
-V: 1792900950
-W: ai-system-20261024-013#23
-═══ */
+V: 1792901090
+W: ai-system-20261024-012#13
+═══ EOF ═══ */
