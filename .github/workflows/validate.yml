@@ -1,0 +1,18 @@
+name: General Commit Validation
+on:
+  push:
+    paths:
+      - 'docs/**/*.md'
+      - 'docs/**/*.json'
+
+jobs:
+  call-validation:
+    uses: tlee20860-dotcom/AI-infra/.github/workflows/validate.yml@main
+    secrets:
+      CROSS_REPO_PAT: ${{ secrets.CROSS_REPO_PAT }}
+
+# ═══ EOF ═══
+# F: AI-General/.github/workflows/validate.yml
+# V: 1792904700
+# W: ai-system-20261026-002#16
+# ═══ EOF ═══
