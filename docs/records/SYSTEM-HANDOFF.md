@@ -3,7 +3,7 @@
 上限：80 行
 用途：體系層對話交接快照
 
-version: SV05
+version: SV06
 records_pending: []
 
 ---
@@ -12,19 +12,20 @@ records_pending: []
 
 | 欄位 | 值 |
 |---|---|
-| 對話編號 | ai-system-20261025-001（代記 webapp-20261025-001） |
-| 本次範圍 | ARCHIVE 打包缺口修復、A-00 幽靈清零、W 包架構契約化、V2 引擎重寫 |
-| 累計回覆 | 兩對話合計 9 次交付，五檔代記完成 |
+| 對話編號 | ai-system-20261026-001 |
+| 本次範圍 | 外部優化方案審查、規則條文對齊（A1 雙軌制）、事件集補齊、CHK 幽靈更名修復、源檔邊界防呆建立 |
+| 累計回覆 | 38 次 |
 | 狀態 | 準備進行 STATE_SEAL 重置 |
 
 ---
 
-## 二、體系重大變更（SV05）
+## 二、體系重大變更（SV06）
 
-1. **ARCHIVE 打包缺口修復**：`setup-structure.yml` Step 9.3 的 `SRC_FILES` 加入 `SYSTEM-ARCHIVE.md`；`A-00 §1.1` 映射表 `24-HISTORY` 列同步加入。
-2. **A-00 幽靈清零**：移除 `INDEX-Sys.md`、`SYSTEM-VERSIONS.md`、`STATE-INDEX.md` 五處引用；§1.1 `20-SP-Sys` 由七檔改五檔；§5.4 STATE_SEAL 移除 `index` 行；§5.3 改指 `25-INDEX.md`。
-3. **W 包架構契約化**：`W-00` 加入【強制規則宣告】；`W-03` 加入依賴方向鐵律 W03-R01~R06；`W-06` 加入新專案啟動 5 步法與防膨脹鐵律。
-4. **專案引擎重寫**：`ui/table.js`、`ui/form.js`、`ui/layout.js`、`engine/main.js`、`engine/router.js` 全數重寫；幽靈依賴（`shared/`、`entity/`、`ui/entity-modal.js`）全面拔除。
+1. **規則條文對齊（A1）**：詞 29、R-010、F-007 統一改為「預設完整檔（FULL_FILE），`append_only_scope` 清單內採增量寫入（APPEND_ONLY）」。消除與 F-008 之矛盾。
+2. **FSM 事件補齊**：A-00 §2.3 補 `E_USER_MAPPING`、`E_CHECK_DONE`；新增 `I-12`（事件差集恆空）。K-003 擴充為四項（含事件差集）。
+3. **身份解耦**：R-014 標頭第 3/4 行改為解耦邏輯，外部角色禁用 FSM 狀態；新增行為標籤小表。
+4. **源檔邊界防呆**：F-005 新增「合成物外殼禁制」；K-001 擴充第 7 項「合成物外殼掃描」。
+5. **CHK 幽靈更名**：`ROLE-BOUNDARY.md` 的「體系開發與結構師」全面更名為「系統架構師」；`CHK-E-012` 補事件差集；K-002 加進度檔豁免。
 
 ---
 
@@ -32,9 +33,9 @@ records_pending: []
 
 | # | 優先確認 |
 |---|---|
-| 1 | 確認 `24-HISTORY.md` 是否已含 `SYSTEM-ARCHIVE.md` 區塊（驗證打包缺口已修） |
-| 2 | 確認 `01-AP.md` §1.1 `20-SP-Sys` 為五檔、§5.4 已無 `index:` 行 |
-| 3 | 確認 `ui/table.js` 排序與篩選實機正常、專案無 V1 幽靈 import |
+| 1 | 確認 `01-AP.md`、`02-RP.md`、`23-CHK.md` 第一行版本已更新，且源檔無「套娃標記」（`FILE START`）。 |
+| 2 | 確認 `R-00` F-005 已含源檔邊界防呆；`R-03` 詞 29 為雙軌制。 |
+| 3 | 檢查 `docs/review/ROLE-BOUNDARY.md` 內已無「結構師」簡稱。 |
 | 4 | `records_pending` 是否為空？ |
 
 ---
@@ -43,10 +44,9 @@ records_pending: []
 
 | 項目 | 狀態 |
 |---|---|
-| webapp 實機功能驗收 | 待執行（Ken 需測試全站） |
-| webapp Admin 預設資料 CRUD | 待處理（見 C-02） |
-| webapp portfolio.js 歷史快照手寫 | 待處理（見 C-03） |
-| INDEX-Sys／SYSTEM-VERSIONS 幽靈來源 | 待查（見 K-11） |
+| K-22（CHK-INDEX 列已廢除 R-013） | 待處理（優先級低） |
+| CHK 過度設計／過時診斷 | 已記為議題 #90，尚未啟動重構 |
+| 專案 K-16（編號撞號） | 已撤回（無決策閒聊不佔編號） |
 
 ---
 
@@ -54,10 +54,12 @@ records_pending: []
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 五檔貼回源碼倉庫後，至 `AI-infra` 手動執行 `setup-structure.yml` |
-| 2 | 下載新合成物，確認 `24-HISTORY` 含 ARCHIVE、`01-AP` 無幽靈引用 |
-| 3 | webapp 進行實機測試；若通過，補齊 admin.js 預設資料管理 |
+| 1 | 4 檔紀錄貼回後，至 `AI-infra` 手動執行 `setup-structure.yml`。 |
+| 2 | 下載新合成物，確認 `20-SP-Sys.md` 的 `version` 為 `SV06`。 |
+| 3 | 若未來要處理 CHK 架構，從 `SYSTEM-CONCLUSION.md` 議題 #90 開始。 |
 
+/* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-HANDOFF.md
-V: 1792902100
-W: ai-system-20261025-001#4
+V: 1792903100
+W: ai-system-20261026-001#11
+═══ */
