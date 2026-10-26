@@ -1,3 +1,5 @@
+## 📄 AI-General/docs/p90/WF-PROGRESS.md
+
 # WF-PROGRESS（專案任務進度追蹤）
 
 用途：追蹤 WebApp Family 專案的步驟進度
@@ -6,13 +8,13 @@
 
 ## 一、當前任務
 
-### 任務 B35-1：全專案模組化重構與 UI 統一（V2）
+### 任務 B35-2：核心引擎重構與幽靈依賴清理
 | 欄位 | 值 |
 |---|---|
-| 任務名稱 | 舊版 119 檔架構廢棄，重寫為 SPA + 模組化架構，並統一 UI 排版 |
-| 開始時間 | 2026-10-24 |
-| 當前階段 | 核心架構與功能已完成，全站排版已統一，等待全面功能驗收 |
-| 完成度 | 9/10 |
+| 任務名稱 | 恢復 V1 引擎功能（排序、篩選、表單連動），全面拔除 V2 重構遺留的幽靈依賴與手寫表格。 |
+| 開始時間 | 2026-10-26 |
+| 當前階段 | 程式碼交付完成，等待實機功能驗收 |
+| 完成度 | 10/10 |
 
 ---
 
@@ -20,17 +22,16 @@
 
 | # | 步驟 | 狀態 | 備註 |
 |---|---|---|---|
-| 1 | 清空舊版程式碼並建立新目錄結構 | 已完成 | 透過 GitHub Actions 腳本清空 |
-| 2 | 建立 P0 骨架（index.html, manifest, sw） | 已完成 | 支援 V2 隔離與 PWA |
-| 3 | 建立 P1 設定層（constants, firebase, state） | 已完成 | 狀態與設定全面重構 |
-| 4 | 建立 P2 資料層（db/read.js, db/write.js） | 已完成 | 拆分舊版巨型 db.js |
-| 5 | 建立 P3 業務域（insurance, settlement, fund） | 已完成 | 純函數化，易於測試 |
-| 6 | 建立 P4 後端層（functions/api/） | 已完成 | 修正 405 錯誤，改為 functions 目錄 |
-| 7 | 建立 P5 UI 層（table, controls, form） | 已完成 | 支援表格/卡片切換 |
-| 8 | 建立 P6 頁面層（dashboard, insurance, input-center 等） | 已完成 | 核心頁面邏輯與 Modal 已補齊 |
-| 9 | 建立統一排版引擎 `renderPageLayout` | 已完成 | 封裝於 `ui/layout.js` |
-| 10 | 套用統一排版至全站頁面 | 已完成 | 包含 dashboard, portfolio, bank, settlements, code-list, member-report, input-center, annual-report 等 |
-| 11 | 全面功能驗收與線上測試 | 待處理 | 需測試 Firebase 寫入與扣款連動，留待下一輪對話執行 |
+| 1 | 重寫 `engine/main.js` 與 `router.js` | 已完成 | 解決超管登入卡死與路由權限衝突。 |
+| 2 | 重寫 `ui/layout.js` | 已完成 | 加入防破版約束，解決統計卡撐破與無法滑動。 |
+| 3 | 重寫 `ui/form.js` 與 `ui/table.js` | 已完成 | 恢復表單連動、`+`號新增、表頭排序、篩選與欄位設定。 |
+| 4 | 清理 `pages/insurance.js` 幽靈依賴 | 已完成 | 移除 `entity-helpers`，改用 `api.entityCreate`。 |
+| 5 | 清理 `pages/portfolio.js` 幽靈依賴 | 已完成 | 移除 `entity-modal`，改用 `ui/form.js`。 |
+| 6 | 清理 `pages/settings.js` 幽靈依賴 | 已完成 | 移除 `shared/`，直接使用引擎渲染成員與銀行。 |
+| 7 | 清理 `admin.js` 與 `annual-report.js` 手寫表格 | 已完成 | 全面改用 `renderTable` 引擎渲染。 |
+| 8 | 補齊 `config/columns.js` 欄位定義 | 已完成 | 新增 `adminFamilies` 與 `annualMonthly`。 |
+| 9 | 補齊 V1 缺失功能（基金快照、CSV 匯出） | 已完成 | 隨頁面重寫一併恢復。 |
+| 10 | 全面功能驗收與線上測試 | 待處理 | 需由 Ken 實機測試表頭排序、`+` 號新增與防破版。 |
 
 ---
 
@@ -49,6 +50,6 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/p90/WF-PROGRESS.md
-V: 1792901090
-W: ai-system-20261024-012#13
-═══ EOF ═══ */
+V: 1792902000
+W: webapp-20261025-001#48
+═══ */
