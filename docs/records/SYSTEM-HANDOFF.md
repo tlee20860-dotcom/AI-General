@@ -1,8 +1,9 @@
-# SYSTEM-HANDOFF（體系層交接快照）
+# SYSTEM-HANDOFF（體系交接快照）
 
 上限：80 行
 用途：體系層對話交接快照
-version: SV04
+
+version: SV05
 records_pending: []
 
 ---
@@ -11,62 +12,52 @@ records_pending: []
 
 | 欄位 | 值 |
 |---|---|
-| 對話編號 | ai-system-20261024-013 |
-| 本次範圍 | 會話鎖防熱更新、版本發布 SOP、新專案 SOP 補齊、嚴格限制提前給密語 |
-| 累計回覆 | 架構與腳本全數結案；已發布 SV04 |
+| 對話編號 | ai-system-20261025-001（代記 webapp-20261025-001） |
+| 本次範圍 | ARCHIVE 打包缺口修復、A-00 幽靈清零、W 包架構契約化、V2 引擎重寫 |
+| 累計回覆 | 兩對話合計 9 次交付，五檔代記完成 |
 | 狀態 | 準備進行 STATE_SEAL 重置 |
 
 ---
 
-## 二、體系重大變更（SV04）
+## 二、體系重大變更（SV05）
 
-1. **嚴格限制提前給密語**：修改 `R-001`，若方案有未決缺口，AI 絕對不能提供解鎖密語。
-2. **新專案 SOP 補齊**：`meta.json` 列為第一優先建立；`notify.yml` 強制包含 PAT；專案腳本禁止硬編碼。
-3. **會話鎖與隔離區**：持續沿用 `R-026`，開場鎖定版本，中途拒讀體系檔。
-4. **密語排版強制令**：僅限 `DISCUSS` 階段給選項；密語一律使用獨立 Code Block 包裹（連架構師自己都違規過，需嚴格把關）。
-
----
-
-## 三、專案狀態關聯（AI-WEB-APP-Family）
-
-| 項目 | 說明 |
-|---|---|
-| 專案進度 | V2 全新架構重寫（SPA + 模組化後端），約 45 檔。核心開發完成，待最後排版套用與驗收。 |
-| 詳細紀錄 | 完整進度與待辦事項，請見 `AI-General/docs/p90/` 下的 `WF-*.md` 紀錄檔。 |
+1. **ARCHIVE 打包缺口修復**：`setup-structure.yml` Step 9.3 的 `SRC_FILES` 加入 `SYSTEM-ARCHIVE.md`；`A-00 §1.1` 映射表 `24-HISTORY` 列同步加入。
+2. **A-00 幽靈清零**：移除 `INDEX-Sys.md`、`SYSTEM-VERSIONS.md`、`STATE-INDEX.md` 五處引用；§1.1 `20-SP-Sys` 由七檔改五檔；§5.4 STATE_SEAL 移除 `index` 行；§5.3 改指 `25-INDEX.md`。
+3. **W 包架構契約化**：`W-00` 加入【強制規則宣告】；`W-03` 加入依賴方向鐵律 W03-R01~R06；`W-06` 加入新專案啟動 5 步法與防膨脹鐵律。
+4. **專案引擎重寫**：`ui/table.js`、`ui/form.js`、`ui/layout.js`、`engine/main.js`、`engine/router.js` 全數重寫；幽靈依賴（`shared/`、`entity/`、`ui/entity-modal.js`）全面拔除。
 
 ---
 
-## 四、重建條件（下一 AI 優先確認）
+## 三、重建條件（下一 AI 優先確認）
 
 | # | 優先確認 |
 |---|---|
-| 1 | 確認 `R-00` 是否已包含 `R-026` 會話鎖與新版 `R-001`（有缺口不給密語）？ |
-| 2 | 確認 `A-00` 是否已包含 SV04 版本宣告與專案 SOP 補強？ |
-| 3 | 確認 `setup-structure.yml` 是否已加入提取 `version` 並注入合成物的腳本？ |
+| 1 | 確認 `24-HISTORY.md` 是否已含 `SYSTEM-ARCHIVE.md` 區塊（驗證打包缺口已修） |
+| 2 | 確認 `01-AP.md` §1.1 `20-SP-Sys` 為五檔、§5.4 已無 `index:` 行 |
+| 3 | 確認 `ui/table.js` 排序與篩選實機正常、專案無 V1 幽靈 import |
 | 4 | `records_pending` 是否為空？ |
 
 ---
 
-## 五、未完成事項
+## 四、未完成事項
 
 | 項目 | 狀態 |
 |---|---|
-| Webapp 專案收尾 | 請依 `WF-PROGRESS.md` 執行剩餘 5 頁面排版與 Firebase 功能驗收。 |
-| 驗證打包腳本 | 需確認打包出來的合成物第一行是否成功顯示 `SV04`。 |
+| webapp 實機功能驗收 | 待執行（Ken 需測試全站） |
+| webapp Admin 預設資料 CRUD | 待處理（見 C-02） |
+| webapp portfolio.js 歷史快照手寫 | 待處理（見 C-03） |
+| INDEX-Sys／SYSTEM-VERSIONS 幽靈來源 | 待查（見 K-11） |
 
 ---
 
-## 六、下一步建議
+## 五、下一步建議
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 將本次所有更新檔案貼回源碼倉庫。 |
-| 2 | 至 `AI-infra` 手動執行 `setup-structure.yml`。 |
-| 3 | 下載全新的合成物，確認第一行是否為「體系版本：SV04」。 |
-| 4 | 開新對話，測試會話鎖與新專案 SOP 機制。 |
+| 1 | 五檔貼回源碼倉庫後，至 `AI-infra` 手動執行 `setup-structure.yml` |
+| 2 | 下載新合成物，確認 `24-HISTORY` 含 ARCHIVE、`01-AP` 無幽靈引用 |
+| 3 | webapp 進行實機測試；若通過，補齊 admin.js 預設資料管理 |
 
-/* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-HANDOFF.md
-V: 1792900155
-W: ai-system-20261024-013#6
-═══ */
+V: 1792902100
+W: ai-system-20261025-001#4
