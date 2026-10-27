@@ -4,6 +4,7 @@ on:
     paths:
       - 'docs/**/*.md'
       - 'docs/**/*.json'
+      - 'docs/**/*.txt'
 
 jobs:
   call-validation:
@@ -13,6 +14,6 @@ jobs:
 
 # ═══ EOF ═══
 # F: AI-General/.github/workflows/validate.yml
-# V: 1792904700
-# W: ai-system-20261026-002#16
+# V: 1792906100
+# W: ai-system-003#10
 # ═══ EOF ═══
