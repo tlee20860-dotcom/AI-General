@@ -63,8 +63,12 @@
 | K-25 | 體系 | 前端 `fetch` 無超時機制，導致網路卡頓時按鈕永久卡在「處理中...」 | 中 | 已解決（加入 AbortController 15 秒超時防護） | ai-system-003 |
 | K-26 | 體系 | `index.html` 仍保留了部分硬編碼的替換標籤（如 `[APPEND]`、`<<<<<<< OLD`），若未來變更語法需改前端 | 低 | 待處理（目前寫死是為了防呆，未來可考慮完全配置化） | ai-system-003 |
 
+| K-92-01 | 專案 | Firebase 前端金鑰寫死於 `src/config/firebase-keys.js`，未來多環境切換不便。 | 低 | 待處理 | webapp-20261026-001 |
+| K-92-02 | 專案 | 自訂登入機制採用前端明文比對，未整合 Firebase Auth，存在安全隱患。 | 中 | 待處理 | webapp-20261026-001 |
+| K-92-03 | 專案 | Firestore 安全規則目前為測試模式（`allow read, write: if true;`），上線前必須替換。 | 高 | 待處理 | webapp-20261026-001 |
+
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-DEBT.md
-V: 1792908700
-W: ai-system-003#37
+V: 1792908900
+W: ai-system-004
 ═══ */
