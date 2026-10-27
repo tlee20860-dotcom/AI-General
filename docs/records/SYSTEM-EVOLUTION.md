@@ -615,8 +615,21 @@
 ### 四、 對抗審查機制升級
 1. **LLM 專屬危機**：`R-016` 實質工程對抗審查升級，要求外部 AI（如 Gemini）針對「認知溢出、邏輯死鎖、幻覺與假裝執行、格式與算數出錯」四大 LLM 物理缺陷進行對抗，拒絕形式主義。
 
+### 2026-10-27｜W 包架構模式與 Vite 工程化規範
+- **來源**：`webapp-20261026-001`（舊體系）
+- **變更檔案**：
+  - `AI-kernel/docs/skills/W/W-00-startup.md`
+  - `AI-kernel/docs/skills/W/W-03-esmodule.md`
+  - `AI-kernel/docs/skills/W/W-06-sop.md`
+- **變更內容**：
+  1. `W-00`：新增「三、架構模式選擇矩陣」，定義 Mode A（純 CDN 無構建）與 Mode B（Vite 工程化），供未來新專案依據複雜度選擇。
+  2. `W-03`：新增「八、Vite 工程化基礎建設（Mode B 專用）」，收錄 `package.json`、`vite.config.js`、`tailwind.config.js`、`postcss.config.js` 等核心配置規範與 `@/` 別名使用原則。
+  3. `W-06`：修改「0.1 啟動 5 步法」之第 1 步，加入判斷並選擇架構模式的流程。
+- **決策關聯**：`D-226`（W 包新增架構模式選擇與 Vite 基礎建設）
+- **影響範圍**：未來所有載入 W 包之 Web App 專案。
+
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-EVOLUTION.md
-V: 1792908800
-W: ai-system-003#38
+V: 1792908900
+W: ai-system-004
 ═══ */
