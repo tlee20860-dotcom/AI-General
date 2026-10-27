@@ -88,8 +88,17 @@
 | 通用對話決策 | GENERAL-CONCLUSION.md（GC） |
 | 審查包源檔 | docs/review/（合成物 CHK.md） |
 
+| D-226 | W 包新增架構模式選擇與 Vite 基礎建設 | 因應不同規模的 Web App 專案，W-00 新增 Mode A（純 CDN）與 Mode B（Vite 工程化）矩陣；W-03 寫入 Vite 配置與 `@/` 別名規範；W-06 啟動 SOP 加入選擇流程。避免小型專案過度工程化，或大型專案缺乏模組化。 |
+
+**決策明細**：被否決方案見 `SYSTEM-REJECTED.md`（RJ-xxx）；技術債見 `SYSTEM-DEBT.md`（K-xx／C-xx）。
+
+---
+
+## 四、關聯檔案
+*(以下省略)*
+
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-CONCLUSION.md
-V: 1792908300
-W: ai-system-003#33
+V: 1792908900
+W: ai-system-004
 ═══ */
