@@ -3,27 +3,30 @@
 **records_pending**: []
 
 ## 一、專案狀態摘要
-本專案已完成第一階段核心初始化（W-06 零到一啟動 SOP）。
-- 技術棧：Vite + Vanilla JS + Tailwind CSS + Firebase Firestore + SheetJS + jsPDF。
-- 架構：嚴格遵守 `W-03` 依賴方向（config -> db -> domain -> ui -> pages）。
-- 目前進度：已交付 29 個核心檔案，包含 Kanban、Table、Overview、Salesperson、Settings 等視圖，以及 Excel 匯入解析與 PDF/Excel 匯出功能。
+本專案已完成重大架構重構，正式進入「完全數據驅動（Data-Driven）」階段。
+- **核心架構**：全站工單顯示（卡片、表格、排序、篩選）已統一由 `src/ui/order-view.js` 渲染，並採用全域事件委派，徹底解決按鈕失效問題。
+- **動態欄位**：資料庫的 `work_orders.data` 動態容器可容納任意自訂欄位，系統會自動清洗垃圾資料與轉換日期格式。
+- **動態狀態**：表格與卡片的狀態欄位已改為「下拉選單」，點擊即時更新，無需再按流轉。
+- **視圖配置**：管理員可於「系統設定 ➜ 視圖配置」中自由勾選各頁面要顯示的欄位。
+- **匯入保護**：每天匯入新 Excel 時，系統僅更新 Excel 欄位，**絕對不會覆蓋手動調整的生產進度**。
 
 ## 二、重建條件
 - 系統入口：`index.html` 載入 `/src/engine/main.js`。
-- 預設管理員帳密：`admin` / `123456`（若 `settings/main` 為空，登入頁會自動 Fallback）。
-- Firebase 配置：直接寫死於 `src/config/firebase-keys.js`（因目前無本地環境變數）。
+- 預設管理員帳密：`admin` / `123456`。
+- **資料庫權限**：Firestore 規則需設為 `allow read, write: if true;` 以供測試（上線前需替換為正式規則）。
 
-## 三、未完成事項
-1. `settings.js` 的「匯入 Excel」功能尚未在真實 Firebase 環境中進行端到端測試。
-2. Cloudflare Pages 尚未設定環境變數與測試自動化部署。
-3. Firestore 安全性規則目前為測試模式（`allow read, write: if true;`），30 天後需更新。
+## 三、未完成事項（技術債）
+1. **拆分 `settings.js`**：該檔案已達約 600 行，未來若需新增「自訂選單名稱」等大型功能，**必須**先將其拆分為 `src/pages/settings/` 下的子模組。
+2. **PWA 實作**：尚未實作 `sw.js` 與 `manifest.json`。
+3. **安全性升級**：目前帳密為前端明文比對，未來需改用 Firebase Authentication 實作。
 
 ## 四、下一步
-- 進入測試階段：請將 `npm install` 與 `npm run dev` 跑通，並確認 Firebase 連線正常。
-- 測試登入 -> 匯入 Excel -> Kanban 流轉 -> 匯出報表。
+- 測試最新的「下拉選單修改狀態」與「視圖配置」功能是否正常。
+- 驗證每日重新匯入 Excel 時，舊工單的生產進度是否被正確保留。
+- （選配）著手進行 UI 細節打磨，或進入 `settings.js` 拆分重構。
 
 /* ═══ EOF ═══
 F: AI-General/docs/p92/WF-HANDOFF.md
-V: 1792904001
-W: UPGRADE-001
+V: 1792915700
+W: UPGRADE-002
 ═══ */
