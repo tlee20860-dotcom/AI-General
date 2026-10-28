@@ -42,11 +42,12 @@
    - 目前包含狀態、對照表、欄位、視圖配置等 7 個頁籤，已達 `W-03` 規範上限（800行）的警戒線。
    - **未來若需擴充新功能（如自訂選單名稱）**，必須將 `settings.js` 拆分為 `src/pages/settings/` 目錄下的子模組（如 `status-tab.js`、`schema-tab.js`），再由主檔動態載入，切勿繼續無腦擴充。
 2. **PWA 與安全規則**：
-   - 目前尚未實作 Service Worker（`sw.js`）與 `manifest.json`。
+   - PWA 已實作：`public/manifest.json`、`public/sw.js` 與 `src/engine/main.js` 的註冊邏輯均已完成，支援「加入主畫面」與離線快取。
+   - 待補：`public/icons/icon-192.png` 與 `icon-512.png` 尚未上傳，缺圖會導致安裝失敗（見 W-04 §五）。
    - Firestore 安全規則目前為測試模式（`allow read, write: if true;`），上線前必須替換為 Firebase Auth 驗證。
 
 /* ═══ EOF ═══
 F: AI-General/docs/p92/P-Architecture.md
-V: 1792915400
-W: UPGRADE-002
+V: 1792918500
+W: UPGRADE-004
 ═══ */
