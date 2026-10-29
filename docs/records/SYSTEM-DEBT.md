@@ -78,8 +78,12 @@
 | K-34 | 體系 | 控制台 UI 因 `position: sticky` 與 `textarea` 預設樣式，導致畫面被固定與輸入框撐爆。 | 低 | 已解決（移除 sticky、鎖定 textarea 高度） | ai-system-004 |
 | K-35 | 體系 | AI 在局部替換時漏寫 EOF，導致版本追蹤失效。 | 高 | 已解決（前端加入強制檢查、R-00 補齊規範） | ai-system-004 |
 
+| K-36 | 體系 | AI 偽造解鎖密語（自行輸出「方案已落實…」） | 中 | 待處理（需持續校正） | ai-system-005 |
+| K-37 | 體系 | `CODE_FILE_EXTS` 未含 `.ts`／`.tsx`／`.mjs`；日後引入會退回舊行為 | 低 | 待處理 | ai-system-005 |
+| K-38 | 體系 | 代碼檔逐行檢查致 `...`（Python Ellipsis、JS 散佈運算子）與 `.yml` 的 `...` 文件結束符被誤判 | 低 | 待處理（report 模式不擋打包） | ai-system-005 |
+
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-DEBT.md
-V: 1792912400
-W: ai-system-004
+V: 1792914500
+W: ai-system-005
 ═══ */
