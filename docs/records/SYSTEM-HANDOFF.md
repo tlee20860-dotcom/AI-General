@@ -3,8 +3,8 @@
 上限：80 行
 用途：體系層對話交接快照
 
-version: SV11
-records_pending: []
+version: SV12
+records_pending: ["R-00-rules.md", "A-00-guide.md", "SYSTEM-ARCHIVE.md", "SYSTEM-CONCLUSION.md", "index.html"]
 
 ---
 
@@ -12,20 +12,19 @@ records_pending: []
 
 | 欄位 | 值 |
 |---|---|
-| 對話編號 | ai-system-005 |
-| 本次範圍 | 修復歷史斷層、洗淨 DEBT/ARCHIVE、新增控制台一鍵備份、修復 YAML 註解路徑解析、對齊 R-00 與 A-00 等缺失。 |
-| 累計回覆 | 約 150 次 |
+| 對話編號 | ai-system-006 |
+| 本次範圍 | 前端控制台雙分頁與預演機制重構、跨檔依賴提醒、W 包實戰沉澱補記、F-005 禁用裝飾字符與 CI 同步。 |
+| 累計回覆 | 約 80 次 |
 | 狀態 | 準備進行 STATE_SEAL 重置 |
 
 ---
 
-## 二、體系重大變更（SV11）
+## 二、體系重大變更（SV12）
 
-1. **歷史斷層補齊**：將 `SYSTEM-EVOLUTION.md` 缺失的 v1.5 到 SV09 歷史完整補齊，並正確接上 SV10 與 SV11。
-2. **控制台一鍵備份**：`index.html` 新增「📦 一鍵全量備份」按鈕，可一鍵觸發 `copy-backup.yml`，備份所有帶有 `ai-systems` 標籤的倉庫到 `AI-Backup`。
-3. **YAML 路徑解析修復**：修正前端 `index.html` 的路徑正則，現在可正確解析 `.yml`、`.py` 等帶有 `#` 或 `//` 註解的 EOF 格式。
-4. **自動化腳本優化**：`copy-backup.yml` 支援 `ALL` 參數，動態抓取 Topic 並自動排除 `AI-Backup` 與 `AI-packages`，避免無限遞迴。
-5. **洗淨紀錄檔**：清除了 `SYSTEM-DEBT.md` 中重複的 K-36~K-38，以及 `SYSTEM-ARCHIVE.md` 尾部重複的標記並補齊標準 EOF。
+1. **前端控制台防污染重構**：`index.html` 拆分「完整檔」與「增量/替換」雙分頁，加入 Dry-Run 預演機制與字數對比，徹底封殺 `<<<<<<< OLD` 污染源碼的 Bug。
+2. **跨檔依賴提醒**：前端內建 `DEPENDENCY_MAP`，發布 `R-00` 或 `A-00` 時會彈出連動提醒，並提供「一鍵複製指令」讓 Ken 貼回對話框。
+3. **W 包實戰沉澱**：補記 `UPGRADE-004` 的 p92 經驗至 `SYSTEM-CONCLUSION` 與 `SYSTEM-EVOLUTION`（含 `W03-R10`、`W03-R11`、三層 Modal 等）。
+4. **F-005 禁用裝飾字符**：修改 `R-00`、`R-05` 與 `validate_delivery.py`，程式碼檔案的 EOF 強制使用標準註解，避免 Vite/Rollup 打包崩潰。
 
 ---
 
@@ -33,20 +32,21 @@ records_pending: []
 
 | # | 優先確認 |
 |---|---|
-| 1 | 確認收到新四檔（版本應為 SV11）。 |
-| 2 | 確認 `SYSTEM-EVOLUTION.md` 已包含 SV08 到 SV11 的歷史。 |
-| 3 | 確認前端控制台 `index.html` 為 `V: 1792916600`（含一鍵備份按鈕與 YAML 解析）。 |
-| 4 | 檢查 `records_pending` 是否為空？ |
-| 5 | **下一個體系對話編號為：`ai-system-006`**。 |
+| 1 | 確認收到新四檔（版本應為 SV12）。 |
+| 2 | 確認前端控制台 `index.html` 已支援雙分頁、預演機制與依賴提醒。 |
+| 3 | 檢查 `records_pending` 是否已由 ai-system-007 處理。 |
+| 4 | **下一個體系對話編號為：`ai-system-007`**。 |
 
 ---
 
-## 四、未完成事項
+## 四、未完成事項（records_pending）
 
 | 項目 | 狀態 |
 |---|---|
-| `02-RP` 合成物拆分 | 已決議延後至 `ai-system-006` 處理。 |
-| `SYSTEM-ARCHIVE.md` 的歸檔觸發 | 目前各台帳（REJECTED 27 條、DEBT 38 條）尚未達 50 條門檻，待日後達標時手動觸發歸檔。 |
+| `R-00` 加入無豁免權與強制發布權責 | 待處理（原定 SV12 交付，延後至 007） |
+| `A-00` 修正轉交語意與合成物認知 | 待處理（延後至 007） |
+| `SYSTEM-CONCLUSION` 瘦身與歷史歸檔 | 待處理（延後至 007） |
+| `index.html` 拔除自指豁免邏輯 | 待處理（延後至 007） |
 
 ---
 
@@ -54,13 +54,13 @@ records_pending: []
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 將本次交接紀錄貼回 GitHub。 |
+| 1 | 將本次交接紀錄與其他更新檔貼回 GitHub。 |
 | 2 | 至 `AI-infra` 手動執行 `setup-structure.yml`。 |
-| 3 | 下載新合成物，確認 `20-SP-Sys.md` 的 `version` 為 `SV11`。 |
-| 4 | 若有需要，可至控制台點擊「一鍵全量備份」，確認備份功能是否正常。 |
+| 3 | 下載新合成物，確認 `20-SP-Sys.md` 的 `version` 為 `SV12`。 |
+| 4 | 開啟新對話（ai-system-007），優先處理 `records_pending`。 |
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-HANDOFF.md
-V: 1792916900
-W: ai-system-005
+V: 1792936000
+W: ai-system-006
 ═══ */
