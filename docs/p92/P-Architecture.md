@@ -1,6 +1,6 @@
 # P-Architecture (p92 UPGRADE-WO)
 
-**最後更新時間**: 2026-10-28
+**最後更新時間**: 2026-10-30
 **用途**: 專案架構鐵律與防呆說明（給下一個接手的 AI 或開發者）。
 
 ---
@@ -19,6 +19,15 @@
 - **現在的做法**：各頁面透過 `settings.view_configs[pageKey]` 取得要顯示的欄位，並傳入 `renderOrderView` 的 `visibleFields` 參數。
 - 卡片與表格會自動根據 `visibleFields` 動態生成，**程式碼中不應再出現特定的業務欄位名稱**。
 
+### 3. 行內編輯（Inline Edit）
+- 表格與卡片中，若欄位屬性 `isEditable` 為 `true`，`order-view.js` 會自動渲染成 `<input>`。
+- 變更時透過全域事件派發 `inline-edit`，由 `order-view-editor.js` 統一攔截並寫入資料庫。
+- **禁止**在頁面層級各自實作輸入框的儲存邏輯。
+
+### 4. 彈窗三層架構（Modal）
+- `src/ui/modal.js` 採用「標題固定、內容滾動、底部按鈕固定」的標準架構。
+- 呼叫 `openModal` 時，若內容會超過螢幕高度，**必須**將按鈕 HTML 傳入 `footer` 參數，切勿將按鈕寫在 `content` 的最下方，以免在手機上被截斷。
+
 ---
 
 ## 二、關鍵機制說明
@@ -28,26 +37,28 @@
 - 切換視圖：`data-action="switch-view"`
 - 排序：`th[data-sort]`
 - 刪除：`data-action="delete"`
-- 變更狀態：`select[data-action="change-status"]`
+- 工序推進：`data-action="prev-step"` / `data-action="next-step"`
 
 ### 2. 資料清洗與日期防呆
 - **星號過濾**：資料庫中若有 `*** 客戶查看中心` 這種垃圾資料，`order-view.js` 會在渲染前自動攔截剔除。
 - **日期格式**：若讀取到 Excel 序列號（如 `46300`），會自動轉換為 `YYYY-MM-DD` 格式。
 
+### 3. 全域設定即時監聽
+- `src/engine/main.js` 啟動時會監聽 `settings/main`，當系統設定（如工序、模板）變更時，會派發 `settings-updated` 事件。
+- 各前台頁面（`kanban`、`table` 等）收到事件後會自動刷新畫面，不需手動重新整理。
+
 ---
 
 ## 三、未來重構待辦（技術債）
 
-1. **`settings.js` 體積過大（約 600 行）**：
-   - 目前包含狀態、對照表、欄位、視圖配置等 7 個頁籤，已達 `W-03` 規範上限（800行）的警戒線。
-   - **未來若需擴充新功能（如自訂選單名稱）**，必須將 `settings.js` 拆分為 `src/pages/settings/` 目錄下的子模組（如 `status-tab.js`、`schema-tab.js`），再由主檔動態載入，切勿繼續無腦擴充。
-2. **PWA 與安全規則**：
-   - PWA 已實作：`public/manifest.json`、`public/sw.js` 與 `src/engine/main.js` 的註冊邏輯均已完成，支援「加入主畫面」與離線快取。
-   - 待補：`public/icons/icon-192.png` 與 `icon-512.png` 尚未上傳，缺圖會導致安裝失敗（見 W-04 §五）。
+1. **體系 W 包同步**：
+   - 本次實作的「三層 Modal」、「全域設定即時監聽」與「行內編輯」，建議日後回到體系層更新至 `W-03`、`W-05`、`W-06` 中，作為未來專案的標準 SOP。
+2. **Firebase Auth**：
    - Firestore 安全規則目前為測試模式（`allow read, write: if true;`），上線前必須替換為 Firebase Auth 驗證。
+   - 目前帳密驗證為前端明文比對，需升級安全性。
 
 /* ═══ EOF ═══
 F: AI-General/docs/p92/P-Architecture.md
-V: 1792918500
+V: 1792928300
 W: UPGRADE-004
 ═══ */
