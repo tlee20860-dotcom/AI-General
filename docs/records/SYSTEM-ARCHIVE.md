@@ -74,7 +74,8 @@
 | 來源檔 | 原檔路徑 |
 | 補充 | DEBT 加「解決對話」；PROGRESS 加「完成日期」；CONCLUSION 加「結案日期」 |
 
+/* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-ARCHIVE.md
-V: 1792912600
-W: ai-system-004
-<!-- === FILE END: AI-General/docs/records/SYSTEM-ARCHIVE.md === -->
+V: 1792916800
+W: ai-system-005
+═══ */
