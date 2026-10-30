@@ -61,8 +61,11 @@
 
 | RJ-027 | 將 `copy-backup.yml` 改為每日定時全量複製 | 每日將所有倉庫實體檔案複製到 `AI-Backup` 會佔用大量 GitHub 儲存空間且拖慢執行速度。決議維持原樣：每日 `backup.yml` 僅在原倉庫打 Tag，全量實體複製交由控制台的「一鍵備份」手動觸發。 | ai-system-005 | 2026-10-30 |
 
-/* ═══ EOF ═══
+| RJ-028 | 將依賴映射表抽離為獨立的 JSON 檔（`dependency-map.json`） | 雖然符合防硬編碼原則，但會增加維護成本（每次修改體系檔案都要同步改 JSON）。若忘記更新，會導致防線失效。決議：直接將字典寫死在前端 `index.html`，並由 AI 於必要時手動更新。 | ai-system-006 | 2026-10-31 |
+| RJ-029 | 使用腳本自動解析 Markdown 表格以生成依賴字典 | Markdown 的表格語意高度依賴人類寫作習慣，腳本正則難以精準抓取（例如「A00 §二、詞 28」）。強行解析會導致嚴重的誤報與漏報。決議：維持前端靜態字典與 AI 的 S-006 關聯分析。 | ai-system-006 | 2026-10-31 |
+
+/* EOF
 F: AI-General/docs/records/SYSTEM-REJECTED.md
-V: 1792917200
-W: ai-system-005
-═══ */
+V: 1792936800
+W: ai-system-006
+EOF */
