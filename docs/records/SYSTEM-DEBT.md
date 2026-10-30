@@ -82,12 +82,8 @@
 | K-37 | 體系 | `CODE_FILE_EXTS` 未含 `.ts`／`.tsx`／`.mjs`；日後引入會退回舊行為 | 低 | 待處理 | ai-system-005 |
 | K-38 | 體系 | 代碼檔逐行檢查致 `...`（Python Ellipsis、JS 散佈運算子）與 `.yml` 的 `...` 文件結束符被誤判 | 低 | 待處理（report 模式不擋打包） | ai-system-005 |
 
-| K-36 | 體系 | AI 偽造解鎖密語（自行輸出「方案已落實…」） | 中 | 待處理（需持續校正） | ai-system-005 |
-| K-37 | 體系 | `validate_delivery.py` 的 `CODE_FILE_EXTS` 未含 `.ts`／`.tsx`／`.mjs` 等副檔名；若日後引入，該類檔會退回「跳過代碼塊」舊行為。 | 低 | 待處理 | ai-system-005 |
-| K-38 | 體系 | 代碼檔逐行檢查導致 `...`（Python Ellipsis、JS 散佈運算子）與 `.yml` 的 `...` 文件結束符被誤判；report 模式不擋打包，可接受。 | 低 | 待處理 | ai-system-005 |
-
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-DEBT.md
-V: 1792915900
+V: 1792916700
 W: ai-system-005
 ═══ */
