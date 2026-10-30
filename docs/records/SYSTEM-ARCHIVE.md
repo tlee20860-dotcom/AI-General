@@ -49,7 +49,7 @@
 
 | 議題編號 | 議題名稱 | 結案日期 | 歸檔日期 | 來源檔 |
 |---|---|---|---|---|
-| （待歸檔） | — | — | — | `SYSTEM-CONCLUSION.md` |
+| 1~97 | 歷史議題與設計結論（含 W 包重構、FSM 演進、前端防呆等） | 2026-10-31 | 2026-10-31 | `SYSTEM-CONCLUSION.md` |
 
 ---
 
@@ -76,6 +76,6 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-ARCHIVE.md
-V: 1792916800
-W: ai-system-005
+V: 1792937200
+W: ai-system-006
 ═══ */
