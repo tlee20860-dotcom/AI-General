@@ -1,6 +1,8 @@
+## 📄 AI-General/docs/p92/P-Architecture.md
+
 # P-Architecture (p92 UPGRADE-WO)
 
-**最後更新時間**: 2026-10-31
+**最後更新時間**: 2026-11-02
 **用途**: 專案架構鐵律與防呆說明（給下一個接手的 AI 或開發者）。
 
 ---
@@ -15,61 +17,70 @@
 - **禁止**在各頁面中使用 `addEventListener` 綁定按鈕，**必須**使用 `order-view.js` 內建的全域事件委派（透過 `data-action` 屬性）。
 
 ### 2. 嚴禁寫死欄位（防硬編碼）
-- 各頁面透過 `settings.view_configs[pageKey]` 取得要顯示的欄位，並傳入 `renderOrderView` 的 `visibleFields` 參數。
-- 卡片與表格會自動根據 `visibleFields` 動態生成，**程式碼中不應再出現特定的業務欄位名稱**（如 `order.amount`），除非是透過 `getOrderValue` 取得的通用欄位。
+- 舊版程式碼曾寫死 `order.data.customerName`、`order.amount` 等欄位，這導致換一份 Excel 就必須改程式碼。
+- **現在的做法**：各頁面透過 `settings.view_configs[pageKey]` 取得要顯示的欄位，並傳入 `renderOrderView` 的 `visibleFields` 參數。
+- 卡片與表格會自動根據 `visibleFields` 動態生成，**程式碼中不應再出現特定的業務欄位名稱**。
 
-### 3. 多角色權限三層防護
-專案具備 `admin`、`worker`、`sales`、`viewer` 四種角色，權限控管分為三層：
-- **路由層 (`engine/router.js`)**：攔截未授權的網址跳轉，強制重導向至該角色首頁。
-- **UI 層 (`ui/layout.js`)**：側邊欄與頂部導覽列依據 `role` 隱藏無權限的選單。
-- **渲染層 (`ui/order-view.js`)**：接收 `isReadOnly`（全部唯讀）與 `allowStatusChange`（僅允許按上下步）參數，精準控制各角色能操作的按鈕。
+### 3. 行內編輯（Inline Edit）
+- 表格與卡片中，若欄位屬性 `isEditable` 為 `true`，`order-view.js` 會自動渲染成 `<input>`。
+- 變更時透過全域事件派發 `inline-edit`，由 `order-view-editor.js` 統一攔截並寫入資料庫。
+- **禁止**在頁面層級各自實作輸入框的儲存邏輯。
 
-### 4. 彈窗模組化與三層架構
-- 所有彈窗採用「標題固定、內容滾動、底部按鈕固定」的標準架構（`src/ui/modal.js`）。
-- 複雜業務邏輯已抽離為獨立模組：
-  - `src/ui/order-detail-modal.js`：負責工單詳細資料（交期、流程切換、進度推進）。
-  - `src/ui/route-builder.js`：負責生產流程的快速新增與編輯。
-- **禁止**在頁面層級各自實作輸入框的儲存或流程編輯邏輯。
+### 4. 彈窗三層架構（Modal）
+- `src/ui/modal.js` 採用「標題固定、內容滾動、底部按鈕固定」的標準架構。
+- 呼叫 `openModal` 時，若內容會超過螢幕高度，**必須**將按鈕 HTML 傳入 `footer` 參數，切勿將按鈕寫在 `content` 的最下方，以免在手機上被截斷。
+
+### 5. 表單引擎與純函數分離
+- **資料錄入（`data-entry.js`）**：僅負責頁面排版與資料載入。
+- **表單渲染（`order-editor.js`）**：僅負責根據 `schema` 渲染輸入框與綁定事件。不直接處理寫入邏輯。
+- **公式計算（`formula-engine.js`）**：為純函數，負責解析 `{{欄位}}` 並回傳計算結果，不碰 DOM 與 Firebase。
+- **差異核對（`data-diff.js`）**：為純函數，負責比對兩筆資料的差異，回傳差異物件供 UI 標示。
+
+### 6. 手動優先與差異核對
+- 若工單來源為 `manual`，Excel 匯入時**絕對不可**覆蓋核心進度與金額。
+- 差異標記（`order.diff`）會在 UI 上顯示為紅色驚嘆號，只有當使用者在介面上手動修改該欄位後，才會清除標記。
 
 ---
 
 ## 二、關鍵機制說明
 
-### 1. 全域事件委派與行內編輯
-- `order-view.js` 將點擊與輸入事件綁定在 `document` 上，透過 `data-action` 辨識目標。
-- 行內編輯（`isEditable` 欄位）在變更時，會拋出 `inline-edit` 自訂事件，由 `order-view-editor.js` 統一攔截並寫入資料庫，確保 UI 層不直接依賴資料層。
+### 1. 全域事件委派（Event Delegation）
+為了徹底解決「切換頁面後按鈕點不到」的靈異現象，`order-view.js` 將點擊與輸入事件綁定在 `document` 上，並透過 `data-action` 與 `data-filter` 屬性來辨識目標。
+- 切換視圖：`data-action="switch-view"`
+- 排序：`th[data-sort]`
+- 刪除：`data-action="delete"`
+- 工序推進：`data-action="prev-step"` / `data-action="next-step"`
 
-### 2. SortableJS 行動端拖曳
-- 由於原生 HTML5 拖曳在手機端會與頁面滾動衝突，專案全面引入 `SortableJS`。
-- 在設定頁的流程、區域、狀態排序，皆須設定 `forceFallback: true` 與 `fallbackTolerance: 3`，確保跨裝置拖曳流暢。
-
-### 3. 本機 Excel 自動同步 (File System Access API)
-- 在 `kanban.js` 中實作。透過 `showDirectoryPicker` 綁定本機資料夾。
-- 結合 `setInterval` 與 `window.focus` 事件輪詢，比對 `lastModified` 時間，發現更新即自動匯入。
-- **限制**：僅限支援 API 的桌機版 Chrome/Edge，手機端隱藏此按鈕；重新整理網頁後需重新授權。
-
-### 4. 原生瀏覽器推播 (Notification API)
-- 在 `engine/main.js` 中實作。系統啟動時請求權限，並背景監聽 `work_orders`。
-- 當工單狀態改變時，比對當前登入者的權限：
-  - 生產員：比對該工單「新狀態」是否屬於其負責的區域。
-  - 銷售員：比對該工單的銷售員是否在授權清單內。
-- 若符合則觸發原生通知（網頁需保持在背景執行）。
-
-### 5. 資料清洗與日期防呆
+### 2. 資料清洗與日期防呆
 - **星號過濾**：資料庫中若有 `*** 客戶查看中心` 這種垃圾資料，`order-view.js` 會在渲染前自動攔截剔除。
 - **日期格式**：若讀取到 Excel 序列號（如 `46300`），會自動轉換為 `YYYY-MM-DD` 格式。
+
+### 3. 全域設定即時監聽
+- `src/engine/main.js` 啟動時會監聽 `settings/main`，當系統設定（如工序、模板）變更時，會派發 `settings-updated` 事件。
+- 各前台頁面（`kanban`、`table` 等）收到事件後會自動刷新畫面，不需手動重新整理。
+
+### 4. 匯入防覆寫與備份還原
+- **日常匯入**：針對已存在的工單，僅更新 Excel 來源欄位（如銷售員、自訂欄位），保留手動修改的狀態與交期。
+- **備份還原**：若匯入的 Excel 包含「狀態」與「製程路線」，且該工單在系統中不存在，則會直接套用 Excel 的狀態與路線建立新單。
+
+### 5. 全域搜尋引擎
+- `global-search.js` 會將工單物件攤平，進行跨欄位的關鍵字比對，並支援狀態、類別、日期的進階過濾。
 
 ---
 
 ## 三、未來重構待辦（技術債）
 
-1. **Firebase Auth**：
+1. **表單佈局切換未完全實作**：
+   - `settings-form.js` 已可設定 A/B/C 三種佈局，但 `order-editor.js` 目前僅實作平鋪模式。
+   - 需補齊模式 B（分頁）與模式 C（左右對照）的渲染邏輯。
+2. **體系 W 包已同步（2026-10-30 補記）**：
+   - 本次實作經驗已沉澱至 W 包：三層 Modal 架構見 `W-05 §0.3`；全域即時監聽與行內編輯見 `W-03 §0.2`（`W03-R10`、`W03-R11`）；雙清單拖曳見 `W-06 §三`；PWA 圖示規範見 `W-04 §3.1`。原 `D-022`／`D-023` 已改派為 `D-239`／`D-240`，補記動作見 `D-241`。
+3. **Firebase Auth**：
    - Firestore 安全規則目前為測試模式（`allow read, write: if true;`），上線前必須替換為 Firebase Auth 驗證。
    - 目前帳密驗證為前端明文比對，需升級安全性。
-2. **原生推播限制**：純前端 `Notification API` 僅在網頁未完全關閉時有效，若需「關閉網頁也能收到通知」，需日後引入 FCM 或 OneSignal。
 
-/*
+/* ═══ EOF ═══
 F: AI-General/docs/p92/P-Architecture.md
-V: 1792989700
+V: 1793019000
 W: UPGRADE-006
-*/
+═══ */
