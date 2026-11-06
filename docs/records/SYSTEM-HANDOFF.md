@@ -3,7 +3,7 @@
 上限：80 行
 用途：體系層對話交接快照
 
-version: SV13
+version: SV14
 records_pending: []
 
 ---
@@ -12,19 +12,19 @@ records_pending: []
 
 | 欄位 | 值 |
 |---|---|
-| 對話編號 | ai-system-007 |
-| 本次範圍 | 處理 records_pending：落實 R-027 無豁免權、修正 A-00 語意、拔除前端豁免、修復 JSON 解析、沉澱歷史紀錄（Evolution、Rejected、Debt、R-04）。 |
-| 累計回覆 | 約 40 次 |
+| 對話編號 | ai-system-009 |
+| 本次範圍 | 處理 `.vue` 打包支援、實作偽 EOF 提取法、新增前端重命名刪除功能、確立 `WF-*` 命名大一統與 7 寶對稱架構。 |
+| 累計回覆 | 約 60 次 |
 | 狀態 | 準備進行 STATE_SEAL 重置 |
 
 ---
 
-## 二、體系重大變更（SV13）
+## 二、體系重大變更（SV14）
 
-1. **無豁免權與強制發布**：`R-00` 的 `R-027` 新增第四款，明定前端與 CI 不得設語法豁免；僅 Ken 可強制發布，且不跳過 EOF 與 `OLD` 匹配。
-2. **轉交與合成物認知修正**：`A-00` §6.2 改為「不切換角色，輸出轉交指令包」；§1.1 補強「AI MUST NOT 假設使用者單檔上傳」。
-3. **前端豁免權移除與 JSON 修復**：`index.html` 移除 `isRecordFile` 與 `record_auto_exempt` 讀取，全面檢查禁用詞；並修復無法解析 JSON `_EOF` 的 Bug。
-4. **歷史紀錄全量沉澱**：合併 UPGRADE-005/006 經驗至 `SYSTEM-EVOLUTION`、`SYSTEM-REJECTED`、`SYSTEM-DEBT` 與 `R-04-learning`。
+1. **前端重命名與物理阻斷**：`index.html` 新增「準備刪除的舊路徑」輸入框，發布新檔後自動刪除舊檔（需搭配 `F-010`）。並加入結構性錯誤阻斷，防止強制發布毀損源碼。
+2. **偽 EOF 提取法**：`F-007` 廢除 `NEW` 區塊必須包含 EOF 的限制，改為「補丁 + 獨立 EOF」，前端自動縫合。同時禁止 JSON 使用局部替換。
+3. **命名與 SOP 大一統**：全面廢除專案 `P-*` 與數字前綴，統一為 `WF-*`。專案結束 SOP 全面對齊體系「7 寶」對稱架構（新增 `WF-EVOLUTION`、`WF-REJECTED`、`WF-DEBT`、`WF-ARCHIVE`）。
+4. **歷史與打包升級**：`24-HISTORY.md` 現在會自動掃描並彙整所有專案的 `WF-EVOLUTION.md`；`setup-structure.yml` 正式支援 `.vue` 打包。
 
 ---
 
@@ -32,10 +32,10 @@ records_pending: []
 
 | # | 優先確認 |
 |---|---|
-| 1 | 確認收到新四檔（版本應為 SV13）。 |
-| 2 | 確認前端控制台 `index.html` 已支援 JSON EOF 解析與無豁免檢查。 |
+| 1 | 確認收到新四檔與狀態包（版本應為 SV14）。 |
+| 2 | 確認前端控制台 `index.html` 已包含「舊路徑刪除」與「結構性錯誤阻斷」功能。 |
 | 3 | 檢查 `records_pending` 是否為空。 |
-| 4 | **下一個體系對話編號為：`ai-system-008`**。 |
+| 4 | **下一個體系對話編號為：`ai-system-010`**。 |
 
 ---
 
@@ -51,13 +51,13 @@ records_pending: []
 
 | 順序 | 動作 |
 |---|---|
-| 1 | 將本次交接紀錄貼回 GitHub。 |
-| 2 | 至 `AI-infra` 手動執行 `setup-structure.yml`。 |
-| 3 | 下載新合成物，確認 `20-SP-Sys.md` 的 `version` 為 `SV13`。 |
-| 4 | 開啟新對話（ai-system-008）。 |
+| 1 | 將本次交接紀錄與更新之規則檔貼回 GitHub。 |
+| 2 | 至 `AI-infra` 手動執行 `setup-structure.yml` 打包。 |
+| 3 | 下載新合成物，確認 `20-SP-Sys.md` 版本為 `SV14`。 |
+| 4 | 開啟新對話（ai-system-010），或進入專案對話執行 `P-*` 轉 `WF-*` 的重命名任務。 |
 
 /* ═══ EOF ═══
 F: AI-General/docs/records/SYSTEM-HANDOFF.md
-V: 1792942800
-W: ai-system-008
+V: 1793815000
+W: ai-system-009
 ═══ */
