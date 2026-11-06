@@ -248,7 +248,22 @@
 | 人類最終決定權 | 程式邏輯全面防守，但當遇到自指干擾（如禁用詞範例）時，保留 Ken 手動強制發布的通道。 |
 
 /* EOF
+EOF */
+
+| 2026-11-06 | ai-system-009 | 發布 SV14。實作偽 EOF 提取法（F-007）、前端重命名與物理阻斷（index.html）、全面廢除 `P-*` 統一為 `WF-*`（R-00/A-00）、專案 7 寶對稱 SOP、24-HISTORY 彙整專案歷史、支援 `.vue` 打包。 |
+
+---
+
+## 三、歷史紀錄說明
+
+| 項目 | 說明 |
+|---|---|
+| 版本編號 | 從 `B32-2` 之後改為 `SV` 前綴（如 SV01、SV02）。 |
+| 紀錄模式 | 本檔為 `APPEND_ONLY`，AI 不得刪除或修改過去的歷史紀錄。 |
+| 關聯檔案 | 詳細的決策原因請見 `SYSTEM-CONCLUSION.md`；被否決方案見 `SYSTEM-REJECTED.md`。 |
+
+/* EOF
 F: AI-General/docs/records/SYSTEM-EVOLUTION.md
-V: 1792941600
-W: ai-system-007
+V: 1793815000
+W: ai-system-009
 EOF */
