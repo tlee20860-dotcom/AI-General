@@ -1,4 +1,4 @@
-# P-Evolution (p93 架構演進歷史)
+# WF-Evolution (p93 架構演進歷史)
 
 用途：記錄本專案從 90 版演進至 93 版的重大架構變革與開發踩坑經驗。此檔案為專案獨立歷史，不與體系全域歷史混合。
 
@@ -63,7 +63,7 @@
 3. **一目了然的對帳**：輸入銀行實際結餘，系統自動計算差異，秒抓漏記帳目。
 
 /* ═══ EOF ═══
-F: AI-General/docs/p93/P-Evolution.md
+F: AI-General/docs/p93/WF-Evolution.md
 V: 1793812400
 W: ai-wa-fs-001
 ═══ */
