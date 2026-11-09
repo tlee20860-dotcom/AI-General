@@ -1,5 +1,3 @@
-## 📄 AI-General/docs/p92/WF-CONCLUSION.md
-
 # WF-CONCLUSION (p92 UPGRADE-WO)
 
 **最後更新時間**: 2026-11-02
@@ -36,6 +34,7 @@
 | D-92-026 | 自動偵測表頭 | 升級 `parser.js`，掃描前 20 行尋找包含「單號」、「登錄」等關鍵字的行作為表頭。 | 解決公司系統導出的 Excel 前幾行有標題、地址，導致匯入失敗的問題。 |
 | D-92-027 | 類別自動同步機制 | 匯入時若發現未知類別，自動補齊至 `settings.categories`，並在類別管理頁面加入「一鍵同步」按鈕。 | 避免手動維護類別清單的困擾，並確保下拉選單的完整性。 |
 | D-92-028 | 開單日期以 Excel 為準 | 將 `uploadDate` 更名為「開單日期」並設為唯讀。匯入時，即使是舊單也以 Excel 內的日期覆寫。 | 符合使用者「手動新增先抓今天，但最後以 Excel 日期為準」的業務邏輯。 |
+| D-92-029 | 全域搜尋支援物料 | `src/domain/global-search.js` 的 `flattenOrder` 將 `order.materials` 陣列中的 `name` 與 `note` 展平為 `materials.{idx}.name` / `materials.{idx}.note`，納入關鍵字搜索範圍；搜索結果顯示欄位維持既有配置不變。 | 滿足「在搜索頁輸入大約物料名稱即可搜出相關工單」的需求。僅改 1 檔 1 函式，最小改動；不觸及顯示層，避免連帶影響 `order-view.js` 與視圖配置。 |
 
 ## 二、已知技術債與限制
 - **表單佈局切換未完全實作**：`settings-form.js` 已可設定 A/B/C 三種佈局，但 `order-editor.js` 目前僅實作平鋪模式（A），尚未依設定切換分頁（B）或左右對照（C）。
@@ -45,6 +44,6 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/p92/WF-CONCLUSION.md
-V: 1793073000
-W: UPGRADE-007
+V: 1794182600
+W: UPGRADE-008
 ═══ */
