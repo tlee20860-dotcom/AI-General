@@ -1,6 +1,6 @@
 # WF-CONCLUSION (p92 UPGRADE-WO)
 
-**最後更新時間**: 2026-11-02
+**最後更新時間**: 2026-11-09
 
 ## 一、專案架構決策紀錄
 
@@ -35,15 +35,18 @@
 | D-92-027 | 類別自動同步機制 | 匯入時若發現未知類別，自動補齊至 `settings.categories`，並在類別管理頁面加入「一鍵同步」按鈕。 | 避免手動維護類別清單的困擾，並確保下拉選單的完整性。 |
 | D-92-028 | 開單日期以 Excel 為準 | 將 `uploadDate` 更名為「開單日期」並設為唯讀。匯入時，即使是舊單也以 Excel 內的日期覆寫。 | 符合使用者「手動新增先抓今天，但最後以 Excel 日期為準」的業務邏輯。 |
 | D-92-029 | 全域搜尋支援物料 | `src/domain/global-search.js` 的 `flattenOrder` 將 `order.materials` 陣列中的 `name` 與 `note` 展平為 `materials.{idx}.name` / `materials.{idx}.note`，納入關鍵字搜索範圍；搜索結果顯示欄位維持既有配置不變。 | 滿足「在搜索頁輸入大約物料名稱即可搜出相關工單」的需求。僅改 1 檔 1 函式，最小改動；不觸及顯示層，避免連帶影響 `order-view.js` 與視圖配置。 |
+| D-92-030 | 紀錄檔命名全面 WF 化 | 專案紀錄與技術檔全面廢除 `P-*` 命名，改為 `WF-*`。既有技術檔更名：`P-Architecture.md` ➜ `WF-ARCH.md`、`P-Data.md` ➜ `WF-DATA.md`、`P-Dev-SOP.md` ➜ `WF-SOP.md`；新增缺失的 4 寶：`WF-EVOLUTION.md`、`WF-REJECTED.md`、`WF-DEBT.md`、`WF-ARCHIVE.md`。 | 對齊 SV14 七寶對稱架構（A-00 §4.4、§5.5）與詞 101。避免 `P-*` 與 `WF-*` 並存造成認知分裂；舊路徑由控制台手動刪除。 |
+| D-92-031 | 本次對話跳過 SV14 結束 SOP | 原 SV13 結束對話 SOP 已中止；本次交付聚焦於紀錄檔遷移，不重新觸發 `E_HANDOFF`。遷移完成後由 Ken 決定是否另開新對話執行 SV14 結束 SOP。 | 避免在同一對話中混用兩套結束 SOP；SV14 的 `STATE_SEAL` 與退出重置需在乾淨的會話狀態下執行，降低認知溢出風險。 |
 
 ## 二、已知技術債與限制
 - **表單佈局切換未完全實作**：`settings-form.js` 已可設定 A/B/C 三種佈局，但 `order-editor.js` 目前僅實作平鋪模式（A），尚未依設定切換分頁（B）或左右對照（C）。
 - **W 包已同步**：本次實作經驗已沉澱至 W 包：單一編輯入口見 `W-03`；多檔案同步與表頭偵測見 `W-06`；全量覆蓋防呆與類別自動同步見 `W-07`。
 - Firestore 目前為測試模式（`allow read, write: if true;`），需在上線前替換為正式安全規則。
 - 尚未實作真正的 Firebase Auth，帳密驗證為前端明文比對。
+- **舊路徑待刪除**：`P-Architecture.md`、`P-Data.md`、`P-Dev-SOP.md` 已由 `WF-ARCH.md`、`WF-DATA.md`、`WF-SOP.md` 取代；需由控制台手動刪除舊檔，避免打包時重複或混淆。
 
 /* ═══ EOF ═══
 F: AI-General/docs/p92/WF-CONCLUSION.md
-V: 1794182600
+V: 1794183600
 W: UPGRADE-008
 ═══ */
