@@ -10,18 +10,21 @@
 - **外發供應商**：新增供應商主檔與自訂欄位，工單可選擇外發廠商，並於匯出時顯示。
 - **Excel 匯入/匯出**：匯出支援自訂欄位、全備份（含物料、外發商、開單日期）。匯入支援多檔案自動同步、自動偵測表頭（不需在第一行）、自動新增未知類別、並以 Excel 內的「日期」覆寫開單日期。
 - **資料防護**：全面改用 `updateDocument` 進行局部更新，徹底避免洗掉無關設定。
-- **本次新增（UPGRADE-008）**：全域搜尋支援物料搜索。`src/domain/global-search.js` 的 `flattenOrder` 已將 `materials` 陣列中的物料名稱（`name`）與備註（`note`）納入攤平範圍，於搜索頁輸入大約物料名稱即可命中相關工單。
+- **全域搜尋支援物料（UPGRADE-008）**：`src/domain/global-search.js` 的 `flattenOrder` 已將 `materials` 陣列中的物料名稱（`name`）與備註（`note`）納入攤平範圍，於搜索頁輸入大約物料名稱即可命中相關工單。
+- **體系 SV14 遷移（UPGRADE-008）**：專案紀錄架構已由 `P-*` 命名全面改為 `WF-*`，並對齊 SV14 七寶對稱架構（`WF-HANDOFF`、`WF-PROGRESS`、`WF-CONCLUSION`、`WF-EVOLUTION`、`WF-REJECTED`、`WF-DEBT`、`WF-ARCHIVE`）。技術檔同步更名：`P-Architecture.md` ➜ `WF-ARCH.md`、`P-Data.md` ➜ `WF-DATA.md`、`P-Dev-SOP.md` ➜ `WF-SOP.md`。
 
 ## 二、重建條件
 - 系統入口：`index.html` 載入 `/src/engine/main.js`。
 - 預設管理員帳密：`admin` / `123456`。
 - 資料庫權限：Firestore 規則需設為 `allow read, write: if true;` 以供測試。
 - PWA 圖示：需放置 `public/icons/icon.png`。
+- 紀錄檔目錄：`AI-General/docs/p92/`（7 寶＋技術檔統一存放）。
 
 ## 三、未完成事項（技術債）
 1. **表單佈局切換未完全實作**：`settings-form.js` 已可設定 A/B/C 三種佈局，但 `order-editor.js` 目前僅實作平鋪模式（A），尚未依設定切換分頁（B）或左右對照（C）。
 2. **體系 W 包已同步**：本次實作經驗已沉澱至 W 包：單一編輯入口見 `W-03`；多檔案同步與表頭偵測見 `W-06`；全量覆蓋防呆與類別自動同步見 `W-07`。
 3. **Firebase Auth**：目前為前端明文比對，需升級安全性。
+4. **SV14 對齊**：專案紀錄檔已遷移至 7 寶架構；後續對話需以 SV14 規則操作，舊版 `P-*` 命名不再使用。
 
 ## 四、下一步
 - 實作 `order-editor.js` 的 B（分頁）與 C（左右對照）佈局邏輯。
@@ -32,6 +35,6 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/p92/WF-HANDOFF.md
-V: 1794182400
+V: 1794183400
 W: UPGRADE-008
 ═══ */
