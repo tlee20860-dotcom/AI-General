@@ -1,6 +1,6 @@
 # WF-PROGRESS (p92 UPGRADE-WO)
 
-**最後更新時間**: 2026-11-02
+**最後更新時間**: 2026-11-09
 
 ## 一、開發進度總表
 
@@ -27,6 +27,7 @@
 | 7. 體驗優化 | Excel 自動同步 | ✅ 完成 | 支援 File System Access API 監聽本機資料夾 |
 | 7. 體驗優化 | 手機端拖曳優化 | ✅ 完成 | 引入 SortableJS `forceFallback` 解決衝突 |
 | 8. 搜尋強化 | 全域搜尋支援物料 | ✅ 完成 | `global-search.js` 攤平 materials 的 name 與 note，可依物料名稱搜出工單 |
+| 9. 體系對齊 | SV14 七寶對稱架構遷移 | ✅ 完成 | 紀錄檔全面改為 `WF-*` 命名；`P-*` 技術檔更名為 `WF-ARCH.md`、`WF-DATA.md`、`WF-SOP.md`；新增 `WF-EVOLUTION.md`、`WF-REJECTED.md`、`WF-DEBT.md`、`WF-ARCHIVE.md` |
 
 ## 二、已完成細節
 - **權限矩陣**：精細區分四種角色，包含路由守衛、選單隱藏與渲染層的 `isReadOnly` / `allowStatusChange` 參數控制，確保生產員只能推進度、銷售員只能看。
@@ -34,6 +35,7 @@
 - **自動同步與通知**：利用瀏覽器原生 API，綁定本機資料夾自動匯入 Excel；工單狀態更新時，針對負責的生產員與銷售員發送系統通知。
 - **完全數據驅動**：表格與卡片皆由 `order-view.js` 統一渲染，並透過動態 `visibleFields` 決定顯示欄位。
 - **物料可搜尋**：`flattenOrder` 將 `order.materials` 陣列中的 `name` 與 `note` 展平為 `materials.{idx}.name` / `materials.{idx}.note`，搜索頁輸入大約物料名稱即可命中相關工單；搜索結果顯示欄位維持既有配置不變。
+- **SV14 架構對齊**：專案紀錄目錄 `AI-General/docs/p92/` 已具備完整 7 寶，並與體系結束 SOP（A-00 §5.5）對稱；後續對話一律以 SV14 規則操作。
 
 ## 三、待辦清單 (Next Actions)
 - [ ] 測試四種角色的登入與權限邊界（確認無法透過修改網址越權）。
@@ -41,9 +43,10 @@
 - [ ] 測試「推播通知」，確認工單更新時，負責人會收到通知。
 - [ ] 準備 Firestore 的正式安全規則，準備上線。
 - [ ] 驗證全域搜尋物料命中：輸入物料名稱片段（如「110G」），確認可搜出含該物料的工單。
+- [ ] 確認舊 `P-*` 檔案已由控制台刪除，避免與新 `WF-*` 並存。
 
 /*
 F: AI-General/docs/p92/WF-PROGRESS.md
-V: 1794182500
+V: 1794183500
 W: UPGRADE-008
 */
