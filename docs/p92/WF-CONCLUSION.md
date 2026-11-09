@@ -43,10 +43,10 @@
 - **W 包已同步**：本次實作經驗已沉澱至 W 包：單一編輯入口見 `W-03`；多檔案同步與表頭偵測見 `W-06`；全量覆蓋防呆與類別自動同步見 `W-07`。
 - Firestore 目前為測試模式（`allow read, write: if true;`），需在上線前替換為正式安全規則。
 - 尚未實作真正的 Firebase Auth，帳密驗證為前端明文比對。
-- **舊路徑待刪除**：`P-Architecture.md`、`P-Data.md`、`P-Dev-SOP.md` 已由 `WF-ARCH.md`、`WF-DATA.md`、`WF-SOP.md` 取代；需由控制台手動刪除舊檔，避免打包時重複或混淆。
+- **舊路徑已刪除**：`P-Architecture.md`、`P-Data.md`、`P-Dev-SOP.md` 已於 2026-11-09 由 Ken 於控制台實際刪除；新檔 `WF-ARCH.md`、`WF-DATA.md`、`WF-SOP.md` 已接手，不再並存。
 
 /* ═══ EOF ═══
 F: AI-General/docs/p92/WF-CONCLUSION.md
-V: 1794183600
+V: 1794184500
 W: UPGRADE-008
 ═══ */
