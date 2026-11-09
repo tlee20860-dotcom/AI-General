@@ -28,10 +28,11 @@
 | TD-92-006 | Excel 匯入無預覽與確認步驟 | 匯入流程為「選檔 → 直接解析 → 直接寫入」，無預覽畫面。 | 若 Excel 格式異常或選錯檔案，可能寫入錯誤資料；雖有防覆寫機制，但仍可能新增錯誤工單。 | 評估在匯入前加入預覽彈窗，列出「將新增 N 筆、將更新 M 筆、比對不符 K 筆」，由使用者確認後才寫入。 | P2 |
 | TD-92-007 | 自動同步僅支援 Chrome 系瀏覽器 | 使用 File System Access API，Firefox 與 Safari 不支援。 | 非 Chrome 使用者無法使用自動同步，需手動匯入。 | 於 UI 明確標示瀏覽器限制；評估是否提供替代方案（如定期上傳壓縮檔）。 | P3 |
 | TD-92-008 | 推播通知僅支援前景監聽 | 目前使用 Notification API，但僅在頁面開啟時監聽資料變更。 | 頁面關閉後不會收到通知，工廠現場可能漏接狀態更新。 | 評估導入 Firebase Cloud Messaging（FCM）或 Service Worker 背景推播；需額外申請憑證與設定。 | P2 |
-| TD-92-009 | 舊 `P-*` 檔案待刪除 | `P-Architecture.md`、`P-Data.md`、`P-Dev-SOP.md` 已由 `WF-ARCH.md`、`WF-DATA.md`、`WF-SOP.md` 取代，但舊檔仍存在於倉庫。 | 若打包腳本仍掃描 `P-*`，可能導致重複或混淆；且新舊並存增加認知負擔。 | 由控制台手動刪除三個舊路徑；確認 `setup-structure.yml` 的掃描規則已改為僅讀 `WF-*`。 | P1 |
-| TD-92-010 | `setup-structure.yml` 掃描規則待確認 | 本次遷移後，專案紀錄檔改為 `WF-*` 命名，但未確認打包腳本是否已同步調整掃描規則。 | 若腳本仍掃描 `P-*` 或未包含新增的 4 寶，合成物 `{pkg_no}-SP.md` 將缺少內容。 | 檢查 `setup-structure.yml` 中 `docs/p{pkg_no}/` 的檔案匹配規則，確保涵蓋 `WF-*.md` 全部 7 寶與技術檔。 | P1 |
+| TD-92-009 | 舊 `P-*` 檔案待刪除 | 已解決（2026-11-09，UPGRADE-008）。Ken 已實際刪除 `P-Architecture.md`、`P-Data.md`、`P-Dev-SOP.md` 三個舊檔；新檔 `WF-ARCH.md`、`WF-DATA.md`、`WF-SOP.md` 已於同對話交付。 | 已無影響。 | 已解決，無需處置。 | 已解決 |
+| TD-92-010 | `setup-structure.yml` 掃描規則待確認 | 已解決（2026-11-09，UPGRADE-008）。實體核對結果：`setup-structure.yml` 的 Step 7 與 Step 8 掃描區塊為 `for f in "$PROJ_DIR"/WF-*.md "$PROJ_DIR"/*P-*.md`，`WF-*.md` glob 已涵蓋全部 7 寶與技術檔；`*P-*.md` 為過渡期相容殘留，舊檔刪除後該 glob 無匹配、空轉無害。 | 已無影響。 | 已解決；殘留匹配的字面清理另立 TD-92-013 追蹤。 | 已解決 |
 | TD-92-011 | 差異核對僅針對手動工單 | `data-diff.js` 的 `checkDiff` 僅在 `dbOrder.source === 'manual'` 時執行。 | Excel 來源的工單若被手動修改過，重新匯入時不會觸發差異警示，可能覆蓋手動修改。 | 評估是否記錄「最後手動修改時間」，若 Excel 來源工單曾被手動修改，亦納入差異核對。 | P2 |
 | TD-92-012 | 公式引擎使用 `new Function` | `formula-engine.js` 使用 `new Function` 動態執行公式字串。 | 理論上存在注入風險，但目前公式僅由管理員在設定頁輸入，且系統為內部使用。 | 若需提高安全性，可改為 AST 解析；目前風險可控，列為觀察項。 | P3 |
+| TD-92-013 | `setup-structure.yml` 殘留 `*P-*.md` 匹配 | Step 7 與 Step 8 的掃描 glob 仍包含 `"$PROJ_DIR"/*P-*.md`，註解標示為「過渡期相容」。舊 `P-*` 檔已刪除，該 glob 目前無匹配、功能上空轉。 | 功能上無影響；但字面殘留可能讓後續開發者誤以為 `P-*` 仍在使用，增加認知負擔。 | 於未來打包腳本維護時，移除 `"$PROJ_DIR"/*P-*.md` 匹配與相關註解，使掃描規則字面與 `WF-*` 命名完全一致。 | P3 |
 
 ---
 
@@ -44,6 +45,8 @@
 | TD-92-H03 | 彈窗底部按鈕在手機端消失 | 2026-10-28 | 重構 `modal.js` 為三層架構，Footer 固定。 |
 | TD-92-H04 | 表格在手機端文字斷行變形 | 2026-10-28 | 表頭加上 `whitespace-nowrap` 與 `min-w-[120px]`，外層加 `overflow-x-auto`。 |
 | TD-92-H05 | 設定檔被全量覆蓋洗白 | 2026-10-31 | 全面改用 `updateDocument` 進行局部更新。 |
+| TD-92-H06 | 舊 `P-*` 檔待刪除 | 2026-11-09 | Ken 於控制台實際刪除 `P-Architecture.md`、`P-Data.md`、`P-Dev-SOP.md`；對應新檔 `WF-ARCH.md`、`WF-DATA.md`、`WF-SOP.md` 已交付。 |
+| TD-92-H07 | `setup-structure.yml` 掃描規則待確認 | 2026-11-09 | 實體核對確認 `WF-*.md` glob 已涵蓋 7 寶與技術檔；`*P-*.md` 為過渡期相容殘留，舊檔刪除後空轉無害。字面清理另立 TD-92-013。 |
 
 ---
 
@@ -58,6 +61,6 @@
 
 /* ═══ EOF ═══
 F: AI-General/docs/p92/WF-DEBT.md
-V: 1794183900
+V: 1794184400
 W: UPGRADE-008
 ═══ */
